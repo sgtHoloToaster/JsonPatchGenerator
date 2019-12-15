@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\JsonPatchGenerator.Core\JsonPatchGenerator.Core.csproj" />
+    <ProjectReference Include="..\..\src\JsonPatchGenerator.Interface\JsonPatchGenerator.Interface.csproj" />
   </ItemGroup>
 
 </Project>
