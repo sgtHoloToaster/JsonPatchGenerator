@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JsonPatchGenerator.Abstract\JsonPatchGenerator.Interface.csproj" />
     <ProjectReference Include="..\JsonPatchGenerator.Interface\JsonPatchGenerator.Interface.csproj" />
   </ItemGroup>
 
