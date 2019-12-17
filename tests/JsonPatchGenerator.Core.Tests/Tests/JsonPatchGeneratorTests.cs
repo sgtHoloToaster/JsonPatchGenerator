@@ -1,6 +1,7 @@
 ﻿using AutoMoqCore;
 using JsonPatchGenerator.Core.Models;
 using JsonPatchGenerator.Core.Services;
+using JsonPatchGenerator.Core.Tests.Helpers;
 using JsonPatchGenerator.Core.Tests.Models;
 using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Services;
@@ -106,6 +107,36 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             Assert.NotNull(result?.Operations);
             Assert.NotEmpty(result.Operations);
             Assert.Contains(result.Operations, o => o.Type == OperationType.Replace);
+        }
+
+        [Fact]
+        public void CreateCorrectPathForNestedPropertiesOnReplace()
+        {
+            // arrange
+            var complexTypePropertyName = nameof(ComplexPropertiesModel.ComplexTypeProperty);
+            var simpleTypePropertyName = nameof(ComplexPropertiesModel.SimpleTypeProperty);
+            var path = $"/{complexTypePropertyName}/{complexTypePropertyName}/{complexTypePropertyName}/{simpleTypePropertyName}";
+            const int initValue = 441;
+            var first = new ComplexPropertiesModel();
+            PropertiesPathfinder.SetValue(first, path, initValue);
+            var second = new ComplexPropertiesModel();
+            var changedValue = initValue + 551;
+            PropertiesPathfinder.SetValue(second, path, changedValue);
+            var target = _mocker.Create<JsonPatchGeneratorService>();
+
+            // act
+            var result = target.GetDiff(first, second);
+
+            // assert
+            Assert.NotNull(result?.Operations);
+            var operation = result.Operations.FirstOrDefault(o => o.Type == OperationType.Replace);
+            Assert.Equal(path, operation.Path);
+        }
+
+        [Fact]
+        public void ReplaceOperationForNestedPropertiesHasCorrectValue()
+        {
+            throw new NotImplementedException();
         }
     }
 }

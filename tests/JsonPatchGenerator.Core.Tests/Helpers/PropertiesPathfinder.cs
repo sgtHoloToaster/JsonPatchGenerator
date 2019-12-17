@@ -9,7 +9,9 @@ namespace JsonPatchGenerator.Core.Tests.Helpers
 
         public static void SetValue(object obj, string path, object value)
         {
-            var pathParts = path.Split(Separator);
+            var pathParts = path.Split(Separator)
+                                .Where(p => !string.IsNullOrWhiteSpace(p))
+                                .ToArray();
             var currentPropertyName = pathParts[0];
             var currentProperty = obj.GetType().GetProperty(currentPropertyName);
             var currentPropertyType = currentProperty.PropertyType;

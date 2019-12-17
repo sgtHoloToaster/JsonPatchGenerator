@@ -13,7 +13,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             var model = new ComplexPropertiesModel();
             var complexTypePropertyName = nameof(ComplexPropertiesModel.ComplexTypeProperty);
             var simpleTypePropertyName = nameof(ComplexPropertiesModel.SimpleTypeProperty);
-            var path = $"{complexTypePropertyName}/{complexTypePropertyName}/{complexTypePropertyName}/{simpleTypePropertyName}";
+            var path = $"/{complexTypePropertyName}/{complexTypePropertyName}/{complexTypePropertyName}/{simpleTypePropertyName}";
             const int value = 42;
 
             // act
@@ -31,7 +31,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             const int value = 14;
             var complexTypePropertyName = nameof(ComplexPropertiesModel.ComplexTypeProperty);
             var simpleTypePropertyName = nameof(ComplexPropertiesModel.SimpleTypeProperty);
-            var path = $"{complexTypePropertyName}/{complexTypePropertyName}/{complexTypePropertyName}/{simpleTypePropertyName}";
+            var path = $"/{complexTypePropertyName}/{complexTypePropertyName}/{complexTypePropertyName}/{simpleTypePropertyName}";
 
             // act
             PropertiesPathfinder.SetValue(model, path, value);
