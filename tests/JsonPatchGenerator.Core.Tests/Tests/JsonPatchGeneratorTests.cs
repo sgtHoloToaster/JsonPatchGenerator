@@ -76,5 +76,36 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             // act
             return (target.GetDiff(first, second), changedValue);
         }
+
+        [Fact]
+        public void SupportReplaceOperationsForNestedObjects()
+        {
+            // arrange
+            const int initValue = 42;
+            var changedValue = initValue + 1;
+            ComplexPropertiesModel createTestObject(int value) =>
+                new ComplexPropertiesModel
+                {
+                    ComplexTypeProperty = new ComplexPropertiesModel
+                    {
+                        ComplexTypeProperty = new ComplexPropertiesModel
+                        {
+                            SimpleTypeProperty = value
+                        }
+                    }
+                };
+
+            var first = createTestObject(initValue);
+            var second = createTestObject(changedValue);
+            var target = _mocker.Create<JsonPatchGeneratorService>();
+
+            // act
+            var result = target.GetDiff(first, second);
+
+            // assert
+            Assert.NotNull(result?.Operations);
+            Assert.NotEmpty(result.Operations);
+            Assert.Contains(result.Operations, o => o.Type == OperationType.Replace);
+        }
     }
 }
