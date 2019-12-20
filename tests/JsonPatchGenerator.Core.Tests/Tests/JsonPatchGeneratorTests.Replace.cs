@@ -12,7 +12,7 @@ using Xunit;
 
 namespace JsonPatchGenerator.Core.Tests.Tests
 {
-    public class JsonPatchGeneratorTests
+    public partial class JsonPatchGeneratorTests
     {
         readonly AutoMoqer _mocker = new AutoMoqer();
 
