@@ -134,9 +134,36 @@ namespace JsonPatchGenerator.Core.Tests.Tests
         }
 
         [Fact]
-        public void ReplaceOperationForNestedPropertiesHasCorrectValue()
+        public void ReplaceOperationForComplexPropertiesHasCorrectValue()
         {
-            throw new NotImplementedException();
+            // arrange
+            var first = new ComplexPropertiesModel();
+            var value = new ComplexPropertiesModel { SimpleTypeProperty = 123 };
+            var second = new ComplexPropertiesModel { ComplexTypeProperty = value };
+            var target = _mocker.Create<JsonPatchGeneratorService>();
+
+            // act
+            var result = target.GetDiff(first, second);
+
+            // assert
+            Assert.NotNull(result);
+            Assert.Equal(value, result.Operations.First().Value);
+        }
+
+        [Fact]
+        public void SupportReplacingValuesWithNull()
+        {
+            // arrange
+            var first = new ComplexPropertiesModel { ComplexTypeProperty = new ComplexPropertiesModel { SimpleTypeProperty = 123 } };
+            var second = new ComplexPropertiesModel();
+            var target = _mocker.Create<JsonPatchGeneratorService>();
+
+            // act
+            var result = target.GetDiff(first, second);
+
+            // assert
+            Assert.NotNull(result);
+            Assert.Null(result.Operations.First().Value);
         }
     }
 }
