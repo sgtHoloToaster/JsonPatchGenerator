@@ -165,5 +165,58 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             Assert.NotNull(result);
             Assert.Null(result.Operations.First().Value);
         }
+
+        [Fact]
+        public void SupportSimpleTypeArrayElementReplacing()
+        {
+            // arrange & act
+            var (result, _, _) = TestSimpleTypeArrayElementReplacing();
+
+            // assert
+            Assert.NotNull(result);
+            Assert.NotEmpty(result.Operations.Where(o => o.Type == OperationType.Replace));
+        }
+
+        [Fact]
+        public void SimpleTypeArrayElementReplaceOperationHasCorrectValue()
+        {
+            // arrange & act
+            var (result, _, newValue) = TestSimpleTypeArrayElementReplacing();
+
+            // assert
+            Assert.NotNull(result);
+            var operation = result.Operations.First();
+            Assert.Equal(newValue, operation.Value);
+        }
+
+        [Fact]
+        public void SimpleTypeArrayElementReplaceOperationHasCorrectPath()
+        {
+            // arrange & act
+            var (result, valuePath, _) = TestSimpleTypeArrayElementReplacing();
+
+            // assert
+            Assert.NotNull(result);
+            var operation = result.Operations.First();
+            Assert.Equal(valuePath, operation.Path);
+        }
+
+        private (DiffDocument result, string changedValuePath, int newValue) TestSimpleTypeArrayElementReplacing()
+        {
+            // arrange
+            var initialArray = new int[] { 1, 2, 3 };
+            const int newValue = 7;
+            const int changedValueIndex = 1;
+            var first = new ComplexPropertiesModel { SimpleTypeArray = initialArray.Clone() as int[] };
+            var second = new ComplexPropertiesModel { SimpleTypeArray = initialArray.Clone() as int[] };
+            var changedValuePath = $"/{nameof(ComplexPropertiesModel.SimpleTypeArray)}[{changedValueIndex}]";
+            PropertiesPathfinder.SetValue(second, changedValuePath, newValue);
+            var target = _mocker.Create<JsonPatchGeneratorService>();
+
+            // act
+            var result = target.GetDiff(first, second);
+
+            return (result, changedValuePath, newValue);
+        }
     }
 }

@@ -28,8 +28,22 @@ namespace JsonPatchGenerator.Core.Services
                 var propertyType = property.Type;
                 var firstValue = property.GetValue(first, _typeResolver);
                 var secondValue = property.GetValue(second, _typeResolver);
-                if (propertyType.IsArray)
-                    continue; // not implemented
+                if (propertyType.IsArray && firstValue != null && secondValue != null)
+                {
+                    var firstArray = firstValue as Array;
+                    var secondArray = secondValue as Array;
+                    for (var i = 0; i < firstArray.Length; i++)
+                    {
+                        var secondArrayValue = secondArray.GetValue(i);
+                        if (!firstArray.GetValue(i).Equals(secondArrayValue))
+                            operations.Add(new Operation
+                            {
+                                Path = $"{path}/{property.Name}[{i}]",
+                                Type = OperationType.Replace,
+                                Value = secondArrayValue
+                            });
+                    }
+                }
                 else if (!propertyType.IsPrimitive && firstValue != null && secondValue != null)
                 {
                     var nestedDiff = GetDiff(firstValue, secondValue, $"{path}{_separator}{property.Name}");
