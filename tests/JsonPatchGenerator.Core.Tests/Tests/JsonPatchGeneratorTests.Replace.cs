@@ -190,7 +190,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
         }
 
         [Fact]
-        public void SimpleTypeArrayElementReplaceOperationHasCorrectPath()
+        public void ArrayElementReplaceOperationHasCorrectPath()
         {
             // arrange & act
             var (result, valuePath, _) = TestSimpleTypeArrayElementReplacing();
@@ -210,6 +210,69 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             var first = new ComplexPropertiesModel { SimpleTypeArray = initialArray.Clone() as int[] };
             var second = new ComplexPropertiesModel { SimpleTypeArray = initialArray.Clone() as int[] };
             var changedValuePath = $"/{nameof(ComplexPropertiesModel.SimpleTypeArray)}[{changedValueIndex}]";
+            PropertiesPathfinder.SetValue(second, changedValuePath, newValue);
+            var target = _mocker.Create<JsonPatchGeneratorService>();
+
+            // act
+            var result = target.GetDiff(first, second);
+
+            return (result, changedValuePath, newValue);
+        }
+
+        [Fact]
+        public void SupportReplacingPropertiesOfArrayElement()
+        {
+            // arrange & act
+            var (result, _, _) = TestComplexTypeArrayElementPropertyReplace();
+
+            // assert
+            Assert.NotNull(result?.Operations);
+            Assert.NotEmpty(result.Operations);
+            Assert.Contains(result.Operations, o => o.Type == OperationType.Replace);
+        }
+
+        [Fact]
+        public void ArrayElementPropertyReplaceOperationHasCorrectValue()
+        {
+            // arrange & act
+            var (result, _, newValue) = TestComplexTypeArrayElementPropertyReplace();
+
+            // assert
+            Assert.NotNull(result);
+            var operation = result.Operations.First();
+            Assert.Equal(newValue, operation.Value);
+        }
+
+        [Fact]
+        public void ArrayElementPropertyReplaceOperationHasCorrectPath()
+        {
+            // arrange & act
+            var (result, path, _) = TestComplexTypeArrayElementPropertyReplace();
+
+            // assert
+            Assert.NotNull(result);
+            var operation = result.Operations.First();
+            Assert.Equal(path, operation.Path);
+        }
+
+        private (DiffDocument result, string valuePath, int changedValue) TestComplexTypeArrayElementPropertyReplace()
+        {
+            // arrange
+            var initialModel = new ComplexPropertiesModel
+            {
+                ComplexTypeArrayProperty = new ComplexPropertiesModel[] 
+                {
+                    new ComplexPropertiesModel(),
+                    new ComplexPropertiesModel { SimpleTypeProperty = 55 },
+                    new ComplexPropertiesModel()
+                }
+            };
+
+            var first = initialModel;
+            var second = ObjectCloner.DeepClone(initialModel);
+            const int newValue = 77;
+            const int changedValueIndex = 1;
+            var changedValuePath = $"/{nameof(ComplexPropertiesModel.ComplexTypeArrayProperty)}[{changedValueIndex}]/{nameof(ComplexPropertiesModel.SimpleTypeProperty)}";
             PropertiesPathfinder.SetValue(second, changedValuePath, newValue);
             var target = _mocker.Create<JsonPatchGeneratorService>();
 

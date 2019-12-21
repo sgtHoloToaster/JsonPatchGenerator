@@ -22,7 +22,9 @@ namespace JsonPatchGenerator.Core.Tests.Helpers
             var currentPropertyType = currentProperty.PropertyType;
             if (currentPropertyType.IsArray && pathParts.Length > 1)
             {
-                throw new NotImplementedException();
+                var array = currentProperty.GetValue(obj) as Array;
+                var currentValue = array.GetValue(index.Value);
+                SetValue(currentValue, string.Join(Separator, pathParts.Skip(1)), value);
             }
             else if (currentPropertyType.IsArray)
             {

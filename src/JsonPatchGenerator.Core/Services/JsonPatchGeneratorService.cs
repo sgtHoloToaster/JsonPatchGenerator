@@ -34,11 +34,16 @@ namespace JsonPatchGenerator.Core.Services
                     var secondArray = secondValue as Array;
                     for (var i = 0; i < firstArray.Length; i++)
                     {
+                        var elementType = propertyType.GetElementType();
+                        var firstArrayValue = firstArray.GetValue(i);
                         var secondArrayValue = secondArray.GetValue(i);
-                        if (!firstArray.GetValue(i).Equals(secondArrayValue))
+                        var currentPath = $"{path}/{property.Name}[{i}]";
+                        if (!elementType.IsPrimitive)
+                            operations.AddRange(GetDiff(firstArrayValue, secondArrayValue, currentPath).Operations);
+                        else if (!firstArrayValue.Equals(secondArrayValue))
                             operations.Add(new Operation
                             {
-                                Path = $"{path}/{property.Name}[{i}]",
+                                Path = currentPath,
                                 Type = OperationType.Replace,
                                 Value = secondArrayValue
                             });

@@ -55,5 +55,30 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             // assert
             Assert.Equal(newValue, model.SimpleTypeArray[changedValueIndex]);
         }
+
+        [Fact]
+        public void CanSetPropertiesOfComplexTypeArrayElement()
+        {
+            // arrange
+            var model = new ComplexPropertiesModel
+            {
+                ComplexTypeArrayProperty = new ComplexPropertiesModel[] 
+                {
+                    new ComplexPropertiesModel(),
+                    new ComplexPropertiesModel(),
+                    new ComplexPropertiesModel()
+                }
+            };
+
+            const int changedValueIndex = 1;
+            const int newValue = 531;
+            var path = $"{nameof(ComplexPropertiesModel.ComplexTypeArrayProperty)}[{changedValueIndex}]/{nameof(ComplexPropertiesModel.SimpleTypeProperty)}";
+
+            // act
+            PropertiesPathfinder.SetValue(model, path, newValue);
+
+            // assert
+            Assert.Equal(newValue, model.ComplexTypeArrayProperty[changedValueIndex].SimpleTypeProperty);
+        }
     }
 }
