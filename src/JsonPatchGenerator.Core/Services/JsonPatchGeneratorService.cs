@@ -19,10 +19,13 @@ namespace JsonPatchGenerator.Core.Services
         public DiffDocument GetDiff(object first, object second) =>
             new DiffDocument(GetObjectPatchOperations(first, second, string.Empty));
 
-        private IEnumerable<Operation> GetObjectPatchOperations(object first, object second, string path)
+        private IEnumerable<Operation> GetObjectPatchOperations(object first, object second, string path) =>
+            GetObjectPatchOperations(first, second, path, first.GetType());
+
+        private IEnumerable<Operation> GetObjectPatchOperations(object first, object second, string path, Type type)
         {
             var operations = new List<Operation>();
-            var properties = _typeResolver.GetProperties(first.GetType());
+            var properties = _typeResolver.GetProperties(type);
             foreach (var property in properties)
             {
                 var firstValue = property.GetValue(first, _typeResolver);
@@ -40,7 +43,7 @@ namespace JsonPatchGenerator.Core.Services
                 if (propertyType.IsArray)
                     return GetArrayPatchOperations(firstValue as Array, secondValue as Array, path, propertyType);
                 else
-                    return GetObjectPatchOperations(firstValue, secondValue, path);
+                    return GetObjectPatchOperations(firstValue, secondValue, path, propertyType);
             }
             else if (!ReferenceEquals(firstValue, secondValue) && (!firstValue?.Equals(secondValue) ?? true))
                 return new[] { new Operation(OperationType.Replace, secondValue, path) };
