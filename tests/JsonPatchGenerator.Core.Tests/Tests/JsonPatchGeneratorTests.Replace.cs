@@ -281,5 +281,27 @@ namespace JsonPatchGenerator.Core.Tests.Tests
 
             return (result, changedValuePath, newValue);
         }
+
+        [Fact]
+        public void CanHandleMultipleDifferences()
+        {
+            // arrange
+            var first = new SimpleTypesPublicPropertiesModel();
+            var second = new SimpleTypesPublicPropertiesModel
+            {
+                BoolProperty = true,
+                ByteProperty = 1,
+                IntProperty = 13
+            };
+
+            var target = _mocker.Create<JsonPatchGeneratorService>();
+
+            // act
+            var result = target.GetDiff(first, second);
+
+            // assert
+            Assert.NotNull(result);
+            Assert.Equal(3, result.Operations.Count());
+        }
     }
 }

@@ -9,5 +9,15 @@
         public object Value { get; set;  }
 
         public string Path { get; set;  }
+
+        public Operation(OperationType type, object value, string path) : this(type, value, path, null) { }
+
+        public Operation(OperationType type, object value, string path, string from)
+        {
+            Type = type;
+            Value = value;
+            Path = path;
+            From = from;
+        }
     }
 }

@@ -7,6 +7,13 @@ namespace JsonPatchGenerator.Interface.Models
     {
         public IEnumerable<Operation> Operations { get; set; }
 
+        public DiffDocument() { }
+
+        public DiffDocument(IEnumerable<Operation> operations)
+        {
+            Operations = operations;
+        }
+
         public string ToJsonPatch(ISerializer serializer) =>
             serializer.Serialize(this);
     }

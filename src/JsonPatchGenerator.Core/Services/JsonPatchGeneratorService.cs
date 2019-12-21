@@ -2,6 +2,7 @@
 using JsonPatchGenerator.Interface.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace JsonPatchGenerator.Core.Services
 {
@@ -16,54 +17,50 @@ namespace JsonPatchGenerator.Core.Services
         }
 
         public DiffDocument GetDiff(object first, object second) =>
-            GetDiff(first, second, string.Empty);
+            new DiffDocument(GetObjectPatchOperations(first, second, string.Empty));
 
-        //TODO: refactor
-        private DiffDocument GetDiff(object first, object second, string path)
+        private IEnumerable<Operation> GetObjectPatchOperations(object first, object second, string path)
         {
-            var properties = _typeResolver.GetProperties(first.GetType());
             var operations = new List<Operation>();
+            var properties = _typeResolver.GetProperties(first.GetType());
             foreach (var property in properties)
             {
-                var propertyType = property.Type;
                 var firstValue = property.GetValue(first, _typeResolver);
                 var secondValue = property.GetValue(second, _typeResolver);
-                if (propertyType.IsArray && firstValue != null && secondValue != null)
-                {
-                    var firstArray = firstValue as Array;
-                    var secondArray = secondValue as Array;
-                    for (var i = 0; i < firstArray.Length; i++)
-                    {
-                        var elementType = propertyType.GetElementType();
-                        var firstArrayValue = firstArray.GetValue(i);
-                        var secondArrayValue = secondArray.GetValue(i);
-                        var currentPath = $"{path}/{property.Name}[{i}]";
-                        if (!elementType.IsPrimitive)
-                            operations.AddRange(GetDiff(firstArrayValue, secondArrayValue, currentPath).Operations);
-                        else if (!firstArrayValue.Equals(secondArrayValue))
-                            operations.Add(new Operation
-                            {
-                                Path = currentPath,
-                                Type = OperationType.Replace,
-                                Value = secondArrayValue
-                            });
-                    }
-                }
-                else if (!propertyType.IsPrimitive && firstValue != null && secondValue != null)
-                {
-                    var nestedDiff = GetDiff(firstValue, secondValue, $"{path}{_separator}{property.Name}");
-                    operations.AddRange(nestedDiff.Operations);
-                }
-                else if (!ReferenceEquals(firstValue, secondValue) && (!firstValue?.Equals(secondValue) ?? true))
-                    operations.Add(new Operation
-                    {
-                        Path = $"{path}/{property.Name}",
-                        Type = OperationType.Replace,
-                        Value = secondValue
-                    });
+                operations.AddRange(GetValuesDiff(firstValue, secondValue, $"{path}{_separator}{property.Name}", property.Type));
             }
 
-            return new DiffDocument { Operations = operations };
+            return operations;
+        }
+
+        private IEnumerable<Operation> GetValuesDiff(object firstValue, object secondValue, string path, Type propertyType)
+        {
+            if (firstValue != null && secondValue != null && !propertyType.IsPrimitive)
+            {
+                if (propertyType.IsArray)
+                    return GetArrayPatchOperations(firstValue as Array, secondValue as Array, path, propertyType);
+                else
+                    return GetObjectPatchOperations(firstValue, secondValue, path);
+            }
+            else if (!ReferenceEquals(firstValue, secondValue) && (!firstValue?.Equals(secondValue) ?? true))
+                return new[] { new Operation(OperationType.Replace, secondValue, path) };
+            else
+                return Enumerable.Empty<Operation>();
+        }
+
+        private IEnumerable<Operation> GetArrayPatchOperations(Array firstArray, Array secondArray, string path, Type propertyType)
+        {
+            var operations = new List<Operation>();
+            for (var i = 0; i < firstArray.Length; i++)
+            {
+                var elementType = propertyType.GetElementType();
+                var firstArrayValue = firstArray.GetValue(i);
+                var secondArrayValue = secondArray.GetValue(i);
+                var currentPath = $"{path}[{i}]";
+                operations.AddRange(GetValuesDiff(firstArrayValue, secondArrayValue, currentPath, elementType));
+            }
+
+            return operations;
         }
     }
 }
