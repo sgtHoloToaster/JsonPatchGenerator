@@ -1,31 +1,15 @@
-﻿using AutoMoqCore;
-using JsonPatchGenerator.Core.Models;
-using JsonPatchGenerator.Core.Services;
+﻿using JsonPatchGenerator.Core.Services;
 using JsonPatchGenerator.Core.Tests.Helpers;
 using JsonPatchGenerator.Core.Tests.Models;
 using JsonPatchGenerator.Interface.Models;
-using JsonPatchGenerator.Interface.Services;
-using Moq;
-using System;
 using System.Linq;
 using Xunit;
 
 namespace JsonPatchGenerator.Core.Tests.Tests
 {
-    public partial class JsonPatchGeneratorTests
+    public class JsonPatchGeneratorReplaceTests : JsonPatchGeneratorTests
     {
-        readonly AutoMoqer _mocker = new AutoMoqer();
-
-        public JsonPatchGeneratorTests()
-        {
-            _mocker.GetMock<ITypeResolver>()
-                   .Setup(m => m.GetProperties(It.IsAny<Type>()))
-                   .Returns<Type>(t => t.GetProperties().Select(p => new ObjectProperty(p)));
-
-            _mocker.GetMock<ITypeResolver>()
-                   .Setup(m => m.GetValue(It.IsAny<object>(), It.IsAny<ObjectProperty>()))
-                   .Returns<object, ObjectProperty>((obj, prop) => obj.GetType().GetProperty(prop.Name).GetValue(obj));
-        }
+        public JsonPatchGeneratorReplaceTests() : base() { }
 
         [Fact]
         public void SupportReplaceOperationForSimpleTypes()
@@ -72,7 +56,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             property.SetValue(first, value);
             var changedValue = value + 1;
             property.SetValue(second, changedValue);
-            var target = _mocker.Create<JsonPatchGeneratorService>();
+            var target = Mocker.Create<JsonPatchGeneratorService>();
 
             // act
             return (target.GetDiff(first, second), changedValue);
@@ -98,7 +82,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
 
             var first = createTestObject(initValue);
             var second = createTestObject(changedValue);
-            var target = _mocker.Create<JsonPatchGeneratorService>();
+            var target = Mocker.Create<JsonPatchGeneratorService>();
 
             // act
             var result = target.GetDiff(first, second);
@@ -122,7 +106,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             var second = new ComplexPropertiesModel();
             var changedValue = initValue + 551;
             PropertiesPathfinder.SetValue(second, path, changedValue);
-            var target = _mocker.Create<JsonPatchGeneratorService>();
+            var target = Mocker.Create<JsonPatchGeneratorService>();
 
             // act
             var result = target.GetDiff(first, second);
@@ -140,7 +124,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             var first = new ComplexPropertiesModel();
             var value = new ComplexPropertiesModel { SimpleTypeProperty = 123 };
             var second = new ComplexPropertiesModel { ComplexTypeProperty = value };
-            var target = _mocker.Create<JsonPatchGeneratorService>();
+            var target = Mocker.Create<JsonPatchGeneratorService>();
 
             // act
             var result = target.GetDiff(first, second);
@@ -156,7 +140,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             // arrange
             var first = new ComplexPropertiesModel { ComplexTypeProperty = new ComplexPropertiesModel { SimpleTypeProperty = 123 } };
             var second = new ComplexPropertiesModel();
-            var target = _mocker.Create<JsonPatchGeneratorService>();
+            var target = Mocker.Create<JsonPatchGeneratorService>();
 
             // act
             var result = target.GetDiff(first, second);
@@ -209,9 +193,9 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             const int changedValueIndex = 1;
             var first = new ComplexPropertiesModel { SimpleTypeArray = initialArray.Clone() as int[] };
             var second = new ComplexPropertiesModel { SimpleTypeArray = initialArray.Clone() as int[] };
-            var changedValuePath = $"/{nameof(ComplexPropertiesModel.SimpleTypeArray)}[{changedValueIndex}]";
+            var changedValuePath = $"/{nameof(ComplexPropertiesModel.SimpleTypeArray)}/{changedValueIndex}";
             PropertiesPathfinder.SetValue(second, changedValuePath, newValue);
-            var target = _mocker.Create<JsonPatchGeneratorService>();
+            var target = Mocker.Create<JsonPatchGeneratorService>();
 
             // act
             var result = target.GetDiff(first, second);
@@ -272,9 +256,9 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             var second = ObjectCloner.DeepClone(initialModel);
             const int newValue = 77;
             const int changedValueIndex = 1;
-            var changedValuePath = $"/{nameof(ComplexPropertiesModel.ComplexTypeArrayProperty)}[{changedValueIndex}]/{nameof(ComplexPropertiesModel.SimpleTypeProperty)}";
+            var changedValuePath = $"/{nameof(ComplexPropertiesModel.ComplexTypeArrayProperty)}/{changedValueIndex}/{nameof(ComplexPropertiesModel.SimpleTypeProperty)}";
             PropertiesPathfinder.SetValue(second, changedValuePath, newValue);
-            var target = _mocker.Create<JsonPatchGeneratorService>();
+            var target = Mocker.Create<JsonPatchGeneratorService>();
 
             // act
             var result = target.GetDiff(first, second);
@@ -294,7 +278,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
                 IntProperty = 13
             };
 
-            var target = _mocker.Create<JsonPatchGeneratorService>();
+            var target = Mocker.Create<JsonPatchGeneratorService>();
 
             // act
             var result = target.GetDiff(first, second);

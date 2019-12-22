@@ -59,7 +59,7 @@ namespace JsonPatchGenerator.Core.Services
                 var elementType = propertyType.GetElementType();
                 var firstArrayValue = firstArray.GetValue(i);
                 var secondArrayValue = secondArray.GetValue(i);
-                var currentPath = $"{path}[{i}]";
+                var currentPath = $"{path}{_separator}{i}";
                 operations.AddRange(GetValuesDiff(firstArrayValue, secondArrayValue, currentPath, elementType));
             }
 

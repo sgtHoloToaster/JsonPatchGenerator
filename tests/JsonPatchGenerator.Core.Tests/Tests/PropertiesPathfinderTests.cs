@@ -47,7 +47,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             var model = new ComplexPropertiesModel { SimpleTypeArray = new int[] { 1, 2, 3 } };
             const int changedValueIndex = 1;
             const int newValue = 531;
-            var path = $"{nameof(ComplexPropertiesModel.SimpleTypeArray)}[{changedValueIndex}]";
+            var path = $"{nameof(ComplexPropertiesModel.SimpleTypeArray)}/{changedValueIndex}";
 
             // act
             PropertiesPathfinder.SetValue(model, path, newValue);
@@ -72,7 +72,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
 
             const int changedValueIndex = 1;
             const int newValue = 531;
-            var path = $"{nameof(ComplexPropertiesModel.ComplexTypeArrayProperty)}[{changedValueIndex}]/{nameof(ComplexPropertiesModel.SimpleTypeProperty)}";
+            var path = $"{nameof(ComplexPropertiesModel.ComplexTypeArrayProperty)}/{changedValueIndex}/{nameof(ComplexPropertiesModel.SimpleTypeProperty)}";
 
             // act
             PropertiesPathfinder.SetValue(model, path, newValue);
