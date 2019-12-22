@@ -63,6 +63,12 @@ namespace JsonPatchGenerator.Core.Services
                 operations.AddRange(GetValuesDiff(firstArrayValue, secondArrayValue, currentPath, elementType));
             }
 
+            if (firstArray.Length < secondArray.Length)
+            {
+                for (var i = firstArray.Length; i < secondArray.Length; i++)
+                    operations.Add(new Operation(OperationType.Add, secondArray.GetValue(i), $"{path}{_separator}-"));
+            }
+
             return operations;
         }
     }
