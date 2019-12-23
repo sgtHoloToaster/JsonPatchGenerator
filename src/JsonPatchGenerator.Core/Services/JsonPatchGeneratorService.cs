@@ -53,20 +53,57 @@ namespace JsonPatchGenerator.Core.Services
 
         private IEnumerable<Operation> GetArrayPatchOperations(Array firstArray, Array secondArray, string path, Type propertyType)
         {
+            var elementType = propertyType.GetElementType();
             var operations = new List<Operation>();
+            var firstArrayHashCodes = new int[firstArray.Length];
+            var firstArrayHashMap = new Dictionary<int, List<int>>();
             for (var i = 0; i < firstArray.Length; i++)
             {
-                var elementType = propertyType.GetElementType();
-                var firstArrayValue = firstArray.GetValue(i);
-                var secondArrayValue = secondArray.GetValue(i);
-                var currentPath = $"{path}{_separator}{i}";
-                operations.AddRange(GetValuesDiff(firstArrayValue, secondArrayValue, currentPath, elementType));
+                var hash = _typeResolver.GetHashCode(firstArray.GetValue(i));
+                firstArrayHashCodes[i] = hash;
+                if (firstArrayHashMap.TryGetValue(hash, out var indexes))
+                    indexes.Add(i);
+                else
+                    firstArrayHashMap[hash] = new List<int> { i };
             }
 
-            if (firstArray.Length < secondArray.Length)
+            var secondArrayHashCodes = new int[secondArray.Length];
+            var secondArrayHashMap = new Dictionary<int, List<int>>();
+            for (var i = 0; i < secondArray.Length; i++)
             {
-                for (var i = firstArray.Length; i < secondArray.Length; i++)
-                    operations.Add(new Operation(OperationType.Add, secondArray.GetValue(i), $"{path}{_separator}-"));
+                var hash = _typeResolver.GetHashCode(secondArray.GetValue(i));
+                secondArrayHashCodes[i] = hash;
+                if (secondArrayHashMap.TryGetValue(hash, out var indexes))
+                    indexes.Add(i);
+                else
+                    secondArrayHashMap[hash] = new List<int> { i };
+            }
+
+            var toAdd = secondArrayHashCodes.Except(firstArrayHashCodes).ToArray();
+            var toRemove = firstArrayHashCodes.Except(secondArrayHashCodes).ToArray();
+
+            // add operations
+            foreach (var hash in toAdd)
+            {
+                var indexes = secondArrayHashMap[hash];
+                foreach (var index in indexes)
+                {
+                    if (index >= firstArray.Length)
+                    {
+                        operations.Add(new Operation(OperationType.Add, secondArray.GetValue(index), $"{path}{_separator}-"));
+                    }
+                    else if (toRemove.Contains(firstArrayHashCodes[index]))
+                    {
+                        var firstArrayValue = firstArray.GetValue(index);
+                        var secondArrayValue = secondArray.GetValue(index);
+                        var currentPath = $"{path}{_separator}{index}";
+                        operations.AddRange(GetValuesDiff(firstArrayValue, secondArrayValue, currentPath, elementType));
+                    }
+                    else
+                    {
+                        operations.Add(new Operation(OperationType.Add, secondArray.GetValue(index), $"{path}{_separator}{index}"));
+                    }
+                }
             }
 
             return operations;
