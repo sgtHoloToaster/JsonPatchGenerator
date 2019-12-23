@@ -1,5 +1,8 @@
-﻿namespace JsonPatchGenerator.Core.Tests.Models
+﻿using System;
+
+namespace JsonPatchGenerator.Core.Tests.Models
 {
+    [Serializable]
     public class SimpleTypesPublicPropertiesModel
     {
         public bool BoolProperty { get; set; }
