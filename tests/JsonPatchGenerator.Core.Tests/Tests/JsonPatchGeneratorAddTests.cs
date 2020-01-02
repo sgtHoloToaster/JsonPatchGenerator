@@ -2,7 +2,6 @@
 using JsonPatchGenerator.Core.Tests.Models;
 using JsonPatchGenerator.Interface.Models;
 using System;
-using System.Linq;
 using Xunit;
 
 namespace JsonPatchGenerator.Core.Tests.Tests
@@ -13,29 +12,17 @@ namespace JsonPatchGenerator.Core.Tests.Tests
 
         [Fact]
         public void SupportSimpleTypeArrayAddOperation() =>
-            TestSimpleTypeArrayAddOperation((result, _, __) =>
-            {
-                Assert.NotNull(result);
-                Assert.Contains(result.Operations, o => o.Type == OperationType.Add);
-            });
+            TestSimpleTypeArrayAddOperation(HasAddOperation);
 
         [Fact]
         public void SimpleTypeArrayAddOperationHasCorrectPath() =>
-            TestSimpleTypeArrayAddOperation((result, _, expectedPath) =>
-            {
-                var operation = result.Operations.First();
-                Assert.Equal(expectedPath, operation.Path);
-            });
+            TestSimpleTypeArrayAddOperation(HasCorrectPath);
 
         [Fact]
         public void SimpleTypeArrayAddOperationHasCorrectValue() =>
-            TestSimpleTypeArrayAddOperation((result, expectedValue, _) =>
-            {
-                var operation = result.Operations.First();
-                Assert.Equal(expectedValue, operation.Value);
-            });
+            TestSimpleTypeArrayAddOperation(HasCorrectValue);
 
-        private void TestSimpleTypeArrayAddOperation(Action<DiffDocument, int, string> assert)
+        private void TestSimpleTypeArrayAddOperation(AssertAction assert)
         {
             // arrange
             const int addedValue = 4;
@@ -49,41 +36,26 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             var result = target.GetDiff(first, second);
 
             // assert
-            assert(result, addedValue, expectedPath);
+            assert(result, expectedPath, addedValue);
         }
 
         [Fact]
         public void SupportSimpleTypeArrayIndexBasedAddOperation() =>
-            TestSimpleTypeArrayIndexBasedAddOperation((result, _, __) =>
-            {
-                Assert.NotNull(result);
-                Assert.Contains(result.Operations, o => o.Type == OperationType.Add);
-            });
+            TestSimpleTypeArrayIndexBasedAddOperation(HasAddOperation);
 
         [Fact]
         public void SimpleTypeArrayIndexBasedAddDoesntProduceExtraOperations() =>
-            TestSimpleTypeArrayIndexBasedAddOperation((result, _, __) =>
-            {
-                Assert.Single(result.Operations);
-            });
+            TestSimpleTypeArrayIndexBasedAddOperation(HasNoExtraOperations);
 
         [Fact]
         public void SimpleTypeArrayIndexBasedAddOperationHasCorrectValue() =>
-            TestSimpleTypeArrayIndexBasedAddOperation((result, expectedValue, _) =>
-            {
-                var operation = result.Operations.First();
-                Assert.Equal(expectedValue, operation.Value);
-            });
+            TestSimpleTypeArrayIndexBasedAddOperation(HasCorrectValue);
 
         [Fact]
         public void SimpleTypeArrayIndexBasedAddOperationHasCorrectPath() =>
-            TestSimpleTypeArrayIndexBasedAddOperation((result, _, expectedPath) =>
-            {
-                var operation = result.Operations.First();
-                Assert.Equal(expectedPath, operation.Path);
-            });
+            TestSimpleTypeArrayIndexBasedAddOperation(HasCorrectPath);
 
-        private void TestSimpleTypeArrayIndexBasedAddOperation(Action<DiffDocument, int, string> assertFunc)
+        private void TestSimpleTypeArrayIndexBasedAddOperation(AssertAction assert)
         {
             // arrange
             const int addedValue = 2;
@@ -96,7 +68,13 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             var result = target.GetDiff(first, second);
 
             // assert
-            assertFunc(result, addedValue, expectedPath);
+            assert(result, expectedPath, addedValue);
         }
+
+        private void HasAddOperation(DiffDocument result) =>
+            HasOperation(result, OperationType.Add);
+
+        private void HasAddOperation(DiffDocument result, string path, object newValue) =>
+            HasAddOperation(result);
     }
 }
