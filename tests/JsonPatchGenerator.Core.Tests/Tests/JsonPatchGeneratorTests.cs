@@ -14,11 +14,15 @@ namespace JsonPatchGenerator.Core.Tests.Tests
     {
         protected readonly AutoMoqer Mocker = new AutoMoqer();
         protected delegate void AssertAction(DiffDocument result, string path, object newValue);
+        protected delegate void MoveAssertAction(DiffDocument result, string path, object value, string from);
 
         public JsonPatchGeneratorTests()
         {
             Mocker.SetInstance<ITypeResolver>(new DefaultTypeResolver());
         }
+
+        protected void HasCorrectValue(DiffDocument result, string path, object expectedValue, string from) =>
+            HasCorrectValue(result, expectedValue);
 
         protected void HasCorrectValue(DiffDocument result, string path, object expectedValue) =>
             HasCorrectValue(result, expectedValue);
@@ -36,6 +40,9 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             Assert.NotEmpty(result.Operations);
             Assert.Contains(result.Operations, o => o.Type == operationType);
         }
+
+        protected void HasNoExtraOperations(DiffDocument result, string path, object newValue, string from) =>
+            HasNoExtraOperations(result);
 
         protected void HasNoExtraOperations(DiffDocument result, string path, object newValue) =>
             HasNoExtraOperations(result);
@@ -55,5 +62,18 @@ namespace JsonPatchGenerator.Core.Tests.Tests
 
         protected void HasCorrectPath(DiffDocument result, string path, object newValue) =>
             HasCorrectPath(result, path);
+
+        protected void HasCorrectPath(DiffDocument result, string path, object newValue, string from) =>
+            HasCorrectPath(result, path);
+
+        protected void HasCorrectFrom(DiffDocument result, string from)
+        {
+            Assert.NotNull(result?.Operations);
+            var operation = result.Operations.First();
+            Assert.Equal(from, operation.From);
+        }
+
+        protected void HasCorrectFrom(DiffDocument result, string path, object newValue, string from) =>
+            HasCorrectFrom(result, from);
     }
 }
