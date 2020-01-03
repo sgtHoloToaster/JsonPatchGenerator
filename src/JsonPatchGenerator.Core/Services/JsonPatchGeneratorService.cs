@@ -1,4 +1,5 @@
-﻿using JsonPatchGenerator.Interface.Models;
+﻿using JsonPatchGenerator.Core.Models;
+using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Services;
 using System;
 using System.Collections.Generic;
@@ -54,15 +55,14 @@ namespace JsonPatchGenerator.Core.Services
         private IEnumerable<Operation> GetArrayPatchOperations(Array firstArray, Array secondArray, string path, Type propertyType)
         {
             var operations = new List<Operation>();
-            var (firstArrayHashCodes, _) = GetHashCodeMaps(firstArray);
-            var (secondArrayHashCodes, secondArrayHashMap) = GetHashCodeMaps(secondArray);
+            var firstArrayHashCodes = new ArrayHashIndexMap(firstArray, _typeResolver.GetHashCode);
+            var secondArrayHashCodes = new ArrayHashIndexMap(secondArray, _typeResolver.GetHashCode);
             var toAdd = secondArrayHashCodes.Except(firstArrayHashCodes).ToArray();
             var toRemove = firstArrayHashCodes.Except(secondArrayHashCodes).ToArray();
 
-            // add operations
             foreach (var hash in toAdd)
             {
-                var indexes = secondArrayHashMap[hash];
+                var indexes = secondArrayHashCodes.Map[hash];
                 foreach (var index in indexes)
                 {
                     if (index >= firstArray.Length)
@@ -85,23 +85,6 @@ namespace JsonPatchGenerator.Core.Services
             }
 
             return operations;
-        }
-
-        private (int[] hashCodesArray, Dictionary<int, List<int>> hashCodeIndexesMap) GetHashCodeMaps(Array array)
-        {
-            var hashCodesArray = new int[array.Length];
-            var hashCodeIndexesMap = new Dictionary<int, List<int>>();
-            for (var i = 0; i < array.Length; i++)
-            {
-                var hash = _typeResolver.GetHashCode(array.GetValue(i));
-                hashCodesArray[i] = hash;
-                if (hashCodeIndexesMap.TryGetValue(hash, out var indexes))
-                    indexes.Add(i);
-                else
-                    hashCodeIndexesMap[hash] = new List<int> { i };
-            }
-
-            return (hashCodesArray, hashCodeIndexesMap);
         }
     }
 }
