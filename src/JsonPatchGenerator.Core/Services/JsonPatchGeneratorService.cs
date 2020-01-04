@@ -10,7 +10,8 @@ namespace JsonPatchGenerator.Core.Services
     public class JsonPatchGeneratorService : IJsonPatchGenerator
     {
         readonly ITypeResolver _typeResolver;
-        const char _separator = '/';
+        const string PathSeparator = "/";
+        const string ArrayLastPositionLiteral = "-";
 
         public JsonPatchGeneratorService(ITypeResolver typeResolver)
         {
@@ -31,7 +32,7 @@ namespace JsonPatchGenerator.Core.Services
             {
                 var firstValue = property.GetValue(first, _typeResolver);
                 var secondValue = property.GetValue(second, _typeResolver);
-                operations.AddRange(GetValuesDiff(firstValue, secondValue, $"{path}{_separator}{property.Name}", property.Type));
+                operations.AddRange(GetValuesDiff(firstValue, secondValue, ConcatPath(path, property.Name), property.Type));
             }
 
             return operations;
@@ -60,7 +61,6 @@ namespace JsonPatchGenerator.Core.Services
             var toAdd = secondArrayHashCodes.Except(firstArrayHashCodes).ToArray();
             var toRemove = firstArrayHashCodes.Except(secondArrayHashCodes).ToArray();
             var offsets = new int[secondArray.Length];
-
             for (var index = 0; index < secondArray.Length; index++)
             {
                 var indexWithOffset = index + offsets[index];
@@ -69,13 +69,13 @@ namespace JsonPatchGenerator.Core.Services
 
                 if (index >= firstArray.Length)
                 {
-                    operations.Add(new Operation(OperationType.Add, secondArray.GetValue(index), $"{path}{_separator}-"));
+                    operations.Add(new Operation(OperationType.Add, secondArray.GetValue(index), ConcatPath(path, ArrayLastPositionLiteral)));
                 }
                 else if (toRemove.Contains(firstArrayHashCodes[index]))
                 {
                     var firstArrayValue = firstArray.GetValue(index);
                     var secondArrayValue = secondArray.GetValue(index);
-                    var currentPath = $"{path}{_separator}{index}";
+                    var currentPath = ConcatPath(path, index);
                     var elementType = propertyType.GetElementType();
                     operations.AddRange(GetValuesDiff(firstArrayValue, secondArrayValue, currentPath, elementType));
                 }
@@ -83,7 +83,7 @@ namespace JsonPatchGenerator.Core.Services
                 {
                     var rawFromIndex = indexes.First(); // TODO: take into consideration cases with duplicate items
                     var fromIndex = rawFromIndex + offsets[indexes.First()]; 
-                    operations.Add(new Operation(OperationType.Move, secondArray.GetValue(index), $"{path}{_separator}{index}", $"{path}{_separator}{fromIndex}"));
+                    operations.Add(new Operation(OperationType.Move, secondArray.GetValue(index), ConcatPath(path, index), ConcatPath(path, fromIndex)));
                     if (fromIndex > index)
                         for (var i = index + 1; i <= fromIndex; i++)
                             offsets[i]--;
@@ -93,7 +93,7 @@ namespace JsonPatchGenerator.Core.Services
                 }
                 else
                 {
-                    operations.Add(new Operation(OperationType.Add, secondArray.GetValue(index), $"{path}{_separator}{index}"));
+                    operations.Add(new Operation(OperationType.Add, secondArray.GetValue(index), ConcatPath(path, index)));
                     for (var i = index + 1; i < offsets.Length; i++)
                         offsets[i]--;
                 }
@@ -101,5 +101,8 @@ namespace JsonPatchGenerator.Core.Services
 
             return operations;
         }
+
+        private string ConcatPath(params object[] pathParts) =>
+            string.Join(PathSeparator, pathParts);
     }
 }
