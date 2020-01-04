@@ -26,6 +26,10 @@ namespace JsonPatchGenerator.Core.Tests.Tests
         public void SimpleTypeArrayMoveOperationHasCorrectFrom() =>
             TestSimpleTypeArrayMoveOperation(HasCorrectFrom);
 
+        [Fact]
+        public void SimpleTypeArrayMoveDoesntProduceExtraOperations() =>
+            TestSimpleTypeArrayMoveOperation(HasNoExtraOperations);
+
         private void TestSimpleTypeArrayMoveOperation(MoveAssertAction assert)
         {
             // arrange
@@ -34,8 +38,8 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             var second = new ComplexPropertiesModel { SimpleTypeArray = new[] { 1, movedValue, 3, 4 } };
             string GetValuePath(ComplexPropertiesModel model) =>
                 $"/{nameof(ComplexPropertiesModel.SimpleTypeArray)}/{Array.IndexOf(model.SimpleTypeArray, movedValue)}";
-            var expectedPath = GetValuePath(first);
-            var expectedFrom = GetValuePath(second);
+            var expectedFrom = GetValuePath(first);
+            var expectedPath = GetValuePath(second);
 
             var target = Mocker.Create<JsonPatchGeneratorService>();
 
@@ -47,7 +51,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
         }
 
         private void HasMoveOperation(DiffDocument result) =>
-            HasOperation(result, OperationType.Add);
+            HasOperation(result, OperationType.Move);
 
         private void HasMoveOperation(DiffDocument result, string path, object newValue, string from) =>
             HasMoveOperation(result);

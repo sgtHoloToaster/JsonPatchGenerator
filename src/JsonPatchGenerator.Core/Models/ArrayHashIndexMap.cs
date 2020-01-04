@@ -15,7 +15,7 @@ namespace JsonPatchGenerator.Core.Models
 
         public int this[int key] => List[key];
 
-        public ArrayHashIndexMap(Array objects, Func<object, int> getHash) : this(objects.Cast<object>().ToList(), getHash) { }
+        public ArrayHashIndexMap(Array objects, Func<object, int> getHash) : this(objects.Cast<object>(), getHash) { }
 
         public ArrayHashIndexMap(IEnumerable<object> objects, Func<object, int> getHash)
         {

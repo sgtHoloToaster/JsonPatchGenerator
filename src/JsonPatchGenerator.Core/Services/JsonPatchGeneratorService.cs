@@ -59,28 +59,43 @@ namespace JsonPatchGenerator.Core.Services
             var secondArrayHashCodes = new ArrayHashIndexMap(secondArray, _typeResolver.GetHashCode);
             var toAdd = secondArrayHashCodes.Except(firstArrayHashCodes).ToArray();
             var toRemove = firstArrayHashCodes.Except(secondArrayHashCodes).ToArray();
+            var offsets = new int[secondArray.Length];
 
-            foreach (var hash in toAdd)
+            for (var index = 0; index < secondArray.Length; index++)
             {
-                var indexes = secondArrayHashCodes.Map[hash];
-                foreach (var index in indexes)
+                var indexWithOffset = index + offsets[index];
+                if (indexWithOffset < firstArray.Length && firstArrayHashCodes[indexWithOffset] == secondArrayHashCodes[index])
+                    continue;
+
+                if (index >= firstArray.Length)
                 {
-                    if (index >= firstArray.Length)
-                    {
-                        operations.Add(new Operation(OperationType.Add, secondArray.GetValue(index), $"{path}{_separator}-"));
-                    }
-                    else if (toRemove.Contains(firstArrayHashCodes[index]))
-                    {
-                        var firstArrayValue = firstArray.GetValue(index);
-                        var secondArrayValue = secondArray.GetValue(index);
-                        var currentPath = $"{path}{_separator}{index}";
-                        var elementType = propertyType.GetElementType();
-                        operations.AddRange(GetValuesDiff(firstArrayValue, secondArrayValue, currentPath, elementType));
-                    }
+                    operations.Add(new Operation(OperationType.Add, secondArray.GetValue(index), $"{path}{_separator}-"));
+                }
+                else if (toRemove.Contains(firstArrayHashCodes[index]))
+                {
+                    var firstArrayValue = firstArray.GetValue(index);
+                    var secondArrayValue = secondArray.GetValue(index);
+                    var currentPath = $"{path}{_separator}{index}";
+                    var elementType = propertyType.GetElementType();
+                    operations.AddRange(GetValuesDiff(firstArrayValue, secondArrayValue, currentPath, elementType));
+                }
+                else if (firstArrayHashCodes.Map.TryGetValue(secondArrayHashCodes[index], out var indexes))
+                {
+                    var rawFromIndex = indexes.First(); // TODO: take into consideration cases with duplicate items
+                    var fromIndex = rawFromIndex + offsets[indexes.First()]; 
+                    operations.Add(new Operation(OperationType.Move, secondArray.GetValue(index), $"{path}{_separator}{index}", $"{path}{_separator}{fromIndex}"));
+                    if (fromIndex > index)
+                        for (var i = index + 1; i <= fromIndex; i++)
+                            offsets[i]--;
                     else
-                    {
-                        operations.Add(new Operation(OperationType.Add, secondArray.GetValue(index), $"{path}{_separator}{index}"));
-                    }
+                        for (var i = fromIndex; i < index; i++)
+                            offsets[i]++;
+                }
+                else
+                {
+                    operations.Add(new Operation(OperationType.Add, secondArray.GetValue(index), $"{path}{_separator}{index}"));
+                    for (var i = index + 1; i < offsets.Length; i++)
+                        offsets[i]--;
                 }
             }
 
