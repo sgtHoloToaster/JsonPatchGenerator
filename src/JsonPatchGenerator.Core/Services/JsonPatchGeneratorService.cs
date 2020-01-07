@@ -61,6 +61,21 @@ namespace JsonPatchGenerator.Core.Services
             var toAdd = secondArrayHashCodes.Except(firstArrayHashCodes).ToArray();
             var toRemove = firstArrayHashCodes.Except(secondArrayHashCodes).ToArray();
             var offsets = new int[secondArray.Length];
+            foreach (var hash in toRemove)
+            {
+                var rawIndexes = firstArrayHashCodes.Map[hash];
+                foreach (var rawIndex in rawIndexes)
+                {
+                    var index = rawIndex + offsets[rawIndex];
+                    if (index >= firstArray.Length || !toAdd.Contains(secondArrayHashCodes[index]))
+                    {
+                        operations.Add(new Operation(OperationType.Remove, firstArray.GetValue(index), ConcatPath(path, index)));
+                        for (var i = index + 1; i < offsets.Length; i++)
+                            offsets[i]--;
+                    }
+                }
+            }
+
             for (var index = 0; index < secondArray.Length; index++)
             {
                 var indexWithOffset = index + offsets[index];
@@ -71,9 +86,9 @@ namespace JsonPatchGenerator.Core.Services
                 {
                     operations.Add(new Operation(OperationType.Add, secondArray.GetValue(index), ConcatPath(path, ArrayLastPositionLiteral)));
                 }
-                else if (toRemove.Contains(firstArrayHashCodes[index]))
+                else if (toRemove.Contains(firstArrayHashCodes[indexWithOffset]) && toAdd.Contains(secondArrayHashCodes[index]))
                 {
-                    var firstArrayValue = firstArray.GetValue(index);
+                    var firstArrayValue = firstArray.GetValue(indexWithOffset);
                     var secondArrayValue = secondArray.GetValue(index);
                     var currentPath = ConcatPath(path, index);
                     var elementType = propertyType.GetElementType();
@@ -82,7 +97,13 @@ namespace JsonPatchGenerator.Core.Services
                 else if (firstArrayHashCodes.Map.TryGetValue(secondArrayHashCodes[index], out var indexes))
                 {
                     var rawFromIndex = indexes.First(); // TODO: take into consideration cases with duplicate items
-                    var fromIndex = rawFromIndex + offsets[indexes.First()]; 
+                    if (rawFromIndex >= offsets.Length)
+                        continue;
+
+                    var fromIndex = rawFromIndex + offsets[rawFromIndex];
+                    if (fromIndex == index)
+                        continue;
+
                     operations.Add(new Operation(OperationType.Move, secondArray.GetValue(index), ConcatPath(path, index), ConcatPath(path, fromIndex)));
                     if (fromIndex > index)
                         for (var i = index + 1; i <= fromIndex; i++)
