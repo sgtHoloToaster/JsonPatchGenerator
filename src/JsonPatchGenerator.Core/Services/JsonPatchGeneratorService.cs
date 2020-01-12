@@ -53,6 +53,7 @@ namespace JsonPatchGenerator.Core.Services
                 return Enumerable.Empty<Operation>();
         }
 
+        //TODO: refactor
         private IEnumerable<Operation> GetArrayPatchOperations(Array firstArray, Array secondArray, string path, Type propertyType)
         {
             var operations = new List<Operation>();

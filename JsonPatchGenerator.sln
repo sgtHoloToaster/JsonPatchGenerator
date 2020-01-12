@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonPatchGenerator.Core.Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonPatchGenerator.Interface", "src\JsonPatchGenerator.Interface\JsonPatchGenerator.Interface.csproj", "{CCB5B3C6-6A22-451C-87C0-506499AECA99}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonPatchGenerator.JsonNet", "src\JsonPatchGenerator.JsonNet\JsonPatchGenerator.JsonNet.csproj", "{44BC07E4-62DB-4C93-800C-20592D2AF32A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonPatchGenerator.JsonNet.Tests", "tests\JsonPatchGenerator.JsonNet.Tests\JsonPatchGenerator.JsonNet.Tests.csproj", "{CCCB92C5-6FFE-48C1-AA9F-EE77CBEAAC2C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{CCB5B3C6-6A22-451C-87C0-506499AECA99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCB5B3C6-6A22-451C-87C0-506499AECA99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCB5B3C6-6A22-451C-87C0-506499AECA99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44BC07E4-62DB-4C93-800C-20592D2AF32A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44BC07E4-62DB-4C93-800C-20592D2AF32A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44BC07E4-62DB-4C93-800C-20592D2AF32A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44BC07E4-62DB-4C93-800C-20592D2AF32A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCCB92C5-6FFE-48C1-AA9F-EE77CBEAAC2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCCB92C5-6FFE-48C1-AA9F-EE77CBEAAC2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCCB92C5-6FFE-48C1-AA9F-EE77CBEAAC2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCCB92C5-6FFE-48C1-AA9F-EE77CBEAAC2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
