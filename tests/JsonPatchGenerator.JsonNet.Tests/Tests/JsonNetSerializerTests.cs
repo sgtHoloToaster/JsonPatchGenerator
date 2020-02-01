@@ -26,9 +26,9 @@ namespace JsonPatchGenerator.JsonNet.Tests.Tests
                 "{ \"op\": \"replace\", \"path\": \"/nullableProperty\", \"value\": null }" +
             "]";
             var expectedOperations = new List<Operation> {
-                new Operation(OperationType.Copy, null, "/best_biscuit", "/biscuits/0"),
-                new Operation(OperationType.Add, "str", "/arr/1"),
-                new Operation(OperationType.Replace, null, "/nullableProperty")
+                new Operation(OperationType.Copy, "/best_biscuit", null, "/biscuits/0"),
+                new Operation(OperationType.Add, "/arr/1", "str"),
+                new Operation(OperationType.Replace, "/nullableProperty", null)
             };
 
             var expected = new DiffDocument(expectedOperations);
@@ -68,12 +68,12 @@ namespace JsonPatchGenerator.JsonNet.Tests.Tests
             // arrange
             var operations = new List<Operation>
             {
-                new Operation(OperationType.Test, (long)41, "/root/sub"),
-                new Operation(OperationType.Add, (long)42, "/root/sub"),
-                new Operation(OperationType.Copy, null, "/root/arr/7", "/root/arr/6"),
-                new Operation(OperationType.Move, null, "/root/arr/1", "/root/arr/2"),
-                new Operation(OperationType.Remove, null, "/root/arr/3"),
-                new Operation(OperationType.Replace, "someVal", "/root/subb")
+                new Operation(OperationType.Test, "/root/sub", (long)41),
+                new Operation(OperationType.Add, "/root/sub", (long)42),
+                new Operation(OperationType.Copy, "/root/arr/7", null, "/root/arr/6"),
+                new Operation(OperationType.Move, "/root/arr/1", null, "/root/arr/2"),
+                new Operation(OperationType.Remove, "/root/arr/3"),
+                new Operation(OperationType.Replace, "/root/subb", "someVal")
             };
 
             var model = new DiffDocument(operations);

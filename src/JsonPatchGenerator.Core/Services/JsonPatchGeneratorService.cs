@@ -49,7 +49,7 @@ namespace JsonPatchGenerator.Core.Services
                     return GetObjectPatchOperations(firstValue, secondValue, path, propertyType);
             }
             else if (!ReferenceEquals(firstValue, secondValue) && (!firstValue?.Equals(secondValue) ?? true))
-                return new[] { new Operation(OperationType.Replace, secondValue, path) };
+                return new[] { new Operation(OperationType.Replace, path, secondValue) };
             else
                 return Enumerable.Empty<Operation>();
         }
@@ -71,7 +71,7 @@ namespace JsonPatchGenerator.Core.Services
                     var index = rawIndex + offsets[rawIndex];
                     if (index >= firstArray.Length || !toAdd.Contains(secondArrayHashCodes[index]))
                     {
-                        operations.Add(new Operation(OperationType.Remove, firstArray.GetValue(index), ConcatPath(path, index)));
+                        operations.Add(new Operation(OperationType.Remove, ConcatPath(path, index), firstArray.GetValue(index)));
                         for (var i = index + 1; i < offsets.Length; i++)
                             offsets[i]--;
                     }
@@ -86,7 +86,7 @@ namespace JsonPatchGenerator.Core.Services
 
                 if (index >= firstArray.Length)
                 {
-                    operations.Add(new Operation(OperationType.Add, secondArray.GetValue(index), ConcatPath(path, ArrayLastPositionLiteral)));
+                    operations.Add(new Operation(OperationType.Add, ConcatPath(path, ArrayLastPositionLiteral), secondArray.GetValue(index)));
                 }
                 else if (toRemove.Contains(firstArrayHashCodes[indexWithOffset]) && toAdd.Contains(secondArrayHashCodes[index]))
                 {
@@ -106,7 +106,7 @@ namespace JsonPatchGenerator.Core.Services
                     if (fromIndex == index)
                         continue;
 
-                    operations.Add(new Operation(OperationType.Move, secondArray.GetValue(index), ConcatPath(path, index), ConcatPath(path, fromIndex)));
+                    operations.Add(new Operation(OperationType.Move, ConcatPath(path, index), secondArray.GetValue(index), ConcatPath(path, fromIndex)));
                     if (fromIndex > index)
                         for (var i = index + 1; i <= fromIndex; i++)
                             offsets[i]--;
@@ -116,7 +116,7 @@ namespace JsonPatchGenerator.Core.Services
                 }
                 else
                 {
-                    operations.Add(new Operation(OperationType.Add, secondArray.GetValue(index), ConcatPath(path, index)));
+                    operations.Add(new Operation(OperationType.Add, ConcatPath(path, index), secondArray.GetValue(index)));
                     for (var i = index + 1; i < offsets.Length; i++)
                         offsets[i]--;
                 }

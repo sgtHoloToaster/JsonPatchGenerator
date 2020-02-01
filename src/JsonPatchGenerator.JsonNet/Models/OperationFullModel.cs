@@ -17,6 +17,6 @@ namespace JsonPatchGenerator.JsonNet.Models
         public object Value { get; set; }
 
         public static explicit operator Operation(OperationFullModel operation) =>
-            new Operation((OperationType)(int)operation.Type, operation.Value, operation.Path, operation.From);
+            new Operation((OperationType)(int)operation.Type, operation.Path, operation.Value, operation.From);
     }
 }

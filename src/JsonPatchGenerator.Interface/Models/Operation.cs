@@ -12,9 +12,11 @@ namespace JsonPatchGenerator.Interface.Models
 
         public string Path { get; set;  }
 
-        public Operation(OperationType type, object value, string path) : this(type, value, path, null) { }
+        public Operation(OperationType type, string path) : this(type, path, null, null) { }
 
-        public Operation(OperationType type, object value, string path, string from)
+        public Operation(OperationType type, string path, object value) : this(type, path, value, null) { }
+
+        public Operation(OperationType type, string path, object value, string from)
         {
             Type = type;
             Value = value;
