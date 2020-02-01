@@ -1,5 +1,5 @@
 ﻿using JsonPatchGenerator.Interface.Models.Abstract;
-using JsonPatchGenerator.JsonNet.Enums;
+using JsonPatchGenerator.Interface.Enums;
 
 namespace JsonPatchGenerator.Interface.Services
 {

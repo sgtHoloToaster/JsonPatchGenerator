@@ -1,4 +1,4 @@
-﻿using JsonPatchGenerator.JsonNet.Enums;
+﻿using JsonPatchGenerator.Interface.Enums;
 
 namespace JsonPatchGenerator.Interface.Models
 {

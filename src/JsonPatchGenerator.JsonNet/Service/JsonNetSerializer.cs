@@ -1,7 +1,7 @@
 ﻿using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Services;
-using JsonPatchGenerator.JsonNet.Enums;
+using JsonPatchGenerator.Interface.Enums;
 using JsonPatchGenerator.JsonNet.Models;
 using JsonPatchGenerator.JsonNet.Service;
 using Newtonsoft.Json;

@@ -3,7 +3,7 @@ using JsonPatchGenerator.Core.Tests.Helpers;
 using JsonPatchGenerator.Core.Tests.Models;
 using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Models.Abstract;
-using JsonPatchGenerator.JsonNet.Enums;
+using JsonPatchGenerator.Interface.Enums;
 using System.Linq;
 using Xunit;
 

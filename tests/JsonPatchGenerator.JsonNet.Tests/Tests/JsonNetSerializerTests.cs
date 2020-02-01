@@ -2,7 +2,7 @@
 using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Json.NET.Serializer.Service;
-using JsonPatchGenerator.JsonNet.Enums;
+using JsonPatchGenerator.Interface.Enums;
 using System.Collections.Generic;
 using Xunit;
 

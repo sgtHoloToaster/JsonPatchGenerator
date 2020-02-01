@@ -2,7 +2,7 @@
 using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Services;
-using JsonPatchGenerator.JsonNet.Enums;
+using JsonPatchGenerator.Interface.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

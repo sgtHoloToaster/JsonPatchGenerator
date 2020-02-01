@@ -1,6 +1,6 @@
 ﻿using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Services;
-using JsonPatchGenerator.JsonNet.Enums;
+using JsonPatchGenerator.Interface.Enums;
 using System;
 
 namespace JsonPatchGenerator.Core.Services

@@ -1,4 +1,4 @@
-﻿namespace JsonPatchGenerator.JsonNet.Enums
+﻿namespace JsonPatchGenerator.Interface.Enums
 {
     public enum OperationType
     {
