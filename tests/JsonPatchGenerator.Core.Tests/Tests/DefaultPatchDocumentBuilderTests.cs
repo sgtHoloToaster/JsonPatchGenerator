@@ -72,6 +72,42 @@ namespace JsonPatchGenerator.Core.Tests.Tests
                 result => assert(expectedOperation, result));
         }
 
+        [Fact]
+        public void TestOperationHasCorrectType() =>
+            TestTestOperation(HasCorrectType);
+
+        [Fact]
+        public void TestOperationHasCorrectValue() =>
+            TestTestOperation(HasCorrectValue);
+
+        [Fact]
+        public void TestOperationHasCorrectPath() =>
+            TestTestOperation(HasCorrectPath);
+
+        private void TestTestOperation(Action<Operation, Operation> assert)
+        {
+            var expectedOperation = new Operation(OperationType.Test, "/someTestPath", "test");
+            TestOperation(
+                builder => builder.AppendTestOperation(expectedOperation.Path, expectedOperation.Value),
+                result => assert(expectedOperation, result));
+        }
+
+        [Fact]
+        public void RemoveOperationHasCorrectType() =>
+            TestRemoveOperation(HasCorrectType);
+
+        [Fact]
+        public void RemoveOperationHasCorrectPath() =>
+            TestRemoveOperation(HasCorrectPath);
+
+        private void TestRemoveOperation(Action<Operation, Operation> assert)
+        {
+            var expectedOperation = new Operation(OperationType.Remove, "/someRemovePath/1");
+            TestOperation(
+                builder => builder.AppendRemoveOperation(expectedOperation.Path),
+                result => assert(expectedOperation, result));
+        }
+
         private void HasCorrectType(Operation expected, Operation result) =>
             Assert.Equal(expected.Type, result.Type);
 
