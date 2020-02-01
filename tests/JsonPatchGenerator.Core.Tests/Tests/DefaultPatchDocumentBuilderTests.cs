@@ -108,6 +108,46 @@ namespace JsonPatchGenerator.Core.Tests.Tests
                 result => assert(expectedOperation, result));
         }
 
+        [Fact]
+        public void MoveOperationHasCorrectType() =>
+            TestMoveOperation(HasCorrectType);
+
+        [Fact]
+        public void MoveOperationHasCorrectPath() =>
+            TestMoveOperation(HasCorrectPath);
+
+        [Fact]
+        public void MoveOperationHasCorrectFrom() =>
+            TestMoveOperation(HasCorrectFrom);
+
+        private void TestMoveOperation(Action<Operation, Operation> assert)
+        {
+            var expectedOperation = new Operation(OperationType.Move, "/someMovePath", null, "/someMoveFrom/from");
+            TestOperation(
+                builder => builder.AppendMoveOperation(expectedOperation.Path, expectedOperation.From),
+                result => assert(expectedOperation, result));
+        }
+
+        [Fact]
+        public void CopyOperationHasCorrectType() =>
+            TestCopyOperation(HasCorrectType);
+
+        [Fact]
+        public void CopyOperationHasCorrectPath() =>
+            TestCopyOperation(HasCorrectPath);
+
+        [Fact]
+        public void CopyOperationHasCorrectFrom() =>
+            TestCopyOperation(HasCorrectFrom);
+
+        private void TestCopyOperation(Action<Operation, Operation> assert)
+        {
+            var expectedOperation = new Operation(OperationType.Copy, "/someCopyPath/3", null, "/someAnother/copyPath/1");
+            TestOperation(
+                builder => builder.AppendCopyOperation(expectedOperation.Path, expectedOperation.From),
+                result => assert(expectedOperation, result));
+        }
+
         private void HasCorrectType(Operation expected, Operation result) =>
             Assert.Equal(expected.Type, result.Type);
 
@@ -115,6 +155,9 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             Assert.Equal(expected.Value, result.Value);
 
         private void HasCorrectPath(Operation expected, Operation result) =>
+            Assert.Equal(expected.Path, result.Path);
+
+        private void HasCorrectFrom(Operation expected, Operation result) =>
             Assert.Equal(expected.Path, result.Path);
 
         private void TestOperation(Action<DefaultPatchDocumentBuilder> appendOperationAction, Action<Operation> assert)
