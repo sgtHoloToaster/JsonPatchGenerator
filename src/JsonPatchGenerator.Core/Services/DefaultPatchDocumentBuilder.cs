@@ -19,12 +19,14 @@ namespace JsonPatchGenerator.Core.Services
 
         public IPatchDocumentBuilder AppendCopyOperation(string path, string from)
         {
-            throw new NotImplementedException();
+            _operations.Add(new Operation(OperationType.Copy, path, null, from));
+            return this;
         }
 
         public IPatchDocumentBuilder AppendMoveOperation(string path, string from)
         {
-            throw new NotImplementedException();
+            _operations.Add(new Operation(OperationType.Move, path, null, from));
+            return this;
         }
 
         public IPatchDocumentBuilder AppendOperation(OperationType operationType, string path, object value, string from)
