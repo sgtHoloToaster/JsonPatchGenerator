@@ -1,6 +1,7 @@
 ﻿using JsonPatchGenerator.Core.Services;
 using JsonPatchGenerator.Core.Tests.Models;
 using JsonPatchGenerator.Interface.Models;
+using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.JsonNet.Enums;
 using System;
 using Xunit;
@@ -72,10 +73,10 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             assert(result, expectedPath, addedValue);
         }
 
-        private void HasAddOperation(DiffDocument result) =>
+        private void HasAddOperation(IPatchDocument result) =>
             HasOperation(result, OperationType.Add);
 
-        private void HasAddOperation(DiffDocument result, string path, object newValue) =>
+        private void HasAddOperation(IPatchDocument result, string path, object newValue) =>
             HasAddOperation(result);
     }
 }

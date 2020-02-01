@@ -1,4 +1,6 @@
-﻿using JsonPatchGenerator.Interface.Models;
+﻿using AutoMoqCore;
+using JsonPatchGenerator.Interface.Models;
+using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Json.NET.Serializer.Service;
 using JsonPatchGenerator.JsonNet.Enums;
 using System.Collections.Generic;
@@ -8,6 +10,8 @@ namespace JsonPatchGenerator.JsonNet.Tests.Tests
 {
     public class JsonNetSerializerTests
     {
+        readonly AutoMoqer _mocker = new AutoMoqer();
+
         [Fact]
         public void CanDeserialize() =>
             TestDeserialization((_, actual) => Assert.NotNull(actual));
@@ -16,7 +20,7 @@ namespace JsonPatchGenerator.JsonNet.Tests.Tests
         public void DeserializationResultHasCorrectValue() =>
             TestDeserialization((expected, actual) => Assert.Equal(expected, actual));
 
-        private delegate void DeserializationAssert(DiffDocument expected, DiffDocument actual);
+        private delegate void DeserializationAssert(IPatchDocument expected, IPatchDocument actual);
         private void TestDeserialization(DeserializationAssert assert)
         {
             // arrange
@@ -31,8 +35,8 @@ namespace JsonPatchGenerator.JsonNet.Tests.Tests
                 new Operation(OperationType.Replace, "/nullableProperty", null)
             };
 
-            var expected = new DiffDocument(expectedOperations);
-            var target = new JsonNetSerializer();
+            var expected = new PatchDocument(expectedOperations);
+            var target = _mocker.Create<JsonNetSerializer>();
 
             // act
             var result = target.Deserialize(json);
@@ -49,7 +53,8 @@ namespace JsonPatchGenerator.JsonNet.Tests.Tests
         public void SerializationResultCanBeDeserialized() =>
             TestSerialization((_, result) =>
             {
-                var deserialized = new JsonNetSerializer().Deserialize(result);
+                var target = _mocker.Create<JsonNetSerializer>();
+                var deserialized = target.Deserialize(result);
                 Assert.NotNull(deserialized);
             });
 
@@ -57,11 +62,12 @@ namespace JsonPatchGenerator.JsonNet.Tests.Tests
         public void SerializationResultHasCorrectValueAfterDeserialization() =>
             TestSerialization((expected, result) =>
             {
-                var deserialized = new JsonNetSerializer().Deserialize(result);
+                var target = _mocker.Create<JsonNetSerializer>();
+                var deserialized = target.Deserialize(result);
                 Assert.Equal(expected, deserialized);
             });
 
-        private delegate void SerializationAssert(DiffDocument document, string json);
+        private delegate void SerializationAssert(IPatchDocument document, string json);
 
         private void TestSerialization(SerializationAssert assert)
         {
@@ -76,8 +82,8 @@ namespace JsonPatchGenerator.JsonNet.Tests.Tests
                 new Operation(OperationType.Replace, "/root/subb", "someVal")
             };
 
-            var model = new DiffDocument(operations);
-            var target = new JsonNetSerializer();
+            var model = new PatchDocument(operations);
+            var target = _mocker.Create<JsonNetSerializer>();
 
             // act
             var result = target.Serialize(model);

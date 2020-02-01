@@ -1,5 +1,6 @@
 ﻿using JsonPatchGenerator.Core.Models;
 using JsonPatchGenerator.Interface.Models;
+using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Services;
 using JsonPatchGenerator.JsonNet.Enums;
 using System;
@@ -11,16 +12,18 @@ namespace JsonPatchGenerator.Core.Services
     public class JsonPatchGeneratorService : IJsonPatchGenerator
     {
         readonly ITypeResolver _typeResolver;
+        readonly IPatchDocumentBuilderFactory _patchDocumentBuilderFactory;
         const string PathSeparator = "/";
         const string ArrayLastPositionLiteral = "-";
 
-        public JsonPatchGeneratorService(ITypeResolver typeResolver)
+        public JsonPatchGeneratorService(ITypeResolver typeResolver, IPatchDocumentBuilderFactory patchDocumentBuilderFactory)
         {
             _typeResolver = typeResolver;
+            _patchDocumentBuilderFactory = patchDocumentBuilderFactory;
         }
 
-        public DiffDocument GetDiff(object first, object second) =>
-            new DiffDocument(GetObjectPatchOperations(first, second, string.Empty));
+        public IPatchDocument GetDiff(object first, object second) =>
+            new PatchDocument(GetObjectPatchOperations(first, second, string.Empty)); // TODO: replace with the abstract builder
 
         private IEnumerable<Operation> GetObjectPatchOperations(object first, object second, string path) =>
             GetObjectPatchOperations(first, second, path, first.GetType());

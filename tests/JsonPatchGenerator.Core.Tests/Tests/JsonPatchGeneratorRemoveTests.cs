@@ -1,6 +1,7 @@
 ﻿using JsonPatchGenerator.Core.Services;
 using JsonPatchGenerator.Core.Tests.Models;
 using JsonPatchGenerator.Interface.Models;
+using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.JsonNet.Enums;
 using System;
 using Xunit;
@@ -44,10 +45,10 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             assert(result, expectedPath, removedValue);
         }
 
-        private void HasRemoveOperation(DiffDocument result) =>
+        private void HasRemoveOperation(IPatchDocument result) =>
             HasOperation(result, OperationType.Remove);
 
-        private void HasRemoveOperation(DiffDocument result, string path, object newValue) =>
+        private void HasRemoveOperation(IPatchDocument result, string path, object newValue) =>
             HasRemoveOperation(result);
     }
 }

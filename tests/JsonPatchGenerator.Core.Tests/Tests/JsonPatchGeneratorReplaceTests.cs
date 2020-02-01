@@ -2,6 +2,7 @@
 using JsonPatchGenerator.Core.Tests.Helpers;
 using JsonPatchGenerator.Core.Tests.Models;
 using JsonPatchGenerator.Interface.Models;
+using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.JsonNet.Enums;
 using System.Linq;
 using Xunit;
@@ -202,10 +203,10 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             Assert.Equal(3, result.Operations.Count());
         }
 
-        private void HasReplaceOperation(DiffDocument result) =>
+        private void HasReplaceOperation(IPatchDocument result) =>
             HasOperation(result, OperationType.Replace);
 
-        private void HasReplaceOperation(DiffDocument result, string path, object newValue) =>
+        private void HasReplaceOperation(IPatchDocument result, string path, object newValue) =>
             HasReplaceOperation(result);
     }
 }

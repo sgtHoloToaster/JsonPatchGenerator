@@ -1,27 +1,28 @@
-﻿using JsonPatchGenerator.Interface.Services;
+﻿using JsonPatchGenerator.Interface.Models.Abstract;
+using JsonPatchGenerator.Interface.Services;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace JsonPatchGenerator.Interface.Models
 {
-    public class DiffDocument
+    public class PatchDocument : IPatchDocument
     {
-        public IEnumerable<Operation> Operations { get; set; }
+        public IEnumerable<Operation> Operations { get; }
 
-        public DiffDocument() { }
+        public PatchDocument() { }
 
-        public DiffDocument(IEnumerable<Operation> operations)
+        public PatchDocument(IEnumerable<Operation> operations)
         {
             Operations = operations;
         }
 
-        public string ToJsonPatch(ISerializer serializer) =>
+        public string Serialize(ISerializer serializer) =>
             serializer.Serialize(this);
 
         public override bool Equals(object obj) =>
-            Equals(obj as DiffDocument);
+            Equals(obj as IPatchDocument);
 
-        public bool Equals(DiffDocument diffDocument)
+        public bool Equals(IPatchDocument diffDocument)
         {
             if (diffDocument == null)
                 return false;

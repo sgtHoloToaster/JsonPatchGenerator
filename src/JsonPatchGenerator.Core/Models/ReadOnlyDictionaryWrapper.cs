@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace JsonPatchGenerator.Core.Models
 {
-    public class ReadOnlyDictionaryWrapper<TKey, TValue, TReadOnlyValue> : IReadOnlyDictionary<TKey, TReadOnlyValue> where TValue : TReadOnlyValue
+    internal class ReadOnlyDictionaryWrapper<TKey, TValue, TReadOnlyValue> : IReadOnlyDictionary<TKey, TReadOnlyValue> where TValue : TReadOnlyValue
     {
         readonly IDictionary<TKey, TValue> _dictionary;
 
