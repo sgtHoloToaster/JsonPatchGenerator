@@ -22,11 +22,13 @@ namespace JsonPatchGenerator.JsonNet.Tests.Tests
             // arrange
             const string json = "[" +
                 "{ \"op\": \"copy\", \"from\": \"/biscuits/0\", \"path\":\"/best_biscuit\" }," +
-                "{ \"op\": \"add\", \"path\": \"/arr/1\", \"value\": \"str\" }" +
+                "{ \"op\": \"add\", \"path\": \"/arr/1\", \"value\": \"str\" }," +
+                "{ \"op\": \"replace\", \"path\": \"/nullableProperty\", \"value\": null }" +
             "]";
             var expectedOperations = new List<Operation> {
                 new Operation(OperationType.Copy, null, "/best_biscuit", "/biscuits/0"),
-                new Operation(OperationType.Add, "str", "/arr/1")
+                new Operation(OperationType.Add, "str", "/arr/1"),
+                new Operation(OperationType.Replace, null, "/nullableProperty")
             };
 
             var expected = new DiffDocument(expectedOperations);
