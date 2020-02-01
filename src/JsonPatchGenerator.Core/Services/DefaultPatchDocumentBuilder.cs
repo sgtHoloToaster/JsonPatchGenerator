@@ -2,11 +2,15 @@
 using JsonPatchGenerator.Interface.Services;
 using JsonPatchGenerator.Interface.Enums;
 using System;
+using JsonPatchGenerator.Interface.Models;
+using System.Collections.Generic;
 
 namespace JsonPatchGenerator.Core.Services
 {
     public class DefaultPatchDocumentBuilder : IPatchDocumentBuilder
     {
+        readonly List<Operation> _operations = new List<Operation>();
+
         public IPatchDocumentBuilder AppendAddOperation<T>(string path, T value)
         {
             throw new NotImplementedException();
@@ -47,9 +51,7 @@ namespace JsonPatchGenerator.Core.Services
             throw new NotImplementedException();
         }
 
-        public IPatchDocument Build()
-        {
-            throw new NotImplementedException();
-        }
+        public IPatchDocument Build() =>
+            new PatchDocument(_operations);
     }
 }
