@@ -3,6 +3,7 @@ using JsonPatchGenerator.Core.Models;
 using JsonPatchGenerator.Core.Services;
 using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Services;
+using JsonPatchGenerator.JsonNet.Enums;
 using Moq;
 using System;
 using System.Linq;

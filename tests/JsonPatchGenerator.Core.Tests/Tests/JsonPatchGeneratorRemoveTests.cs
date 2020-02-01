@@ -1,6 +1,7 @@
 ﻿using JsonPatchGenerator.Core.Services;
 using JsonPatchGenerator.Core.Tests.Models;
 using JsonPatchGenerator.Interface.Models;
+using JsonPatchGenerator.JsonNet.Enums;
 using System;
 using Xunit;
 

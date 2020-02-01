@@ -18,10 +18,10 @@ namespace JsonPatchGenerator.Core.Tests.Models
             var hash = 17;
             unchecked
             {
-                hash *= 23 + ComplexTypeProperty?.GetHashCode() ?? 0;
-                hash *= 23 + SimpleTypeArray?.GetHashCode() ?? 0;
-                hash *= 23 + ComplexTypeArrayProperty?.GetHashCode() ?? 0;
-                hash *= 23 + SimpleTypeProperty.GetHashCode();
+                hash *= 23 + (ComplexTypeProperty?.GetHashCode() ?? 0);
+                hash *= 23 + (SimpleTypeArray?.GetHashCode() ?? 0);
+                hash *= 23 + (ComplexTypeArrayProperty?.GetHashCode() ?? 0);
+                hash *= 23 + (SimpleTypeProperty.GetHashCode());
             }
 
             return hash;

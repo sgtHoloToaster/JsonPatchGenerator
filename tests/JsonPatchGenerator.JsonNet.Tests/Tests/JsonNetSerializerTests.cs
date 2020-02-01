@@ -1,5 +1,6 @@
 ﻿using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Json.NET.Serializer.Service;
+using JsonPatchGenerator.JsonNet.Enums;
 using System.Collections.Generic;
 using Xunit;
 
@@ -20,8 +21,8 @@ namespace JsonPatchGenerator.JsonNet.Tests.Tests
         {
             // arrange
             const string json = "[" +
-                "{ \"op\": \"copy\", \"from\": \"/biscuits/0\", \"path\":\"/best_biscuit\" }" +
-                "{ \"op\": \"add\", \"path\": \"/arr/1\", \"value\": 17 }" +
+                "{ \"op\": \"copy\", \"from\": \"/biscuits/0\", \"path\":\"/best_biscuit\" }," +
+                "{ \"op\": \"add\", \"path\": \"/arr/1\", \"value\": \"str\" }" +
             "]";
             var expectedOperations = new List<Operation> {
                 new Operation(OperationType.Copy, null, "/best_biscuit", "/biscuits/0"),
@@ -65,8 +66,8 @@ namespace JsonPatchGenerator.JsonNet.Tests.Tests
             // arrange
             var operations = new List<Operation>
             {
-                new Operation(OperationType.Test, 41, "/root/sub"),
-                new Operation(OperationType.Add, 42, "/root/sub"),
+                new Operation(OperationType.Test, (long)41, "/root/sub"),
+                new Operation(OperationType.Add, (long)42, "/root/sub"),
                 new Operation(OperationType.Copy, null, "/root/arr/7", "/root/arr/6"),
                 new Operation(OperationType.Move, null, "/root/arr/1", "/root/arr/2"),
                 new Operation(OperationType.Remove, null, "/root/arr/3"),

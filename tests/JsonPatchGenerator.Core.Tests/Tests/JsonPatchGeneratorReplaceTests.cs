@@ -2,6 +2,7 @@
 using JsonPatchGenerator.Core.Tests.Helpers;
 using JsonPatchGenerator.Core.Tests.Models;
 using JsonPatchGenerator.Interface.Models;
+using JsonPatchGenerator.JsonNet.Enums;
 using System.Linq;
 using Xunit;
 

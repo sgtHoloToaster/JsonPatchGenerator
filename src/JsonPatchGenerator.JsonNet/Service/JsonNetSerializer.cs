@@ -1,8 +1,9 @@
 ﻿using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Services;
-using System;
+using JsonPatchGenerator.JsonNet.Models;
+using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace JsonPatchGenerator.Json.NET.Serializer.Service
 {
@@ -10,12 +11,17 @@ namespace JsonPatchGenerator.Json.NET.Serializer.Service
     {
         public string Serialize(DiffDocument diff)
         {
-            throw new NotImplementedException();
+            var operations = diff.Operations.Select(o => new OperationModel(o));
+            return JsonConvert.SerializeObject(operations);
         }
 
         public DiffDocument Deserialize(string json)
         {
-            throw new NotImplementedException();
+            var operations = JsonConvert.DeserializeObject<IEnumerable<OperationModel>>(json)
+                .Select(o => (Operation)o)
+                .ToList();
+
+            return new DiffDocument(operations);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using JsonPatchGenerator.Core.Models;
 using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Services;
+using JsonPatchGenerator.JsonNet.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

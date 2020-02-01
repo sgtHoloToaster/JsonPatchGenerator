@@ -38,11 +38,11 @@ namespace JsonPatchGenerator.Core.Models
 
         public override int GetHashCode()
         {
-            var hash = 13;
+            var hash = 17;
             unchecked
             {
-                hash *= 17 ^ Type?.GetHashCode() ?? 0;
-                hash *= 17 ^ Type?.GetHashCode() ?? 0;
+                hash *= 23 + (Type?.GetHashCode() ?? 0);
+                hash *= 23 + (Type?.GetHashCode() ?? 0);
             }
 
             return hash;
