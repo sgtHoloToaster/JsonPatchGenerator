@@ -38,5 +38,19 @@ namespace JsonPatchGenerator.Interface.Models
                 && Equals(Path, obj.Path)
                 && Equals(From, obj.From);
         }
+
+        public override int GetHashCode()
+        {
+            var hash = 17;
+            unchecked
+            {
+                hash *= 23 + Type.GetHashCode();
+                hash *= 23 + (Value?.GetHashCode() ?? int.MinValue);
+                hash *= 23 + (Path?.GetHashCode() ?? 0);
+                hash *= 23 + (From?.GetHashCode() ?? 0);
+            }
+
+            return hash;
+        }
     }
 }
