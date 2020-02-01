@@ -13,7 +13,8 @@ namespace JsonPatchGenerator.Core.Services
 
         public IPatchDocumentBuilder AppendAddOperation<T>(string path, T value)
         {
-            throw new NotImplementedException();
+            _operations.Add(new Operation(OperationType.Add, path, value));
+            return this;
         }
 
         public IPatchDocumentBuilder AppendCopyOperation(string path, string from)
@@ -43,7 +44,8 @@ namespace JsonPatchGenerator.Core.Services
 
         public IPatchDocumentBuilder AppendReplaceOperation<T>(string path, T value)
         {
-            throw new NotImplementedException();
+            _operations.Add(new Operation(OperationType.Replace, path, value));
+            return this;
         }
 
         public IPatchDocumentBuilder AppendTestOperation<T>(string path, T value)
