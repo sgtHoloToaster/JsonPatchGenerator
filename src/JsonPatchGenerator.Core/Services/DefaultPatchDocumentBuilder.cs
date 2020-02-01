@@ -39,7 +39,8 @@ namespace JsonPatchGenerator.Core.Services
 
         public IPatchDocumentBuilder AppendRemoveOperation(string path)
         {
-            throw new NotImplementedException();
+            _operations.Add(new Operation(OperationType.Remove, path));
+            return this;
         }
 
         public IPatchDocumentBuilder AppendReplaceOperation<T>(string path, T value)
@@ -50,7 +51,8 @@ namespace JsonPatchGenerator.Core.Services
 
         public IPatchDocumentBuilder AppendTestOperation<T>(string path, T value)
         {
-            throw new NotImplementedException();
+            _operations.Add(new Operation(OperationType.Test, path, value));
+            return this;
         }
 
         public IPatchDocument Build() =>
