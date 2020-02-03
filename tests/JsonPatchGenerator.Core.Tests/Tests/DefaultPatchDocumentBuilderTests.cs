@@ -3,6 +3,7 @@ using JsonPatchGenerator.Interface.Enums;
 using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Models.Abstract;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -162,6 +163,26 @@ namespace JsonPatchGenerator.Core.Tests.Tests
 
             // assert
             assert(result.Operations.FirstOrDefault());
+        }
+
+        [Theory]
+        [MemberData(nameof(GetTestOperations))]
+        public void CustomTypeOperationHasCorrectType(Operation operation) =>
+            TestCustomOperation(operation, HasCorrectType);
+
+        private void TestCustomOperation(Operation expectedOperation, Action<Operation, Operation> assert) =>
+            TestOperation(
+                expectedOperation, 
+                (builder, expected) => builder.AppendOperation(expected.Type, expected.Path, expected.Value, expected.From),
+                assert);
+
+        public static IEnumerable<object[]> GetTestOperations()
+        {
+            yield return new object[] { new Operation(OperationType.Add, "/someProperty/1", 42) };
+            yield return new object[] { new Operation(OperationType.Remove, "/unusedProp") };
+            yield return new object[] { new Operation(OperationType.Test, "/need/To/Test", "faaaaa") };
+            yield return new object[] { new Operation(OperationType.Move, "/fromHere", null, "/there") };
+            yield return new object[] { new Operation(OperationType.Replace, "/objProp", new object()) };
         }
     }
 }

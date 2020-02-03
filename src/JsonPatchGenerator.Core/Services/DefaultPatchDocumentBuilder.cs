@@ -29,14 +29,10 @@ namespace JsonPatchGenerator.Core.Services
             return this;
         }
 
-        public IPatchDocumentBuilder AppendOperation(OperationType operationType, string path, object value, string from)
-        {
-            throw new NotImplementedException();
-        }
-
         public IPatchDocumentBuilder AppendOperation<T>(OperationType operationType, string path, T value, string from)
         {
-            throw new NotImplementedException();
+            _operations.Add(new Operation(operationType, path, value, from));
+            return this;
         }
 
         public IPatchDocumentBuilder AppendRemoveOperation(string path)

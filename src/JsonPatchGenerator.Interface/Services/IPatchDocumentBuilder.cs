@@ -17,8 +17,6 @@ namespace JsonPatchGenerator.Interface.Services
 
         IPatchDocumentBuilder AppendReplaceOperation<T>(string path, T value);
 
-        IPatchDocumentBuilder AppendOperation(OperationType operationType, string path, object value, string from);
-
         IPatchDocumentBuilder AppendOperation<T>(OperationType operationType, string path, T value, string from);
 
         IPatchDocument Build();
