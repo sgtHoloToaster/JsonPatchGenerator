@@ -5,12 +5,30 @@ using JsonPatchGenerator.Json.NET.Serializer.Service;
 using JsonPatchGenerator.Interface.Enums;
 using System.Collections.Generic;
 using Xunit;
+using JsonPatchGenerator.Interface.Services;
+using Moq;
 
 namespace JsonPatchGenerator.JsonNet.Tests.Tests
 {
     public class JsonNetSerializerTests
     {
         readonly AutoMoqer _mocker = new AutoMoqer();
+        public JsonNetSerializerTests()
+        {
+            var operations = new List<Operation>();
+            _mocker.GetMock<IPatchDocumentBuilder>()
+                .Setup(m => m.AppendOperation(It.IsAny<OperationType>(), It.IsAny<string>(), It.IsAny<object>(), It.IsAny<string>()))
+                .Callback<OperationType, string, object, string>((type, path, value, from) => operations.Add(new Operation(type, path, value, from)));
+            _mocker.GetMock<IPatchDocumentBuilder>()
+                .Setup(m => m.Build())
+                .Returns(new PatchDocument(operations));
+            _mocker.GetMock<IPatchDocumentBuilderFactory>()
+                .Setup(m => m.Create())
+                .Returns(() => _mocker.Create<IPatchDocumentBuilder>());
+        }
+
+        private JsonNetSerializer GetTarget() =>
+            _mocker.Create<JsonNetSerializer>();
 
         [Fact]
         public void CanDeserialize() =>
@@ -36,7 +54,7 @@ namespace JsonPatchGenerator.JsonNet.Tests.Tests
             };
 
             var expected = new PatchDocument(expectedOperations);
-            var target = _mocker.Create<JsonNetSerializer>();
+            var target = GetTarget();
 
             // act
             var result = target.Deserialize(json);
@@ -53,7 +71,7 @@ namespace JsonPatchGenerator.JsonNet.Tests.Tests
         public void SerializationResultCanBeDeserialized() =>
             TestSerialization((_, result) =>
             {
-                var target = _mocker.Create<JsonNetSerializer>();
+                var target = GetTarget();
                 var deserialized = target.Deserialize(result);
                 Assert.NotNull(deserialized);
             });
@@ -62,7 +80,7 @@ namespace JsonPatchGenerator.JsonNet.Tests.Tests
         public void SerializationResultHasCorrectValueAfterDeserialization() =>
             TestSerialization((expected, result) =>
             {
-                var target = _mocker.Create<JsonNetSerializer>();
+                var target = GetTarget();
                 var deserialized = target.Deserialize(result);
                 Assert.Equal(expected, deserialized);
             });
@@ -83,7 +101,7 @@ namespace JsonPatchGenerator.JsonNet.Tests.Tests
             };
 
             var model = new PatchDocument(operations);
-            var target = _mocker.Create<JsonNetSerializer>();
+            var target = GetTarget();
 
             // act
             var result = target.Serialize(model);
