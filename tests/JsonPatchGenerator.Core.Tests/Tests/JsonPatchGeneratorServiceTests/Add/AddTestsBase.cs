@@ -1,26 +1,28 @@
 ﻿using JsonPatchGenerator.Core.Services;
 using JsonPatchGenerator.Core.Tests.Models;
-using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Enums;
 using System;
-using Xunit;
 
-namespace JsonPatchGenerator.Core.Tests.Tests
+namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
 {
-    public class JsonPatchGeneratorAddTests : JsonPatchGeneratorTests
-    {
-        public JsonPatchGeneratorAddTests() : base() { }
+    using static Helper;
 
-        [Fact]
+    public class AddTestsBase
+    {
+        readonly Func<JsonPatchGeneratorService> _getTarget;
+
+        public AddTestsBase(Func<JsonPatchGeneratorService> getTarget)
+        {
+            _getTarget = getTarget;
+        }
+
         public void SupportSimpleTypeArrayAddOperation() =>
             TestSimpleTypeArrayAddOperation(HasAddOperation);
 
-        [Fact]
         public void SimpleTypeArrayAddOperationHasCorrectPath() =>
             TestSimpleTypeArrayAddOperation(HasCorrectPath);
 
-        [Fact]
         public void SimpleTypeArrayAddOperationHasCorrectValue() =>
             TestSimpleTypeArrayAddOperation(HasCorrectValue);
 
@@ -32,7 +34,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             var second = new ComplexPropertiesModel { SimpleTypeArray = new[] { 1, 2, 3, addedValue } };
             var expectedPath = $"/{nameof(ComplexPropertiesModel.SimpleTypeArray)}/-";
 
-            var target = Mocker.Create<JsonPatchGeneratorService>();
+            var target = _getTarget();
 
             // act
             var result = target.GetDiff(first, second);
@@ -41,19 +43,15 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             assert(result, expectedPath, addedValue);
         }
 
-        [Fact]
         public void SupportSimpleTypeArrayIndexBasedAddOperation() =>
             TestSimpleTypeArrayIndexBasedAddOperation(HasAddOperation);
 
-        [Fact]
         public void SimpleTypeArrayIndexBasedAddDoesntProduceExtraOperations() =>
             TestSimpleTypeArrayIndexBasedAddOperation(HasNoExtraOperations);
 
-        [Fact]
         public void SimpleTypeArrayIndexBasedAddOperationHasCorrectValue() =>
             TestSimpleTypeArrayIndexBasedAddOperation(HasCorrectValue);
 
-        [Fact]
         public void SimpleTypeArrayIndexBasedAddOperationHasCorrectPath() =>
             TestSimpleTypeArrayIndexBasedAddOperation(HasCorrectPath);
 
@@ -64,7 +62,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             var first = new ComplexPropertiesModel { SimpleTypeArray = new[] { 1, 3, 4 } };
             var second = new ComplexPropertiesModel { SimpleTypeArray = new[] { 1, addedValue, 3, 4 } };
             var expectedPath = $"/{nameof(ComplexPropertiesModel.SimpleTypeArray)}/{Array.IndexOf(second.SimpleTypeArray, addedValue)}";
-            var target = Mocker.Create<JsonPatchGeneratorService>();
+            var target = _getTarget();
 
             // act
             var result = target.GetDiff(first, second);

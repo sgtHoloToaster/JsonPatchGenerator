@@ -1,34 +1,34 @@
 ﻿using JsonPatchGenerator.Core.Services;
 using JsonPatchGenerator.Core.Tests.Models;
-using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Enums;
 using System;
-using Xunit;
 
-namespace JsonPatchGenerator.Core.Tests.Tests
+namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
 {
-    public class JsonPatchGeneratorMoveTests : JsonPatchGeneratorTests
-    {
-        public JsonPatchGeneratorMoveTests() : base() { }
+    using static Helper;
 
-        [Fact]
+    public class MoveTestsBase
+    {
+        readonly Func<JsonPatchGeneratorService> _getTarget;
+
+        public MoveTestsBase(Func<JsonPatchGeneratorService> getTarget)
+        {
+            _getTarget = getTarget;
+        }
+
         public void SupportSimpleTypeArrayMoveOperation() =>
             TestSimpleTypeArrayMoveOperation(HasMoveOperation);
 
-        [Fact]
         public void SimpleTypeArrayMoveOperationHasCorrectPath() =>
             TestSimpleTypeArrayMoveOperation(HasCorrectPath);
 
-        [Fact]
         public void SimpleTypeArrayMoveOperationHasCorrectValue() =>
             TestSimpleTypeArrayMoveOperation(HasCorrectValue);
 
-        [Fact]
         public void SimpleTypeArrayMoveOperationHasCorrectFrom() =>
             TestSimpleTypeArrayMoveOperation(HasCorrectFrom);
 
-        [Fact]
         public void SimpleTypeArrayMoveDoesntProduceExtraOperations() =>
             TestSimpleTypeArrayMoveOperation(HasNoExtraOperations);
 
@@ -43,7 +43,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             var expectedFrom = GetValuePath(first);
             var expectedPath = GetValuePath(second);
 
-            var target = Mocker.Create<JsonPatchGeneratorService>();
+            var target = _getTarget();
 
             // act
             var result = target.GetDiff(first, second);

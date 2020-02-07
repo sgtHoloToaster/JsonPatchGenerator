@@ -1,31 +1,33 @@
 ﻿using JsonPatchGenerator.Core.Services;
 using JsonPatchGenerator.Core.Tests.Helpers;
 using JsonPatchGenerator.Core.Tests.Models;
-using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Enums;
 using System.Linq;
 using Xunit;
+using static JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests.Helper;
+using System;
 
-namespace JsonPatchGenerator.Core.Tests.Tests
+namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
 {
-    public class JsonPatchGeneratorReplaceTests : JsonPatchGeneratorTests
+    public class ReplaceTestsBase
     {
-        public JsonPatchGeneratorReplaceTests() : base() { }
+        readonly Func<JsonPatchGeneratorService> _getTarget;
 
-        [Fact]
+        public ReplaceTestsBase(Func<JsonPatchGeneratorService> getTarget) 
+        {
+            _getTarget = getTarget;
+        }
+
         public void SupportReplaceOperationForSimpleTypes() =>
             TestReplaceSimpleTypeOperation(HasReplaceOperation);
 
-        [Fact]
         public void ReplaceOperationHasCorrectValue() =>
             TestReplaceSimpleTypeOperation(HasCorrectValue);
 
-        [Fact]
         public void ReplaceOperationHasCorrectPath() =>
             TestReplaceSimpleTypeOperation(HasCorrectPath);
 
-        [Fact]
         public void DontCreateExtraOperationsOnReplace() =>
             TestReplaceSimpleTypeOperation(HasNoExtraOperations);
 
@@ -41,7 +43,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             var path = $"/{propertyName}";
             var changedValue = value + 1;
             property.SetValue(second, changedValue);
-            var target = Mocker.Create<JsonPatchGeneratorService>();
+            var target = _getTarget();
 
             // act
             var result = target.GetDiff(first, second);
@@ -50,11 +52,9 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             assert(result, path, changedValue);
         }
 
-        [Fact]
         public void SupportReplaceOperationsForNestedObjects() =>
             TestComplexTypeNestedPropertiesReplace(HasReplaceOperation);
 
-        [Fact]
         public void CreateCorrectPathForNestedPropertiesOnReplace() =>
             TestComplexTypeNestedPropertiesReplace(HasCorrectPath);
 
@@ -70,7 +70,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             var second = new ComplexPropertiesModel();
             var newValue = initValue + 551;
             PropertiesPathfinder.SetValue(second, path, newValue);
-            var target = Mocker.Create<JsonPatchGeneratorService>();
+            var target = _getTarget();
 
             // act
             var result = target.GetDiff(first, second);
@@ -79,14 +79,13 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             assert(result, path, newValue);
         }
 
-        [Fact]
         public void ReplaceOperationForComplexPropertiesHasCorrectValue()
         {
             // arrange
             var first = new ComplexPropertiesModel();
             var value = new ComplexPropertiesModel { SimpleTypeProperty = 123 };
             var second = new ComplexPropertiesModel { ComplexTypeProperty = value };
-            var target = Mocker.Create<JsonPatchGeneratorService>();
+            var target = _getTarget();
 
             // act
             var result = target.GetDiff(first, second);
@@ -95,13 +94,12 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             HasCorrectValue(result, value);
         }
 
-        [Fact]
         public void SupportReplacingValuesWithNull()
         {
             // arrange
             var first = new ComplexPropertiesModel { ComplexTypeProperty = new ComplexPropertiesModel { SimpleTypeProperty = 777 } };
             var second = new ComplexPropertiesModel();
-            var target = Mocker.Create<JsonPatchGeneratorService>();
+            var target = _getTarget();
 
             // act
             var result = target.GetDiff(first, second);
@@ -110,15 +108,12 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             HasReplaceOperation(result);
         }
 
-        [Fact]
         public void SupportSimpleTypeArrayElementReplacing() =>
             TestSimpleTypeArrayElementReplacing(HasReplaceOperation);
 
-        [Fact]
         public void SimpleTypeArrayElementReplaceOperationHasCorrectValue() =>
             TestSimpleTypeArrayElementReplacing(HasCorrectValue);
 
-        [Fact]
         public void ArrayElementReplaceOperationHasCorrectPath() =>
             TestSimpleTypeArrayElementReplacing(HasCorrectPath);
 
@@ -132,7 +127,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             var second = new ComplexPropertiesModel { SimpleTypeArray = initialArray.Clone() as int[] };
             var changedValuePath = $"/{nameof(ComplexPropertiesModel.SimpleTypeArray)}/{changedValueIndex}";
             PropertiesPathfinder.SetValue(second, changedValuePath, newValue);
-            var target = Mocker.Create<JsonPatchGeneratorService>();
+            var target = _getTarget();
 
             // act
             var result = target.GetDiff(first, second);
@@ -141,15 +136,12 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             assert(result, changedValuePath, newValue);
         }
 
-        [Fact]
         public void SupportReplacingPropertiesOfArrayElement() =>
             TestComplexTypeArrayElementPropertyReplace(HasReplaceOperation);
 
-        [Fact]
         public void ArrayElementPropertyReplaceOperationHasCorrectValue() =>
             TestComplexTypeArrayElementPropertyReplace(HasCorrectValue);
 
-        [Fact]
         public void ArrayElementPropertyReplaceOperationHasCorrectPath() =>
             TestComplexTypeArrayElementPropertyReplace(HasCorrectPath);
 
@@ -158,7 +150,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             // arrange
             var initialModel = new ComplexPropertiesModel
             {
-                ComplexTypeArrayProperty = new ComplexPropertiesModel[] 
+                ComplexTypeArrayProperty = new ComplexPropertiesModel[]
                 {
                     new ComplexPropertiesModel(),
                     new ComplexPropertiesModel { SimpleTypeProperty = 55 },
@@ -172,7 +164,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             const int changedValueIndex = 1;
             var changedValuePath = $"/{nameof(ComplexPropertiesModel.ComplexTypeArrayProperty)}/{changedValueIndex}/{nameof(ComplexPropertiesModel.SimpleTypeProperty)}";
             PropertiesPathfinder.SetValue(second, changedValuePath, newValue);
-            var target = Mocker.Create<JsonPatchGeneratorService>();
+            var target = _getTarget();
 
             // act
             var result = target.GetDiff(first, second);
@@ -181,7 +173,6 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             assert(result, changedValuePath, newValue);
         }
 
-        [Fact]
         public void CanHandleMultipleDifferences()
         {
             // arrange
@@ -193,7 +184,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
                 IntProperty = 13
             };
 
-            var target = Mocker.Create<JsonPatchGeneratorService>();
+            var target = _getTarget();
 
             // act
             var result = target.GetDiff(first, second);

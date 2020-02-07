@@ -1,30 +1,31 @@
 ﻿using JsonPatchGenerator.Core.Services;
 using JsonPatchGenerator.Core.Tests.Models;
-using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Enums;
 using System;
-using Xunit;
 
-namespace JsonPatchGenerator.Core.Tests.Tests
+namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
 {
-    public class JsonPatchGeneratorRemoveTests : JsonPatchGeneratorTests
-    {
-        public JsonPatchGeneratorRemoveTests() : base() { }
+    using static Helper;
 
-        [Fact]
+    public class RemoveTestsBase
+    {
+        readonly Func<JsonPatchGeneratorService> _getTarget;
+
+        public RemoveTestsBase(Func<JsonPatchGeneratorService> getTarget) 
+        {
+            _getTarget = getTarget;
+        }
+
         public void SupportSimpleTypeArrayRemoveOperation() =>
             TestSimpleTypeArrayRemoveOperation(HasRemoveOperation);
 
-        [Fact]
         public void SimpleTypeArrayRemoveOperationHasCorrectPath() =>
             TestSimpleTypeArrayRemoveOperation(HasCorrectPath);
 
-        [Fact]
         public void SimpleTypeArrayRemoveOperationHasCorrectValue() =>
             TestSimpleTypeArrayRemoveOperation(HasCorrectValue);
 
-        [Fact]
         public void SimpleTypeArrayMoveDoesntProduceExtraOperations() =>
             TestSimpleTypeArrayRemoveOperation(HasNoExtraOperations);
 
@@ -32,11 +33,10 @@ namespace JsonPatchGenerator.Core.Tests.Tests
         {
             // arrange
             const int removedValue = 2;
-            var first = new ComplexPropertiesModel { SimpleTypeArray = new[] { 1, removedValue, 3, 4,  } };
+            var first = new ComplexPropertiesModel { SimpleTypeArray = new[] { 1, removedValue, 3, 4, } };
             var second = new ComplexPropertiesModel { SimpleTypeArray = new[] { 1, 3, 4 } };
             var expectedPath = $"/{nameof(ComplexPropertiesModel.SimpleTypeArray)}/{Array.IndexOf(first.SimpleTypeArray, removedValue)}";
-
-            var target = Mocker.Create<JsonPatchGeneratorService>();
+            var target = _getTarget();
 
             // act
             var result = target.GetDiff(first, second);
