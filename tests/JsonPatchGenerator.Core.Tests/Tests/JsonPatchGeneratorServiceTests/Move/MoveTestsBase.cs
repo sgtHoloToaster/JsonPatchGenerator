@@ -49,7 +49,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
             var result = target.GetDiff(first, second);
 
             // assert
-            assert(result, expectedPath, movedValue, expectedFrom);
+            assert(result, expectedPath, null, expectedFrom);
         }
 
         private void HasMoveOperation(IPatchDocument result) =>

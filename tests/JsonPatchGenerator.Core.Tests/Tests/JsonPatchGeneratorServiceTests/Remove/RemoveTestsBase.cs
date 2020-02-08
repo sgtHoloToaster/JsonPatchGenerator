@@ -42,7 +42,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
             var result = target.GetDiff(first, second);
 
             // assert
-            assert(result, expectedPath, removedValue);
+            assert(result, expectedPath, null);
         }
 
         private void HasRemoveOperation(IPatchDocument result) =>
