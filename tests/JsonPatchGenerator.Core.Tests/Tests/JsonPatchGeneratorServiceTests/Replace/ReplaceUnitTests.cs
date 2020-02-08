@@ -9,6 +9,8 @@ using Xunit;
 
 namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
 {
+    using static UnitTestsHelper;
+
     public class ReplaceUnitTests : IReplaceTests
     {
         readonly AutoMoqer _mocker = new AutoMoqer();
@@ -16,6 +18,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
 
         public ReplaceUnitTests()
         {
+            MockCommonDependencies(_mocker);
             var operations = new List<Operation>();
             _mocker.GetMock<IPatchDocumentBuilder>()
                 .Setup(m => m.AppendReplaceOperation(It.IsAny<string>(), It.IsAny<object>()))
@@ -23,9 +26,6 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
             _mocker.GetMock<IPatchDocumentBuilder>()
                 .Setup(m => m.Build())
                 .Returns(new PatchDocument(operations));
-            _mocker.GetMock<IPatchDocumentBuilderFactory>()
-                .Setup(m => m.Create())
-                .Returns(() => _mocker.Create<IPatchDocumentBuilder>());
             _base = new ReplaceTestsBase(GetTarget);
         }
 

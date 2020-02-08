@@ -5,7 +5,7 @@ using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Enums;
 using System.Linq;
 using Xunit;
-using static JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests.Helper;
+using static JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests.BaseTestsHelper;
 using System;
 
 namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests

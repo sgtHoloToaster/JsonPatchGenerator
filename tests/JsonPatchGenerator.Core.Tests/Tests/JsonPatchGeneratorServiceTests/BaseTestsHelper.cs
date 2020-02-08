@@ -5,7 +5,7 @@ using Xunit;
 
 namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
 {
-    public class Helper
+    public class BaseTestsHelper
     {
         public delegate void AssertAction(IPatchDocument result, string path, object newValue);
         public delegate void MoveAssertAction(IPatchDocument result, string path, object value, string from);

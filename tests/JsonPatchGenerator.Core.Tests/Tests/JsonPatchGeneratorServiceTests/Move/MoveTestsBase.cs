@@ -6,7 +6,7 @@ using System;
 
 namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
 {
-    using static Helper;
+    using static BaseTestsHelper;
 
     public class MoveTestsBase
     {
