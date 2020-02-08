@@ -1,10 +1,7 @@
 ﻿using JsonPatchGenerator.Core.Models;
-using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Services;
-using JsonPatchGenerator.Interface.Enums;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace JsonPatchGenerator.Core.Services
@@ -25,39 +22,39 @@ namespace JsonPatchGenerator.Core.Services
         public IPatchDocument GetDiff(object first, object second)
         {
             var builder = _patchDocumentBuilderFactory.Create();
-            GetObjectPatchOperations(builder, first, second, string.Empty);
+            AppendObjectPatchOperations(builder, first, second, string.Empty);
             return builder.Build();
         }
 
-        private void GetObjectPatchOperations(IPatchDocumentBuilder builder, object first, object second, string path) =>
-            GetObjectPatchOperations(builder, first, second, path, first.GetType());
+        private void AppendObjectPatchOperations(IPatchDocumentBuilder builder, object first, object second, string path) =>
+            AppendObjectPatchOperations(builder, first, second, path, first.GetType());
 
-        private void GetObjectPatchOperations(IPatchDocumentBuilder builder, object first, object second, string path, Type type)
+        private void AppendObjectPatchOperations(IPatchDocumentBuilder builder, object first, object second, string path, Type type)
         {
             var properties = _typeResolver.GetProperties(type);
             foreach (var property in properties)
             {
                 var firstValue = property.GetValue(first, _typeResolver);
                 var secondValue = property.GetValue(second, _typeResolver);
-                GetValuesDiff(builder, firstValue, secondValue, ConcatPath(path, property.Name), property.Type);
+                AppendPatchOperations(builder, firstValue, secondValue, ConcatPath(path, property.Name), property.Type);
             }
         }
 
-        private void GetValuesDiff(IPatchDocumentBuilder builder, object firstValue, object secondValue, string path, Type propertyType)
+        private void AppendPatchOperations(IPatchDocumentBuilder builder, object firstValue, object secondValue, string path, Type propertyType)
         {
             if (firstValue != null && secondValue != null && !propertyType.IsPrimitive)
             {
                 if (propertyType.IsArray)
-                    GetArrayPatchOperations(builder, firstValue as Array, secondValue as Array, path, propertyType);
+                    AppendArrayPatchOperations(builder, firstValue as Array, secondValue as Array, path, propertyType);
                 else
-                    GetObjectPatchOperations(builder, firstValue, secondValue, path, propertyType);
+                    AppendObjectPatchOperations(builder, firstValue, secondValue, path, propertyType);
             }
             else if (!ReferenceEquals(firstValue, secondValue) && (!firstValue?.Equals(secondValue) ?? true))
                 builder.AppendReplaceOperation(path, secondValue);
         }
 
         //TODO: refactor
-        private void GetArrayPatchOperations(IPatchDocumentBuilder builder, Array firstArray, Array secondArray, string path, Type propertyType)
+        private void AppendArrayPatchOperations(IPatchDocumentBuilder builder, Array firstArray, Array secondArray, string path, Type propertyType)
         {
             var firstArrayHashCodes = new ArrayHashIndexMap(firstArray, _typeResolver.GetHashCode);
             var secondArrayHashCodes = new ArrayHashIndexMap(secondArray, _typeResolver.GetHashCode);
@@ -93,7 +90,7 @@ namespace JsonPatchGenerator.Core.Services
                     var secondArrayValue = secondArray.GetValue(index);
                     var currentPath = ConcatPath(path, index);
                     var elementType = propertyType.GetElementType();
-                    GetValuesDiff(builder, firstArrayValue, secondArrayValue, currentPath, elementType);
+                    AppendPatchOperations(builder, firstArrayValue, secondArrayValue, currentPath, elementType);
                 }
                 else if (firstArrayHashCodes.Map.TryGetValue(secondArrayHashCodes[index], out var indexes))
                 {
