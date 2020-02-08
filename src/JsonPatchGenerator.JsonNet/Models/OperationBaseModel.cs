@@ -1,4 +1,5 @@
-﻿using JsonPatchGenerator.Interface.Models;
+﻿using JsonPatchGenerator.Interface.Enums;
+using JsonPatchGenerator.Interface.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -8,7 +9,7 @@ namespace JsonPatchGenerator.JsonNet.Models
     {
         [JsonProperty(PropertyName = "op")]
         [JsonConverter(typeof(StringEnumConverter))]
-        public OperationTypeEnum Type { get; set; }
+        public OperationType Type { get; set; }
 
         [JsonProperty(PropertyName = "path")]
         public string Path { get; set; }
@@ -17,7 +18,7 @@ namespace JsonPatchGenerator.JsonNet.Models
 
         public OperationBaseModel(Operation operation)
         {
-            Type = (OperationTypeEnum)(int)operation.Type;
+            Type = operation.Type;
             Path = operation.Path;
         }
     }

@@ -1,8 +1,8 @@
 ﻿using System.Runtime.Serialization;
 
-namespace JsonPatchGenerator.Interface.Models
+namespace JsonPatchGenerator.Interface.Enums
 {
-    internal enum OperationTypeEnum
+    public enum OperationType
     {
         [EnumMember(Value = "add")]
         Add     = 0,
