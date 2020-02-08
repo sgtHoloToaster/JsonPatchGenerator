@@ -1,5 +1,4 @@
-﻿using JsonPatchGenerator.Interface.Models;
-using JsonPatchGenerator.Interface.Models.Abstract;
+﻿using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Services;
 using JsonPatchGenerator.Interface.Enums;
 using JsonPatchGenerator.JsonNet.Models;
@@ -8,7 +7,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace JsonPatchGenerator.Json.NET.Serializer.Service
+namespace JsonPatchGenerator.JsonNet.Serializer.Service
 {
     public class JsonNetSerializer : ISerializer
     {

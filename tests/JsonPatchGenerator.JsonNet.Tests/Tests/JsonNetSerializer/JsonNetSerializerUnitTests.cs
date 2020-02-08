@@ -1,6 +1,6 @@
 ﻿using AutoMoqCore;
 using JsonPatchGenerator.Interface.Models;
-using JsonPatchGenerator.Json.NET.Serializer.Service;
+using JsonPatchGenerator.JsonNet.Serializer.Service;
 using JsonPatchGenerator.Interface.Enums;
 using System.Collections.Generic;
 using Xunit;

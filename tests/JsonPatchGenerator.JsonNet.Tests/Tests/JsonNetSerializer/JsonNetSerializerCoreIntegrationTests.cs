@@ -1,5 +1,5 @@
 ﻿using AutoMoqCore;
-using JsonPatchGenerator.Json.NET.Serializer.Service;
+using JsonPatchGenerator.JsonNet.Serializer.Service;
 using Xunit;
 using JsonPatchGenerator.Core.Services;
 
