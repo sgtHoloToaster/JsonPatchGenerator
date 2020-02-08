@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace JsonPatchGenerator.Core.Services
 {
-    public class JsonPatchGeneratorService : IJsonPatchGenerator
+    public class JsonPatchGeneratorService : IJsonPatchGenerator<IPatchDocument>
     {
         readonly ITypeResolver _typeResolver;
         readonly IPatchDocumentBuilderFactory _patchDocumentBuilderFactory;

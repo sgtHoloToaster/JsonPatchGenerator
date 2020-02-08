@@ -2,8 +2,8 @@
 
 namespace JsonPatchGenerator.Interface.Services
 {
-    public interface IJsonPatchGenerator
+    public interface IJsonPatchGenerator<T>
     {
-        IPatchDocument GetDiff(object first, object second);
+        T GetDiff(object first, object second);
     }
 }
