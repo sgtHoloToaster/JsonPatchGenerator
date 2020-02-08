@@ -1,5 +1,4 @@
 ﻿using JsonPatchGenerator.AspNetCore.Abstract;
-using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Services;
 using Microsoft.AspNetCore.JsonPatch.Operations;
 using System;
@@ -46,7 +45,7 @@ namespace JsonPatchGenerator.AspNetCore
             throw new NotImplementedException();
         }
 
-        public IPatchDocument Build()
+        public IJsonPatchDocumentWrapper Build()
         {
             throw new NotImplementedException();
         }
