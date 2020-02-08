@@ -3,21 +3,21 @@ using JsonPatchGenerator.Interface.Enums;
 
 namespace JsonPatchGenerator.Interface.Services
 {
-    public interface IPatchDocumentBuilder
+    public interface IPatchDocumentBuilder<out TPatchDocument> where TPatchDocument : IPatchDocument
     {
-        IPatchDocumentBuilder AppendAddOperation<T>(string path, T value);
+        IPatchDocumentBuilder<TPatchDocument> AppendAddOperation<T>(string path, T value);
 
-        IPatchDocumentBuilder AppendRemoveOperation(string path);
+        IPatchDocumentBuilder<TPatchDocument> AppendRemoveOperation(string path);
 
-        IPatchDocumentBuilder AppendTestOperation<T>(string path, T value);
+        IPatchDocumentBuilder<TPatchDocument> AppendTestOperation<T>(string path, T value);
 
-        IPatchDocumentBuilder AppendCopyOperation(string path, string from);
+        IPatchDocumentBuilder<TPatchDocument> AppendCopyOperation(string path, string from);
 
-        IPatchDocumentBuilder AppendMoveOperation(string path, string from);
+        IPatchDocumentBuilder<TPatchDocument> AppendMoveOperation(string path, string from);
 
-        IPatchDocumentBuilder AppendReplaceOperation<T>(string path, T value);
+        IPatchDocumentBuilder<TPatchDocument> AppendReplaceOperation<T>(string path, T value);
 
-        IPatchDocumentBuilder AppendOperation<T>(OperationType operationType, string path, T value, string from);
+        IPatchDocumentBuilder<TPatchDocument> AppendOperation<T>(OperationType operationType, string path, T value, string from);
 
         IPatchDocument Build();
     }

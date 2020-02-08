@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Xunit;
 using JsonPatchGenerator.Interface.Services;
 using Moq;
+using JsonPatchGenerator.Interface.Models.Abstract;
 
 namespace JsonPatchGenerator.JsonNet.Tests.Tests
 {
@@ -18,15 +19,15 @@ namespace JsonPatchGenerator.JsonNet.Tests.Tests
         {
             _testsBase = new JsonNetSerializerTestsBase(GetTarget);
             var operations = new List<Operation>();
-            _mocker.GetMock<IPatchDocumentBuilder>()
+            _mocker.GetMock<IPatchDocumentBuilder<IPatchDocument>>()
                 .Setup(m => m.AppendOperation(It.IsAny<OperationType>(), It.IsAny<string>(), It.IsAny<object>(), It.IsAny<string>()))
                 .Callback<OperationType, string, object, string>((type, path, value, from) => operations.Add(new Operation(type, path, value, from)));
-            _mocker.GetMock<IPatchDocumentBuilder>()
+            _mocker.GetMock<IPatchDocumentBuilder<IPatchDocument>>()
                 .Setup(m => m.Build())
                 .Returns(new PatchDocument(operations));
-            _mocker.GetMock<IPatchDocumentBuilderFactory>()
+            _mocker.GetMock<IPatchDocumentBuilderFactory<IPatchDocument>>()
                 .Setup(m => m.Create())
-                .Returns(() => _mocker.Create<IPatchDocumentBuilder>());
+                .Returns(() => _mocker.Create<IPatchDocumentBuilder<IPatchDocument>>());
         }
 
         private JsonNetSerializer GetTarget() =>

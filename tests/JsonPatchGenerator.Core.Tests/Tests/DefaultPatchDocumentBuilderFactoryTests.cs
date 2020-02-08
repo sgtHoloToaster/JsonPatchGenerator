@@ -1,4 +1,5 @@
 ﻿using JsonPatchGenerator.Core.Services;
+using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Services;
 using System;
 using Xunit;
@@ -15,7 +16,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
         public void CreatedBuilderHasCorrectType() =>
             TestBuilderCreate(result => Assert.True(result is DefaultPatchDocumentBuilder));
 
-        private void TestBuilderCreate(Action<IPatchDocumentBuilder> assert)
+        private void TestBuilderCreate(Action<IPatchDocumentBuilder<IPatchDocument>> assert)
         {
             // arrange
             var target = new DefaultPatchDocumentBuilderFactory();

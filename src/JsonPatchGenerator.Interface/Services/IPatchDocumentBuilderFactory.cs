@@ -1,7 +1,9 @@
-﻿namespace JsonPatchGenerator.Interface.Services
+﻿using JsonPatchGenerator.Interface.Models.Abstract;
+
+namespace JsonPatchGenerator.Interface.Services
 {
-    public interface IPatchDocumentBuilderFactory
+    public interface IPatchDocumentBuilderFactory<out TPatchDocument> where TPatchDocument : IPatchDocument
     {
-        IPatchDocumentBuilder Create();
+        IPatchDocumentBuilder<TPatchDocument> Create();
     }
 }

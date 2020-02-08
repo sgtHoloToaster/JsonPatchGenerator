@@ -2,6 +2,7 @@
 using JsonPatchGenerator.Core.Services;
 using JsonPatchGenerator.Interface.Enums;
 using JsonPatchGenerator.Interface.Models;
+using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Services;
 using Moq;
 using System.Collections.Generic;
@@ -20,10 +21,10 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
         {
             MockCommonDependencies(_mocker);        
             var operations = new List<Operation>();
-            _mocker.GetMock<IPatchDocumentBuilder>()
+            _mocker.GetMock<IPatchDocumentBuilder<IPatchDocument>>()
                 .Setup(m => m.AppendRemoveOperation(It.IsAny<string>()))
                 .Callback<string>(path => operations.Add(new Operation(OperationType.Remove, path)));
-            _mocker.GetMock<IPatchDocumentBuilder>()
+            _mocker.GetMock<IPatchDocumentBuilder<IPatchDocument>>()
                 .Setup(m => m.Build())
                 .Returns(new PatchDocument(operations));
             _base = new RemoveTestsBase(GetTarget);

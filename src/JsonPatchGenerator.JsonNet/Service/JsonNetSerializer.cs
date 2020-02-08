@@ -12,9 +12,9 @@ namespace JsonPatchGenerator.JsonNet.Serializer.Service
     public class JsonNetSerializer : ISerializer
     {
         readonly OperationsFactory _operationsFactory = new OperationsFactory();
-        readonly IPatchDocumentBuilderFactory _patchDocumentBuilderFactory;
+        readonly IPatchDocumentBuilderFactory<IPatchDocument> _patchDocumentBuilderFactory;
 
-        public JsonNetSerializer(IPatchDocumentBuilderFactory patchDocumentBuilderFactory)
+        public JsonNetSerializer(IPatchDocumentBuilderFactory<IPatchDocument> patchDocumentBuilderFactory)
         {
             _patchDocumentBuilderFactory = patchDocumentBuilderFactory;
         }

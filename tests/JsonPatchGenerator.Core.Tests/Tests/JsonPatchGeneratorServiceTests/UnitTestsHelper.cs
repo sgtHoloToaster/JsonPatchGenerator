@@ -1,5 +1,6 @@
 ﻿using AutoMoqCore;
 using JsonPatchGenerator.Core.Models;
+using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Services;
 using Moq;
 using System;
@@ -13,9 +14,9 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
     {
         public static void MockCommonDependencies(AutoMoqer mocker)
         {
-            mocker.GetMock<IPatchDocumentBuilderFactory>()
+            mocker.GetMock<IPatchDocumentBuilderFactory<IPatchDocument>>()
                 .Setup(m => m.Create())
-                .Returns(() => mocker.Create<IPatchDocumentBuilder>());
+                .Returns(() => mocker.Create<IPatchDocumentBuilder<IPatchDocument>>());
             mocker.GetMock<ITypeResolver>()
                 .Setup(m => m.GetProperties(It.IsAny<Type>()))
                 .Returns<Type>(type => type.GetProperties().Select(p => new ObjectProperty(p)).ToList());

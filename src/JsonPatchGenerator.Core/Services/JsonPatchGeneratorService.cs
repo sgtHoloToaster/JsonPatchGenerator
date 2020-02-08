@@ -9,11 +9,11 @@ namespace JsonPatchGenerator.Core.Services
     public class JsonPatchGeneratorService : IJsonPatchGenerator<IPatchDocument>
     {
         readonly ITypeResolver _typeResolver;
-        readonly IPatchDocumentBuilderFactory _patchDocumentBuilderFactory;
+        readonly IPatchDocumentBuilderFactory<IPatchDocument> _patchDocumentBuilderFactory;
         const string PathSeparator = "/";
         const string ArrayLastPositionLiteral = "-";
 
-        public JsonPatchGeneratorService(ITypeResolver typeResolver, IPatchDocumentBuilderFactory patchDocumentBuilderFactory)
+        public JsonPatchGeneratorService(ITypeResolver typeResolver, IPatchDocumentBuilderFactory<IPatchDocument> patchDocumentBuilderFactory)
         {
             _typeResolver = typeResolver;
             _patchDocumentBuilderFactory = patchDocumentBuilderFactory;
@@ -26,10 +26,10 @@ namespace JsonPatchGenerator.Core.Services
             return builder.Build();
         }
 
-        private void AppendObjectPatchOperations(IPatchDocumentBuilder builder, object first, object second, string path) =>
+        private void AppendObjectPatchOperations(IPatchDocumentBuilder<IPatchDocument> builder, object first, object second, string path) =>
             AppendObjectPatchOperations(builder, first, second, path, first.GetType());
 
-        private void AppendObjectPatchOperations(IPatchDocumentBuilder builder, object first, object second, string path, Type type)
+        private void AppendObjectPatchOperations(IPatchDocumentBuilder<IPatchDocument> builder, object first, object second, string path, Type type)
         {
             var properties = _typeResolver.GetProperties(type);
             foreach (var property in properties)
@@ -40,7 +40,7 @@ namespace JsonPatchGenerator.Core.Services
             }
         }
 
-        private void AppendPatchOperations(IPatchDocumentBuilder builder, object firstValue, object secondValue, string path, Type propertyType)
+        private void AppendPatchOperations(IPatchDocumentBuilder<IPatchDocument> builder, object firstValue, object secondValue, string path, Type propertyType)
         {
             if (firstValue != null && secondValue != null && !propertyType.IsPrimitive)
             {
@@ -54,7 +54,7 @@ namespace JsonPatchGenerator.Core.Services
         }
 
         //TODO: refactor
-        private void AppendArrayPatchOperations(IPatchDocumentBuilder builder, Array firstArray, Array secondArray, string path, Type propertyType)
+        private void AppendArrayPatchOperations(IPatchDocumentBuilder<IPatchDocument> builder, Array firstArray, Array secondArray, string path, Type propertyType)
         {
             var firstArrayHashCodes = new ArrayHashIndexMap(firstArray, _typeResolver.GetHashCode);
             var secondArrayHashCodes = new ArrayHashIndexMap(secondArray, _typeResolver.GetHashCode);

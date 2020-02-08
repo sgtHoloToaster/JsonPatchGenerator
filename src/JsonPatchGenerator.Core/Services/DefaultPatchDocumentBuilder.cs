@@ -7,47 +7,47 @@ using System.Collections.Generic;
 
 namespace JsonPatchGenerator.Core.Services
 {
-    public class DefaultPatchDocumentBuilder : IPatchDocumentBuilder
+    public class DefaultPatchDocumentBuilder : IPatchDocumentBuilder<IPatchDocument>
     {
         readonly List<Operation> _operations = new List<Operation>();
 
-        public IPatchDocumentBuilder AppendAddOperation<T>(string path, T value)
+        public IPatchDocumentBuilder<IPatchDocument> AppendAddOperation<T>(string path, T value)
         {
             _operations.Add(new Operation(OperationType.Add, path, value));
             return this;
         }
 
-        public IPatchDocumentBuilder AppendCopyOperation(string path, string from)
+        public IPatchDocumentBuilder<IPatchDocument> AppendCopyOperation(string path, string from)
         {
             _operations.Add(new Operation(OperationType.Copy, path, null, from));
             return this;
         }
 
-        public IPatchDocumentBuilder AppendMoveOperation(string path, string from)
+        public IPatchDocumentBuilder<IPatchDocument> AppendMoveOperation(string path, string from)
         {
             _operations.Add(new Operation(OperationType.Move, path, null, from));
             return this;
         }
 
-        public IPatchDocumentBuilder AppendOperation<T>(OperationType operationType, string path, T value, string from)
+        public IPatchDocumentBuilder<IPatchDocument> AppendOperation<T>(OperationType operationType, string path, T value, string from)
         {
             _operations.Add(new Operation(operationType, path, value, from));
             return this;
         }
 
-        public IPatchDocumentBuilder AppendRemoveOperation(string path)
+        public IPatchDocumentBuilder<IPatchDocument> AppendRemoveOperation(string path)
         {
             _operations.Add(new Operation(OperationType.Remove, path));
             return this;
         }
 
-        public IPatchDocumentBuilder AppendReplaceOperation<T>(string path, T value)
+        public IPatchDocumentBuilder<IPatchDocument> AppendReplaceOperation<T>(string path, T value)
         {
             _operations.Add(new Operation(OperationType.Replace, path, value));
             return this;
         }
 
-        public IPatchDocumentBuilder AppendTestOperation<T>(string path, T value)
+        public IPatchDocumentBuilder<IPatchDocument> AppendTestOperation<T>(string path, T value)
         {
             _operations.Add(new Operation(OperationType.Test, path, value));
             return this;
