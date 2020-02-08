@@ -11,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonPatchGenerator.Interfac
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonPatchGenerator.JsonNet", "src\JsonPatchGenerator.JsonNet\JsonPatchGenerator.JsonNet.csproj", "{44BC07E4-62DB-4C93-800C-20592D2AF32A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonPatchGenerator.JsonNet.Tests", "tests\JsonPatchGenerator.JsonNet.Tests\JsonPatchGenerator.JsonNet.Tests.csproj", "{CCCB92C5-6FFE-48C1-AA9F-EE77CBEAAC2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonPatchGenerator.JsonNet.Tests", "tests\JsonPatchGenerator.JsonNet.Tests\JsonPatchGenerator.JsonNet.Tests.csproj", "{CCCB92C5-6FFE-48C1-AA9F-EE77CBEAAC2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonPatchGenerator.AspNetCore", "src\JsonPatchGenerator.AspNetCore\JsonPatchGenerator.AspNetCore.csproj", "{63A84E09-B8FE-4DEB-AF3A-0CF0E78B611F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonPatchGenerator.AspNetCore.Tests", "tests\JsonPatchGenerator.AspNetCore.Tests\JsonPatchGenerator.AspNetCore.Tests.csproj", "{FB3DFAF1-3111-46DC-A034-FF0963F0EF49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{CCCB92C5-6FFE-48C1-AA9F-EE77CBEAAC2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCCB92C5-6FFE-48C1-AA9F-EE77CBEAAC2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCCB92C5-6FFE-48C1-AA9F-EE77CBEAAC2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63A84E09-B8FE-4DEB-AF3A-0CF0E78B611F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63A84E09-B8FE-4DEB-AF3A-0CF0E78B611F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63A84E09-B8FE-4DEB-AF3A-0CF0E78B611F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63A84E09-B8FE-4DEB-AF3A-0CF0E78B611F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB3DFAF1-3111-46DC-A034-FF0963F0EF49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB3DFAF1-3111-46DC-A034-FF0963F0EF49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB3DFAF1-3111-46DC-A034-FF0963F0EF49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB3DFAF1-3111-46DC-A034-FF0963F0EF49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
