@@ -1,9 +1,7 @@
-﻿using JsonPatchGenerator.Interface.Models.Abstract;
-
-namespace JsonPatchGenerator.Interface.Services
+﻿namespace JsonPatchGenerator.Interface.Services
 {
     public interface IJsonPatchGenerator<T>
     {
-        T GetDiff(object first, object second);
+        T Generate(object first, object second);
     }
 }

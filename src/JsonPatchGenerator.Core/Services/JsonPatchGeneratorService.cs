@@ -19,7 +19,7 @@ namespace JsonPatchGenerator.Core.Services
             _patchDocumentBuilderFactory = patchDocumentBuilderFactory;
         }
 
-        public IPatchDocument GetDiff(object first, object second)
+        public IPatchDocument Generate(object first, object second)
         {
             var builder = _patchDocumentBuilderFactory.Create();
             AppendObjectPatchOperations(builder, first, second, string.Empty);

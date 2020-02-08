@@ -46,7 +46,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
             var target = _getTarget();
 
             // act
-            var result = target.GetDiff(first, second);
+            var result = target.Generate(first, second);
 
             // assert
             assert(result, expectedPath, null, expectedFrom);

@@ -46,7 +46,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
             var target = _getTarget();
 
             // act
-            var result = target.GetDiff(first, second);
+            var result = target.Generate(first, second);
 
             // assert
             assert(result, path, changedValue);
@@ -73,7 +73,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
             var target = _getTarget();
 
             // act
-            var result = target.GetDiff(first, second);
+            var result = target.Generate(first, second);
 
             // assert
             assert(result, path, newValue);
@@ -88,7 +88,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
             var target = _getTarget();
 
             // act
-            var result = target.GetDiff(first, second);
+            var result = target.Generate(first, second);
 
             // assert
             HasCorrectValue(result, value);
@@ -102,7 +102,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
             var target = _getTarget();
 
             // act
-            var result = target.GetDiff(first, second);
+            var result = target.Generate(first, second);
 
             // assert
             HasReplaceOperation(result);
@@ -130,7 +130,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
             var target = _getTarget();
 
             // act
-            var result = target.GetDiff(first, second);
+            var result = target.Generate(first, second);
 
             // assert
             assert(result, changedValuePath, newValue);
@@ -167,7 +167,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
             var target = _getTarget();
 
             // act
-            var result = target.GetDiff(first, second);
+            var result = target.Generate(first, second);
 
             // assert
             assert(result, changedValuePath, newValue);
@@ -187,7 +187,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
             var target = _getTarget();
 
             // act
-            var result = target.GetDiff(first, second);
+            var result = target.Generate(first, second);
 
             // assert
             Assert.NotNull(result);
