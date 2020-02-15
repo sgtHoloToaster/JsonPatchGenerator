@@ -1,10 +1,12 @@
 ﻿using JsonPatchGenerator.AspNetCore.Abstract;
+using JsonPatchGenerator.Interface.Enums;
 using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Services;
 using Microsoft.AspNetCore.JsonPatch;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace JsonPatchGenerator.AspNetCore
 {
@@ -16,12 +18,13 @@ namespace JsonPatchGenerator.AspNetCore
             _jsonPatchDocument = jsonPatchDocument;
         }
 
-        public IEnumerable<Operation> Operations => throw new NotImplementedException();
+        public IEnumerable<Operation> Operations =>
+            _jsonPatchDocument.GetOperations()
+                .Select(o => new Operation(JsonConvert.DeserializeObject<OperationType>(o.op), o.path, o.value, o.from))
+                .ToList();
 
-        public IJsonPatchDocument GetValue()
-        {
-            throw new NotImplementedException();
-        }
+        public IJsonPatchDocument GetValue() =>
+            _jsonPatchDocument;
 
         public string Serialize(ISerializer serializer)
         {
