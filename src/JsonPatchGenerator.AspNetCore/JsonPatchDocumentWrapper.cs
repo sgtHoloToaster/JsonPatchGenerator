@@ -10,6 +10,12 @@ namespace JsonPatchGenerator.AspNetCore
 {
     public class JsonPatchDocumentWrapper : IJsonPatchDocumentWrapper
     {
+        readonly IJsonPatchDocument _jsonPatchDocument;
+        public JsonPatchDocumentWrapper(IJsonPatchDocument jsonPatchDocument)
+        {
+            _jsonPatchDocument = jsonPatchDocument;
+        }
+
         public IEnumerable<Operation> Operations => throw new NotImplementedException();
 
         public IJsonPatchDocument GetValue()
