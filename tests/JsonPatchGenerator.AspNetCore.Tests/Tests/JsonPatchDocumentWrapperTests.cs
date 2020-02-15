@@ -1,6 +1,8 @@
 ﻿using AutoMoqCore;
+using JsonPatchGenerator.Interface.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.JsonPatch.Operations;
+using Moq;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,6 +65,23 @@ namespace JsonPatchGenerator.AspNetCore.Tests.Tests
                 .ToList();
 
             return (operations, expectedOperations);
+        }
+
+        [Fact]
+        public void CanBeSerialized()
+        {
+            // arrange
+            var target = new JsonPatchDocumentWrapper(new JsonPatchDocument());
+            const string expected = "correctSerializationResult";
+            var serializerStub = new Mock<ISerializer>();
+            serializerStub.Setup(m => m.Serialize(target))
+                .Returns(expected);
+
+            // act
+            var result = target.Serialize(serializerStub.Object);
+
+            // assert
+            Assert.Equal(expected, result);
         }
     }
 }
