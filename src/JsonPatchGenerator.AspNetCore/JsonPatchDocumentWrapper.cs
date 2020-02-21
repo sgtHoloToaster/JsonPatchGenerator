@@ -1,10 +1,10 @@
 ﻿using JsonPatchGenerator.AspNetCore.Abstract;
+using JsonPatchGenerator.Core.Helpers;
 using JsonPatchGenerator.Interface.Enums;
 using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,7 +20,7 @@ namespace JsonPatchGenerator.AspNetCore
 
         public IEnumerable<Operation> Operations =>
             _jsonPatchDocument.GetOperations()
-                .Select(o => new Operation(JsonConvert.DeserializeObject<OperationType>(o.op), o.path, o.value, o.from))
+                .Select(o => new Operation(EnumsHelper.GetValueByEnumMemberAttribute<OperationType>(o.op), o.path, o.value, o.from))
                 .ToList();
 
         public IJsonPatchDocument GetValue() =>
