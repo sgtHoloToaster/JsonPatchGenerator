@@ -1,4 +1,5 @@
 ﻿using JsonPatchGenerator.AspNetCore.Abstract;
+using JsonPatchGenerator.Core.Helpers;
 using JsonPatchGenerator.Interface.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.JsonPatch.Operations;
@@ -32,7 +33,8 @@ namespace JsonPatchGenerator.AspNetCore
 
         public IPatchDocumentBuilder<IJsonPatchDocumentWrapper> AppendOperation<T>(Interface.Enums.OperationType operationType, string path, T value, string from)
         {
-            throw new NotImplementedException();
+            _operations.Add(new Operation(EnumsHelper.GetEnumMemberAttributeValue(operationType), path, from, value));
+            return this;
         }
 
         public IPatchDocumentBuilder<IJsonPatchDocumentWrapper> AppendRemoveOperation(string path)
