@@ -1,4 +1,5 @@
 ﻿using AutoMoqCore;
+using JsonPatchGenerator.Core.Helpers;
 using JsonPatchGenerator.Interface.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.JsonPatch.Operations;
@@ -61,7 +62,7 @@ namespace JsonPatchGenerator.AspNetCore.Tests.Tests
             };
 
             var expectedOperations = operations
-                .Select(o => new Operation(JsonConvert.SerializeObject(o.Type), o.Path, o.From, o.Value))
+                .Select(o => new Operation(EnumsHelper.GetEnumMemberAttributeValue(o.Type), o.Path, o.From, o.Value))
                 .ToList();
 
             return (operations, expectedOperations);
