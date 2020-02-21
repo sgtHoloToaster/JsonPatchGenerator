@@ -29,5 +29,19 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             // act & assert
             Assert.Throws<ArgumentException>(() => EnumsHelper.GetValueByEnumMemberAttribute<OperationType>(input));
         }
+
+        [Theory]
+        [InlineData(OperationType.Move, "move")]
+        [InlineData(OperationType.Replace, "replace")]
+        [InlineData(OperationType.Copy, "copy")]
+        public void ReturnsEnumMemberAttributeValueForEnumValue(OperationType input, string expected)
+        {
+            // act
+            var result = EnumsHelper.GetEnumMemberAttributeValue(input);
+
+            // assert
+            Assert.Equal(expected, result);
+        }
+
     }
 }

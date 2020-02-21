@@ -20,5 +20,13 @@ namespace JsonPatchGenerator.Core.Helpers
             }
             throw new ArgumentException("Not found", nameof(attributeValue));
         }
+
+        public static string GetEnumMemberAttributeValue<T>(T enumValue) where T : Enum
+        {
+            var type = typeof(T);
+            var memberInfo = type.GetMember(enumValue.ToString())[0];
+            var attribute = Attribute.GetCustomAttribute(memberInfo, typeof(EnumMemberAttribute)) as EnumMemberAttribute;
+            return attribute.Value;
+        }
     }
 }
