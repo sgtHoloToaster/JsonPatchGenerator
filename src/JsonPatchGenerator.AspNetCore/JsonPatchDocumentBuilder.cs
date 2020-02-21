@@ -1,6 +1,8 @@
 ﻿using JsonPatchGenerator.AspNetCore.Abstract;
 using JsonPatchGenerator.Interface.Services;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.JsonPatch.Operations;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 
@@ -12,17 +14,20 @@ namespace JsonPatchGenerator.AspNetCore
 
         public IPatchDocumentBuilder<IJsonPatchDocumentWrapper> AppendAddOperation<T>(string path, T value)
         {
-            throw new NotImplementedException();
+            _operations.Add(new Operation("add", path, null, value));
+            return this;
         }
 
         public IPatchDocumentBuilder<IJsonPatchDocumentWrapper> AppendCopyOperation(string path, string from)
         {
-            throw new NotImplementedException();
+            _operations.Add(new Operation("copy", path, from));
+            return this;
         }
 
         public IPatchDocumentBuilder<IJsonPatchDocumentWrapper> AppendMoveOperation(string path, string from)
         {
-            throw new NotImplementedException();
+            _operations.Add(new Operation("move", path, from));
+            return this;
         }
 
         public IPatchDocumentBuilder<IJsonPatchDocumentWrapper> AppendOperation<T>(Interface.Enums.OperationType operationType, string path, T value, string from)
@@ -32,22 +37,23 @@ namespace JsonPatchGenerator.AspNetCore
 
         public IPatchDocumentBuilder<IJsonPatchDocumentWrapper> AppendRemoveOperation(string path)
         {
-            throw new NotImplementedException();
+            _operations.Add(new Operation("remove", path, null));
+            return this;
         }
 
         public IPatchDocumentBuilder<IJsonPatchDocumentWrapper> AppendReplaceOperation<T>(string path, T value)
         {
-            throw new NotImplementedException();
+            _operations.Add(new Operation("replace", path, null, value));
+            return this;
         }
 
         public IPatchDocumentBuilder<IJsonPatchDocumentWrapper> AppendTestOperation<T>(string path, T value)
         {
-            throw new NotImplementedException();
+            _operations.Add(new Operation("test", path, null, value));
+            return this;
         }
 
-        public IJsonPatchDocumentWrapper Build()
-        {
-            throw new NotImplementedException();
-        }
+        public IJsonPatchDocumentWrapper Build() =>
+            new JsonPatchDocumentWrapper(new JsonPatchDocument(_operations, new DefaultContractResolver()));
     }
 }
