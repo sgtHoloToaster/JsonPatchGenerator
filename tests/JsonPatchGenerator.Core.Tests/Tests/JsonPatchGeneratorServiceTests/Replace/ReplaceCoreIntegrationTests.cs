@@ -74,5 +74,17 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
         [Fact]
         public void SupportSimpleTypeArrayElementReplacing() =>
             _base.SupportSimpleTypeArrayElementReplacing();
+
+        [Fact]
+        public void SupportStringElementReplacing() =>
+            _base.SupportStringElementReplacing();
+
+        [Fact]
+        public void StringElementReplaceOperationHasCorrectPath() =>
+            _base.StringElementReplaceOperationHasCorrectPath();
+
+        [Fact]
+        public void StringElementReplaceOperationHasCorrectValue() =>
+            _base.StringElementReplaceOperationHasCorrectValue();
     }
 }

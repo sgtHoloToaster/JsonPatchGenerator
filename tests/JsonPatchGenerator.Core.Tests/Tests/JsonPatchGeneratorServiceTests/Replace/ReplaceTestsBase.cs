@@ -199,5 +199,33 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
 
         private void HasReplaceOperation(IPatchDocument result, string path, object newValue) =>
             HasReplaceOperation(result);
+
+        public void SupportStringElementReplacing() =>
+            TestStringElementPropertyReplace(HasReplaceOperation);
+
+        public void StringElementReplaceOperationHasCorrectPath() =>
+            TestStringElementPropertyReplace(HasCorrectPath);
+
+        public void StringElementReplaceOperationHasCorrectValue() =>
+            TestStringElementPropertyReplace(HasCorrectValue);
+
+        private void TestStringElementPropertyReplace(AssertAction assert)
+        {
+            // arrange
+            var initialModel = new SimpleTypesPublicPropertiesModel { StringProperty = "oldValue" };
+
+            var first = initialModel;
+            var second = ObjectCloner.DeepClone(initialModel);
+            const string newValue = "newValue";
+            var changedValuePath = $"/{nameof(SimpleTypesPublicPropertiesModel.StringProperty)}";
+            PropertiesPathfinder.SetValue(second, changedValuePath, newValue);
+            var target = _getTarget();
+
+            // act
+            var result = target.Generate(first, second);
+
+            // assert
+            assert(result, changedValuePath, newValue);
+        }
     }
 }

@@ -17,5 +17,8 @@
         void SupportReplacingPropertiesOfArrayElement();
         void SupportReplacingValuesWithNull();
         void SupportSimpleTypeArrayElementReplacing();
+        void SupportStringElementReplacing();
+        void StringElementReplaceOperationHasCorrectPath();
+        void StringElementReplaceOperationHasCorrectValue();
     }
 }
