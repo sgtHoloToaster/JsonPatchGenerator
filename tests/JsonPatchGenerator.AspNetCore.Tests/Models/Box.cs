@@ -9,13 +9,13 @@ namespace JsonPatchGenerator.AspNetCore.Tests.Models
 
         public int Id { get; set; }
 
-        public List<Box> Inside { get; set; } = new List<Box>();
+        public Box[] Inside { get; set; }
 
         public override bool Equals(object obj) =>
             obj is Box box &&
                    Title == box.Title &&
                    Id == box.Id &&
-                   EqualityComparer<List<Box>>.Default.Equals(Inside, box.Inside);
+                   EqualityComparer<Box[]>.Default.Equals(Inside, box.Inside);
 
         public override int GetHashCode() => 
             HashCode.Combine(Title, Id, Inside);
