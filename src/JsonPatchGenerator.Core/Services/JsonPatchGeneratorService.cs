@@ -49,7 +49,7 @@ namespace JsonPatchGenerator.Core.Services
 
         private void AppendPatchOperations(IPatchDocumentBuilder<T> builder, object firstValue, object secondValue, string path, Type propertyType)
         {
-            if (firstValue != null && secondValue != null && !propertyType.IsPrimitive)
+            if (firstValue != null && secondValue != null && !propertyType.IsPrimitive && propertyType != typeof(string))
             {
                 if (propertyType.IsArray)
                     AppendArrayPatchOperations(builder, firstValue as Array, secondValue as Array, path, propertyType);
