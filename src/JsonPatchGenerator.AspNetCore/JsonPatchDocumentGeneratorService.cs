@@ -15,9 +15,8 @@ namespace JsonPatchGenerator.AspNetCore
             _patchGenerator = jsonPatchGenerator;
         }
 
-        public IJsonPatchDocument Generate(object first, object second)
-        {
-            throw new NotImplementedException();
-        }
+        public IJsonPatchDocument Generate(object first, object second) =>
+            _patchGenerator.Generate(first, second)
+                .GetValue();
     }
 }
