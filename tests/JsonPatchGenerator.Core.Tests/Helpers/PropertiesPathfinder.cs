@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Linq;
 
 namespace JsonPatchGenerator.Core.Tests.Helpers
@@ -16,11 +17,23 @@ namespace JsonPatchGenerator.Core.Tests.Helpers
             var isIndex = int.TryParse(currentPathPart, out var index);
             if (isIndex)
             {
-                var array = obj as Array;
-                if (pathParts.Length > 1)
-                    SetValue(array.GetValue(index), string.Join(Separator, pathParts.Skip(1)), value);
+                var isNested = pathParts.Length > 1;
+                if (obj is Array array)
+                {
+                    if (isNested)
+                        SetValue(array.GetValue(index), string.Join(Separator, pathParts.Skip(1)), value);
+                    else
+                        array.SetValue(value, index);
+                }
+                else if (obj is IList list)
+                {
+                    if (isNested)
+                        SetValue(list[index], string.Join(Separator, pathParts.Skip(1)), value);
+                    else
+                        list[index] = value;
+                }
                 else
-                    array.SetValue(value, index);
+                    throw new NotImplementedException();
             }
             else
             {
