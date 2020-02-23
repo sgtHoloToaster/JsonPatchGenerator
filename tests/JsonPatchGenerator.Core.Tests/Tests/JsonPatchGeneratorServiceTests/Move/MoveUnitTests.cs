@@ -52,5 +52,25 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
         [Fact]
         public void SupportSimpleTypeArrayMoveOperation() =>
             _base.SupportSimpleTypeArrayMoveOperation();
+
+        [Fact]
+        public void SimpleTypeListMoveDoesntProduceExtraOperations() =>
+            _base.SimpleTypeListMoveDoesntProduceExtraOperations();
+
+        [Fact]
+        public void SimpleTypeListMoveOperationHasCorrectFrom() =>
+            _base.SimpleTypeListMoveOperationHasCorrectFrom();
+
+        [Fact]
+        public void SimpleTypeListMoveOperationHasCorrectPath() =>
+            _base.SimpleTypeListMoveOperationHasCorrectPath();
+
+        [Fact]
+        public void SimpleTypeListMoveOperationHasCorrectValue() =>
+            _base.SimpleTypeListMoveOperationHasCorrectValue();
+
+        [Fact]
+        public void SupportSimpleTypeListMoveOperation() =>
+            _base.SupportSimpleTypeListMoveOperation();
     }
 }

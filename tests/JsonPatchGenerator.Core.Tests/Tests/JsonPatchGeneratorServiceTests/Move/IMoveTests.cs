@@ -7,5 +7,10 @@
         void SimpleTypeArrayMoveOperationHasCorrectPath();
         void SimpleTypeArrayMoveOperationHasCorrectValue();
         void SupportSimpleTypeArrayMoveOperation();
+        void SimpleTypeListMoveDoesntProduceExtraOperations();
+        void SimpleTypeListMoveOperationHasCorrectFrom();
+        void SimpleTypeListMoveOperationHasCorrectPath();
+        void SimpleTypeListMoveOperationHasCorrectValue();
+        void SupportSimpleTypeListMoveOperation();
     }
 }

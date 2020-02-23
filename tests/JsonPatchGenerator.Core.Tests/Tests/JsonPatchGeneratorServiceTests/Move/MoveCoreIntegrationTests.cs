@@ -5,7 +5,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
 {
     using static BaseTestsHelper;
 
-    public class MoveCoreIntegrationTests
+    public class MoveCoreIntegrationTests : IMoveTests
     {
         readonly MoveTestsBase _base;
 
@@ -36,5 +36,25 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
         [Fact]
         public void SimpleTypeArrayMoveDoesntProduceExtraOperations() =>
             _base.SimpleTypeArrayMoveDoesntProduceExtraOperations();
+
+        [Fact]
+        public void SimpleTypeListMoveDoesntProduceExtraOperations() =>
+            _base.SimpleTypeListMoveDoesntProduceExtraOperations();
+
+        [Fact]
+        public void SimpleTypeListMoveOperationHasCorrectFrom() =>
+            _base.SimpleTypeListMoveOperationHasCorrectFrom();
+
+        [Fact]
+        public void SimpleTypeListMoveOperationHasCorrectPath() =>
+            _base.SimpleTypeListMoveOperationHasCorrectPath();
+
+        [Fact]
+        public void SimpleTypeListMoveOperationHasCorrectValue() =>
+            _base.SimpleTypeListMoveOperationHasCorrectValue();
+
+        [Fact]
+        public void SupportSimpleTypeListMoveOperation() =>
+            _base.SupportSimpleTypeListMoveOperation();
     }
 }
