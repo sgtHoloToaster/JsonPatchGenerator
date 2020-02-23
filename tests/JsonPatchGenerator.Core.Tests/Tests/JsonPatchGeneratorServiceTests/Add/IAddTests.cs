@@ -9,5 +9,8 @@
         void SimpleTypeArrayIndexBasedAddOperationHasCorrectValue();
         void SupportSimpleTypeArrayAddOperation();
         void SupportSimpleTypeArrayIndexBasedAddOperation();
+        void SupportSimpleTypeListAddOperation();
+        void SimpleTypeListAddOperationHasCorrectValue();
+        void SimpleTypeListAddOperationHasCorrectPath();
     }
 }

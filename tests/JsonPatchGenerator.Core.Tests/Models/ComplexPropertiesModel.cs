@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace JsonPatchGenerator.Core.Tests.Models
 {
@@ -10,6 +11,8 @@ namespace JsonPatchGenerator.Core.Tests.Models
         public int[] SimpleTypeArray { get; set; }
 
         public ComplexPropertiesModel[] ComplexTypeArrayProperty { get; set; }
+
+        public IList<int> SimpleTypeList { get; set; }
 
         public int SimpleTypeProperty { get; set; }
 

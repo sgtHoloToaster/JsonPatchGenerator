@@ -3,6 +3,7 @@ using JsonPatchGenerator.Core.Tests.Models;
 using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Enums;
 using System;
+using System.Collections.Generic;
 
 namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
 {
@@ -76,5 +77,31 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
 
         private void HasAddOperation(IPatchDocument result, string path, object newValue) =>
             HasAddOperation(result);
+
+        public void SupportSimpleTypeListAddOperation() =>
+            TestSimpleTypeListAddOperation(HasAddOperation);
+
+        public void SimpleTypeListAddOperationHasCorrectPath() =>
+            TestSimpleTypeListAddOperation(HasCorrectPath);
+
+        public void SimpleTypeListAddOperationHasCorrectValue() =>
+            TestSimpleTypeListAddOperation(HasCorrectValue);
+
+        private void TestSimpleTypeListAddOperation(AssertAction assert)
+        {
+            // arrange
+            const int addedValue = 4;
+            var first = new ComplexPropertiesModel { SimpleTypeList = new List<int> { 1, 2, 3 } };
+            var second = new ComplexPropertiesModel { SimpleTypeList = new List<int> { 1, 2, 3, addedValue } };
+            var expectedPath = $"/{nameof(ComplexPropertiesModel.SimpleTypeList)}/-";
+
+            var target = _getTarget();
+
+            // act
+            var result = target.Generate(first, second);
+
+            // assert
+            assert(result, expectedPath, addedValue);
+        }
     }
 }
