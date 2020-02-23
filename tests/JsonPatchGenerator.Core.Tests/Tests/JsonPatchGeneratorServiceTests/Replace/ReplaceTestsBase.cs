@@ -7,6 +7,7 @@ using System.Linq;
 using Xunit;
 using static JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests.BaseTestsHelper;
 using System;
+using System.Collections.Generic;
 
 namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
 {
@@ -218,6 +219,34 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
             var second = ObjectCloner.DeepClone(initialModel);
             const string newValue = "newValue";
             var changedValuePath = $"/{nameof(SimpleTypesPublicPropertiesModel.StringProperty)}";
+            PropertiesPathfinder.SetValue(second, changedValuePath, newValue);
+            var target = _getTarget();
+
+            // act
+            var result = target.Generate(first, second);
+
+            // assert
+            assert(result, changedValuePath, newValue);
+        }
+
+        public void SupportSimpleTypeListElementReplacing() =>
+            TestSimpleTypeListElementReplacing(HasReplaceOperation);
+
+        public void SimpleTypeListElementReplaceOperationHasCorrectValue() =>
+            TestSimpleTypeListElementReplacing(HasCorrectValue);
+
+        public void SimpleTypeListElementReplaceOperationHasCorrectPath() =>
+            TestSimpleTypeListElementReplacing(HasCorrectPath);
+
+        private void TestSimpleTypeListElementReplacing(AssertAction assert)
+        {
+            // arrange
+            var initial = new List<int> { 1, -450, 1445 };
+            const int newValue = 7;
+            const int changedValueIndex = 1;
+            var first = new ComplexPropertiesModel { SimpleTypeList = initial.ConvertAll(v => v) };
+            var second = new ComplexPropertiesModel { SimpleTypeList = initial.ConvertAll(v => v) };
+            var changedValuePath = $"/{nameof(ComplexPropertiesModel.SimpleTypeList)}/{changedValueIndex}";
             PropertiesPathfinder.SetValue(second, changedValuePath, newValue);
             var target = _getTarget();
 

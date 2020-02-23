@@ -20,5 +20,8 @@
         void SupportStringElementReplacing();
         void StringElementReplaceOperationHasCorrectPath();
         void StringElementReplaceOperationHasCorrectValue();
+        void SupportSimpleTypeListElementReplacing();
+        void SimpleTypeListElementReplaceOperationHasCorrectPath();
+        void SimpleTypeListElementReplaceOperationHasCorrectValue();
     }
 }
