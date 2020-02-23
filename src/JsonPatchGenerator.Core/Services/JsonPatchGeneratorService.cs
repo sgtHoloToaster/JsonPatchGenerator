@@ -2,6 +2,8 @@
 using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Services;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace JsonPatchGenerator.Core.Services
@@ -53,11 +55,22 @@ namespace JsonPatchGenerator.Core.Services
             {
                 if (propertyType.IsArray)
                     AppendArrayPatchOperations(builder, firstValue as Array, secondValue as Array, path, propertyType);
+                else if (typeof(IEnumerable).IsAssignableFrom(propertyType))
+                    AppendArrayPatchOperations(builder, firstValue as IEnumerable, secondValue as IEnumerable, path, propertyType);
                 else
                     AppendObjectPatchOperations(builder, firstValue, secondValue, path, propertyType);
             }
             else if (!ReferenceEquals(firstValue, secondValue) && (!firstValue?.Equals(secondValue) ?? true))
                 builder.AppendReplaceOperation(path, secondValue);
+        }
+
+        // TODO: find a more efficient way to process ienumerable
+        private void AppendArrayPatchOperations(IPatchDocumentBuilder<T> builder, IEnumerable first, IEnumerable second, string path, Type propertyType)
+        {
+            Array ToArray(IEnumerable array) =>
+                array.Cast<object>().ToArray() as Array;
+
+            AppendArrayPatchOperations(builder, ToArray(first), ToArray(second), path, propertyType);
         }
 
         //TODO: refactor
