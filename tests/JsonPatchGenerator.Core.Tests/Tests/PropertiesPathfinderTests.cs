@@ -1,5 +1,6 @@
 ﻿using JsonPatchGenerator.Core.Tests.Helpers;
 using JsonPatchGenerator.Core.Tests.Models;
+using System.Collections.Generic;
 using Xunit;
 
 namespace JsonPatchGenerator.Core.Tests.Tests
@@ -57,6 +58,22 @@ namespace JsonPatchGenerator.Core.Tests.Tests
         }
 
         [Fact]
+        public void CanSetListElementByIndex()
+        {
+            // arrange
+            var model = new ComplexPropertiesModel { SimpleTypeList = new List<int> { -910, 2, 10442 } };
+            const int changedValueIndex = 1;
+            const int newValue = 531;
+            var path = $"{nameof(ComplexPropertiesModel.SimpleTypeList)}/{changedValueIndex}";
+
+            // act
+            PropertiesPathfinder.SetValue(model, path, newValue);
+
+            // assert
+            Assert.Equal(newValue, model.SimpleTypeList[changedValueIndex]);
+        }
+
+        [Fact]
         public void CanSetPropertiesOfComplexTypeArrayElement()
         {
             // arrange
@@ -79,6 +96,31 @@ namespace JsonPatchGenerator.Core.Tests.Tests
 
             // assert
             Assert.Equal(newValue, model.ComplexTypeArray[changedValueIndex].SimpleType);
+        }
+
+        [Fact]
+        public void CanSetPropertiesOfComplexTypeListElement()
+        {
+            // arrange
+            var model = new ComplexPropertiesModel
+            {
+                ComplexTypeList = new List<ComplexPropertiesModel>
+                {
+                    new ComplexPropertiesModel(),
+                    new ComplexPropertiesModel(),
+                    new ComplexPropertiesModel()
+                }
+            };
+
+            const int changedValueIndex = 1;
+            const int newValue = 1001;
+            var path = $"{nameof(ComplexPropertiesModel.ComplexTypeList)}/{changedValueIndex}/{nameof(ComplexPropertiesModel.SimpleType)}";
+
+            // act
+            PropertiesPathfinder.SetValue(model, path, newValue);
+
+            // assert
+            Assert.Equal(newValue, model.ComplexTypeList[changedValueIndex].SimpleType);
         }
     }
 }
