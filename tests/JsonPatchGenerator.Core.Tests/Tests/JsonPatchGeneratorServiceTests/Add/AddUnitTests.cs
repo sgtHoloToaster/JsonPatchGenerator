@@ -72,5 +72,17 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
         [Fact]
         public void SimpleTypeListAddOperationHasCorrectPath() =>
             _base.SimpleTypeListAddOperationHasCorrectPath();
+
+        [Fact]
+        public void SupportSimpleTypeListIndexBasedAddOperation() =>
+            _base.SupportSimpleTypeListIndexBasedAddOperation();
+
+        [Fact]
+        public void SimpleTypeListIndexBasedOperationHasCorrectValue() =>
+            _base.SimpleTypeListIndexBasedOperationHasCorrectValue();
+
+        [Fact]
+        public void SimpleTypeListIndexBasedOperationHasCorrectPath() =>
+            _base.SimpleTypeListIndexBasedOperationHasCorrectPath();
     }
 }

@@ -12,5 +12,8 @@
         void SupportSimpleTypeListAddOperation();
         void SimpleTypeListAddOperationHasCorrectValue();
         void SimpleTypeListAddOperationHasCorrectPath();
+        void SupportSimpleTypeListIndexBasedAddOperation();
+        void SimpleTypeListIndexBasedOperationHasCorrectValue();
+        void SimpleTypeListIndexBasedOperationHasCorrectPath();
     }
 }

@@ -90,11 +90,36 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
         private void TestSimpleTypeListAddOperation(AssertAction assert)
         {
             // arrange
-            const int addedValue = 4;
-            var first = new ComplexPropertiesModel { SimpleTypeList = new List<int> { 1, 2, 3 } };
-            var second = new ComplexPropertiesModel { SimpleTypeList = new List<int> { 1, 2, 3, addedValue } };
+            const int addedValue = 139;
+            var first = new ComplexPropertiesModel { SimpleTypeList = new List<int> { 4, 19, 85 } };
+            var second = new ComplexPropertiesModel { SimpleTypeList = new List<int> { 4, 19, 85, addedValue } };
             var expectedPath = $"/{nameof(ComplexPropertiesModel.SimpleTypeList)}/-";
 
+            var target = _getTarget();
+
+            // act
+            var result = target.Generate(first, second);
+
+            // assert
+            assert(result, expectedPath, addedValue);
+        }
+
+        public void SupportSimpleTypeListIndexBasedAddOperation() =>
+            TestSimpleTypeListIndexBasedAddOperation(HasAddOperation);
+
+        public void SimpleTypeListIndexBasedOperationHasCorrectValue() =>
+            TestSimpleTypeListIndexBasedAddOperation(HasCorrectValue);
+
+        public void SimpleTypeListIndexBasedOperationHasCorrectPath() =>
+            TestSimpleTypeListIndexBasedAddOperation(HasCorrectPath);
+
+        private void TestSimpleTypeListIndexBasedAddOperation(AssertAction assert)
+        {
+            // arrange
+            const int addedValue = 42;
+            var first = new ComplexPropertiesModel { SimpleTypeList = new List<int> { 1, 91, 104 } };
+            var second = new ComplexPropertiesModel { SimpleTypeList = new List<int> { 1, addedValue, 91, 104 } };
+            var expectedPath = $"/{nameof(ComplexPropertiesModel.SimpleTypeList)}/{second.SimpleTypeList.IndexOf(addedValue)}";
             var target = _getTarget();
 
             // act
