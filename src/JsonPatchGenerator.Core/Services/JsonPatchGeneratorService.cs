@@ -109,7 +109,7 @@ namespace JsonPatchGenerator.Core.Services
                     var firstArrayValue = firstArray.GetValue(indexWithOffset);
                     var secondArrayValue = secondArray.GetValue(index);
                     var currentPath = ConcatPath(path, index);
-                    var elementType = propertyType.GetElementType();
+                    var elementType = propertyType.GetElementType() /*array*/ ?? propertyType.GetGenericArguments()[0] /*ienumerable*/; // TODO: move this logic to a separate method and make it more readable
                     AppendPatchOperations(builder, firstArrayValue, secondArrayValue, currentPath, elementType);
                 }
                 else if (firstArrayHashCodes.Map.TryGetValue(secondArrayHashCodes[index], out var indexes))
