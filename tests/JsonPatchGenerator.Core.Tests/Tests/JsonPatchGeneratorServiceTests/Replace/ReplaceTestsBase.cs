@@ -62,8 +62,8 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
         private void TestComplexTypeNestedPropertiesReplace(AssertAction assert)
         {
             // arrange
-            var complexTypePropertyName = nameof(ComplexPropertiesModel.ComplexTypeProperty);
-            var simpleTypePropertyName = nameof(ComplexPropertiesModel.SimpleTypeProperty);
+            var complexTypePropertyName = nameof(ComplexPropertiesModel.ComplexType);
+            var simpleTypePropertyName = nameof(ComplexPropertiesModel.SimpleType);
             var path = $"/{complexTypePropertyName}/{complexTypePropertyName}/{complexTypePropertyName}/{simpleTypePropertyName}";
             const int initValue = 441;
             var first = new ComplexPropertiesModel();
@@ -84,8 +84,8 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
         {
             // arrange
             var first = new ComplexPropertiesModel();
-            var value = new ComplexPropertiesModel { SimpleTypeProperty = 123 };
-            var second = new ComplexPropertiesModel { ComplexTypeProperty = value };
+            var value = new ComplexPropertiesModel { SimpleType = 123 };
+            var second = new ComplexPropertiesModel { ComplexType = value };
             var target = _getTarget();
 
             // act
@@ -98,7 +98,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
         public void SupportReplacingValuesWithNull()
         {
             // arrange
-            var first = new ComplexPropertiesModel { ComplexTypeProperty = new ComplexPropertiesModel { SimpleTypeProperty = 777 } };
+            var first = new ComplexPropertiesModel { ComplexType = new ComplexPropertiesModel { SimpleType = 777 } };
             var second = new ComplexPropertiesModel();
             var target = _getTarget();
 
@@ -151,10 +151,10 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
             // arrange
             var initialModel = new ComplexPropertiesModel
             {
-                ComplexTypeArrayProperty = new ComplexPropertiesModel[]
+                ComplexTypeArray = new ComplexPropertiesModel[]
                 {
                     new ComplexPropertiesModel(),
-                    new ComplexPropertiesModel { SimpleTypeProperty = 55 },
+                    new ComplexPropertiesModel { SimpleType = 55 },
                     new ComplexPropertiesModel()
                 }
             };
@@ -163,7 +163,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
             var second = ObjectCloner.DeepClone(initialModel);
             const int newValue = 77;
             const int changedValueIndex = 1;
-            var changedValuePath = $"/{nameof(ComplexPropertiesModel.ComplexTypeArrayProperty)}/{changedValueIndex}/{nameof(ComplexPropertiesModel.SimpleTypeProperty)}";
+            var changedValuePath = $"/{nameof(ComplexPropertiesModel.ComplexTypeArray)}/{changedValueIndex}/{nameof(ComplexPropertiesModel.SimpleType)}";
             PropertiesPathfinder.SetValue(second, changedValuePath, newValue);
             var target = _getTarget();
 

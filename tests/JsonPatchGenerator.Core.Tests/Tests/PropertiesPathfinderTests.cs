@@ -11,8 +11,8 @@ namespace JsonPatchGenerator.Core.Tests.Tests
         {
             // arrange
             var model = new ComplexPropertiesModel();
-            var complexTypePropertyName = nameof(ComplexPropertiesModel.ComplexTypeProperty);
-            var simpleTypePropertyName = nameof(ComplexPropertiesModel.SimpleTypeProperty);
+            var complexTypePropertyName = nameof(ComplexPropertiesModel.ComplexType);
+            var simpleTypePropertyName = nameof(ComplexPropertiesModel.SimpleType);
             var path = $"/{complexTypePropertyName}/{complexTypePropertyName}/{complexTypePropertyName}/{simpleTypePropertyName}";
             const int value = 42;
 
@@ -20,24 +20,24 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             PropertiesPathfinder.SetValue(model, path, value);
 
             // assert
-            Assert.NotNull(model.ComplexTypeProperty?.ComplexTypeProperty?.ComplexTypeProperty);
+            Assert.NotNull(model.ComplexType?.ComplexType?.ComplexType);
         }
 
         [Fact]
         public void CanSetNestedSimpleTypeProperty()
         {
             // arrange
-            var model = new ComplexPropertiesModel { ComplexTypeProperty = new ComplexPropertiesModel { ComplexTypeProperty = new ComplexPropertiesModel() } };
+            var model = new ComplexPropertiesModel { ComplexType = new ComplexPropertiesModel { ComplexType = new ComplexPropertiesModel() } };
             const int value = 14;
-            var complexTypePropertyName = nameof(ComplexPropertiesModel.ComplexTypeProperty);
-            var simpleTypePropertyName = nameof(ComplexPropertiesModel.SimpleTypeProperty);
+            var complexTypePropertyName = nameof(ComplexPropertiesModel.ComplexType);
+            var simpleTypePropertyName = nameof(ComplexPropertiesModel.SimpleType);
             var path = $"/{complexTypePropertyName}/{complexTypePropertyName}/{complexTypePropertyName}/{simpleTypePropertyName}";
 
             // act
             PropertiesPathfinder.SetValue(model, path, value);
 
             // assert
-            Assert.Equal(value, model.ComplexTypeProperty.ComplexTypeProperty.ComplexTypeProperty.SimpleTypeProperty);
+            Assert.Equal(value, model.ComplexType.ComplexType.ComplexType.SimpleType);
         }
 
         [Fact]
@@ -62,7 +62,7 @@ namespace JsonPatchGenerator.Core.Tests.Tests
             // arrange
             var model = new ComplexPropertiesModel
             {
-                ComplexTypeArrayProperty = new ComplexPropertiesModel[] 
+                ComplexTypeArray = new ComplexPropertiesModel[] 
                 {
                     new ComplexPropertiesModel(),
                     new ComplexPropertiesModel(),
@@ -72,13 +72,13 @@ namespace JsonPatchGenerator.Core.Tests.Tests
 
             const int changedValueIndex = 1;
             const int newValue = 531;
-            var path = $"{nameof(ComplexPropertiesModel.ComplexTypeArrayProperty)}/{changedValueIndex}/{nameof(ComplexPropertiesModel.SimpleTypeProperty)}";
+            var path = $"{nameof(ComplexPropertiesModel.ComplexTypeArray)}/{changedValueIndex}/{nameof(ComplexPropertiesModel.SimpleType)}";
 
             // act
             PropertiesPathfinder.SetValue(model, path, newValue);
 
             // assert
-            Assert.Equal(newValue, model.ComplexTypeArrayProperty[changedValueIndex].SimpleTypeProperty);
+            Assert.Equal(newValue, model.ComplexTypeArray[changedValueIndex].SimpleType);
         }
     }
 }
