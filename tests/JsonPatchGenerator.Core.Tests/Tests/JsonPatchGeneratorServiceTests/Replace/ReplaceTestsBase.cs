@@ -256,5 +256,43 @@ namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests
             // assert
             assert(result, changedValuePath, newValue);
         }
+
+        public void SupportReplacingPropertiesOfListElement() =>
+            TestComplexTypeListElementPropertyReplace(HasReplaceOperation);
+
+        public void ListElementPropertyReplaceOperationHasCorrectValue() =>
+            TestComplexTypeListElementPropertyReplace(HasCorrectValue);
+
+        public void ListElementPropertyReplaceOperationHasCorrectPath() =>
+            TestComplexTypeListElementPropertyReplace(HasCorrectPath);
+
+        private void TestComplexTypeListElementPropertyReplace(AssertAction assert)
+        {
+            // arrange
+            var initialModel = new ComplexPropertiesModel
+            {
+                ComplexTypeList = new List<ComplexPropertiesModel>
+                {
+                    new ComplexPropertiesModel(),
+                    new ComplexPropertiesModel(),
+                    new ComplexPropertiesModel { SimpleType = 401 },
+                    new ComplexPropertiesModel()
+                }
+            };
+
+            var first = initialModel;
+            var second = ObjectCloner.DeepClone(initialModel);
+            const int newValue = 723;
+            const int changedValueIndex = 2;
+            var changedValuePath = $"/{nameof(ComplexPropertiesModel.ComplexTypeList)}/{changedValueIndex}/{nameof(ComplexPropertiesModel.SimpleType)}";
+            PropertiesPathfinder.SetValue(second, changedValuePath, newValue);
+            var target = _getTarget();
+
+            // act
+            var result = target.Generate(first, second);
+
+            // assert
+            assert(result, changedValuePath, newValue);
+        }
     }
 }

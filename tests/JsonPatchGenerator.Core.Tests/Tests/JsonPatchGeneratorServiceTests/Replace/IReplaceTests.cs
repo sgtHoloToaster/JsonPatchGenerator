@@ -23,5 +23,8 @@
         void SupportSimpleTypeListElementReplacing();
         void SimpleTypeListElementReplaceOperationHasCorrectPath();
         void SimpleTypeListElementReplaceOperationHasCorrectValue();
+        void SupportReplacingPropertiesOfListElement();
+        void ListElementPropertyReplaceOperationHasCorrectPath();
+        void ListElementPropertyReplaceOperationHasCorrectValue();
     }
 }
