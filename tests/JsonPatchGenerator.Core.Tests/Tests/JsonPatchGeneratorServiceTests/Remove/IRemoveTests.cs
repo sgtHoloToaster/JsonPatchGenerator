@@ -6,5 +6,9 @@
         void SimpleTypeArrayRemoveOperationHasCorrectPath();
         void SimpleTypeArrayRemoveOperationHasCorrectValue();
         void SupportSimpleTypeArrayRemoveOperation();
+        void SimpleTypeListMoveDoesntProduceExtraOperations();
+        void SimpleTypeListRemoveOperationHasCorrectPath();
+        void SimpleTypeListRemoveOperationHasCorrectValue();
+        void SupportSimpleTypeListRemoveOperation();
     }
 }
