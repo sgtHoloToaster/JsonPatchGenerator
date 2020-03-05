@@ -1,10 +1,8 @@
 ﻿using AutoMoqCore;
+using JsonPatchGenerator.AspNetCore.Services;
 using JsonPatchGenerator.Core.Helpers;
-using JsonPatchGenerator.Interface.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.JsonPatch.Operations;
-using Moq;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;

@@ -1,13 +1,12 @@
-﻿using JsonPatchGenerator.AspNetCore.Abstract;
+﻿using JsonPatchGenerator.AspNetCore.Services.Abstract;
 using JsonPatchGenerator.Core.Helpers;
 using JsonPatchGenerator.Interface.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.JsonPatch.Operations;
 using Newtonsoft.Json.Serialization;
-using System;
 using System.Collections.Generic;
 
-namespace JsonPatchGenerator.AspNetCore
+namespace JsonPatchGenerator.AspNetCore.Services
 {
     public class JsonPatchDocumentBuilder : IPatchDocumentBuilder<IJsonPatchDocumentWrapper>
     {

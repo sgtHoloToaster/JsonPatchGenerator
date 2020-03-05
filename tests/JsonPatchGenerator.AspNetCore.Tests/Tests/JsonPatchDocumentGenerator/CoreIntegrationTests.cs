@@ -1,4 +1,5 @@
-﻿using JsonPatchGenerator.AspNetCore.Abstract;
+﻿using JsonPatchGenerator.AspNetCore.Services;
+using JsonPatchGenerator.AspNetCore.Services.Abstract;
 using JsonPatchGenerator.AspNetCore.Tests.Helpers;
 using JsonPatchGenerator.AspNetCore.Tests.Models;
 using JsonPatchGenerator.Core.Services;

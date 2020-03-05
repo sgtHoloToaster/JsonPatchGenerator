@@ -1,4 +1,4 @@
-﻿using JsonPatchGenerator.AspNetCore;
+﻿using JsonPatchGenerator.AspNetCore.Services;
 using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Services;
 using System;
