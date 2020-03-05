@@ -6,7 +6,5 @@ namespace JsonPatchGenerator.Interface.Models.Abstract
     public interface IPatchDocument
     {
         IEnumerable<Operation> Operations { get; }
-
-        string Serialize(ISerializer serializer);
     }
 }

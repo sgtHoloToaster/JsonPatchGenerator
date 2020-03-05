@@ -25,8 +25,5 @@ namespace JsonPatchGenerator.AspNetCore
 
         public IJsonPatchDocument GetValue() =>
             _jsonPatchDocument;
-
-        public string Serialize(ISerializer serializer) =>
-            serializer.Serialize(this);
     }
 }

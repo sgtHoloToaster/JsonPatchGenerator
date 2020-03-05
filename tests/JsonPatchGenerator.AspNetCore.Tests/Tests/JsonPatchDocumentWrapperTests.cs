@@ -67,22 +67,5 @@ namespace JsonPatchGenerator.AspNetCore.Tests.Tests
 
             return (operations, expectedOperations);
         }
-
-        [Fact]
-        public void CanBeSerialized()
-        {
-            // arrange
-            var target = new JsonPatchDocumentWrapper(new JsonPatchDocument());
-            const string expected = "correctSerializationResult";
-            var serializerStub = new Mock<ISerializer>();
-            serializerStub.Setup(m => m.Serialize(target))
-                .Returns(expected);
-
-            // act
-            var result = target.Serialize(serializerStub.Object);
-
-            // assert
-            Assert.Equal(expected, result);
-        }
     }
 }

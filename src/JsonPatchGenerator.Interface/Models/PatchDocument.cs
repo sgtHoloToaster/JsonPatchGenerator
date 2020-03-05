@@ -16,9 +16,6 @@ namespace JsonPatchGenerator.Interface.Models
             Operations = operations;
         }
 
-        public string Serialize(ISerializer serializer) =>
-            serializer.Serialize(this);
-
         public override bool Equals(object obj) =>
             Equals(obj as IPatchDocument);
 
