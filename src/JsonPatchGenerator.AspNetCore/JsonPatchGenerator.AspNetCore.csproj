@@ -16,9 +16,20 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="[1,4)" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\JsonPatchGenerator.Core\JsonPatchGenerator.Core.csproj" />
-    <ProjectReference Include="..\JsonPatchGenerator.Interface\JsonPatchGenerator.Interface.csproj" />
-  </ItemGroup>
+
+  <Choose>
+    <When Condition="'$(Configuration)' != 'Release'">
+      <ItemGroup>
+        <ProjectReference Include="..\JsonPatchGenerator.Core\JsonPatchGenerator.Core.csproj" />
+        <ProjectReference Include="..\JsonPatchGenerator.Interface\JsonPatchGenerator.Interface.csproj" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <PackageReference Include="JsonPatchGenerator.Core" Version="[0.0.1]" />
+        <PackageReference Include="JsonPatchGenerator.Interface" Version="[0.0.1]" />      
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
 
 </Project>
