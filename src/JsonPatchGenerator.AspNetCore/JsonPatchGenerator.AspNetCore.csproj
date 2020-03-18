@@ -26,7 +26,7 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <PackageReference Include="JsonPatchGenerator.Core" Version="[0.0.1]" />
+        <PackageReference Include="JsonPatchGenerator.Core" Version="[0.0.2]" />
         <PackageReference Include="JsonPatchGenerator.Interface" Version="[0.0.1]" />      
       </ItemGroup>
     </Otherwise>
