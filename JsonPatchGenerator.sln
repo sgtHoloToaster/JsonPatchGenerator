@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonPatchGenerator.AspNetCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonPatchGenerator.Marvin.Json", "src\JsonPatchGenerator.Marvin.Json\JsonPatchGenerator.Marvin.Json.csproj", "{0F2B69A7-8993-4D67-9402-05FE8AC971E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonPatchGenerator.Marvin.Json.Tests", "tests\JsonPatchGenerator.Marvin.Json.Tests\JsonPatchGenerator.Marvin.Json.Tests.csproj", "{8E302CA9-7D7E-4520-B7A4-EF5F359A15D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{0F2B69A7-8993-4D67-9402-05FE8AC971E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F2B69A7-8993-4D67-9402-05FE8AC971E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F2B69A7-8993-4D67-9402-05FE8AC971E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E302CA9-7D7E-4520-B7A4-EF5F359A15D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E302CA9-7D7E-4520-B7A4-EF5F359A15D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E302CA9-7D7E-4520-B7A4-EF5F359A15D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E302CA9-7D7E-4520-B7A4-EF5F359A15D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
