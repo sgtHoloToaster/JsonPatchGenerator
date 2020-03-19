@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonPatchGenerator.AspNetCo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonPatchGenerator.AspNetCore.Tests", "tests\JsonPatchGenerator.AspNetCore.Tests\JsonPatchGenerator.AspNetCore.Tests.csproj", "{FB3DFAF1-3111-46DC-A034-FF0963F0EF49}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonPatchGenerator.Marvin.Json", "src\JsonPatchGenerator.Marvin.Json\JsonPatchGenerator.Marvin.Json.csproj", "{0F2B69A7-8993-4D67-9402-05FE8AC971E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{FB3DFAF1-3111-46DC-A034-FF0963F0EF49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB3DFAF1-3111-46DC-A034-FF0963F0EF49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB3DFAF1-3111-46DC-A034-FF0963F0EF49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F2B69A7-8993-4D67-9402-05FE8AC971E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F2B69A7-8993-4D67-9402-05FE8AC971E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F2B69A7-8993-4D67-9402-05FE8AC971E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F2B69A7-8993-4D67-9402-05FE8AC971E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
