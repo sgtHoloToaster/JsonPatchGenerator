@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JsonPatchGenerator.Core.Models.Abstract;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +9,9 @@ namespace JsonPatchGenerator.Core.Models
     internal class ArrayHashIndexMap : IEnumerable<int>
     {
         readonly List<int> _hashes = new List<int>();
-        readonly Dictionary<int, HashSet<int>> _map = new Dictionary<int, HashSet<int>>();
-#if (NET45)
-        public IReadOnlyDictionary<int, HashSet<int>> Map { get; } //TODO: replace HashSet with any readonly data type
-#else
-        public IReadOnlyDictionary<int, IReadOnlyCollection<int>> Map { get; } //TODO: replace IReadOnlyCollection with some readonly HashSet implementation
-#endif
+        readonly Dictionary<int, HashSetReadOnlyAdapter<int>> _map = new Dictionary<int, HashSetReadOnlyAdapter<int>>();
+
+        public IReadOnlyDictionary<int, IReadOnlyHashSet<int>> Map { get; }
 
         private IReadOnlyList<int> List => _hashes;
 
@@ -23,11 +21,7 @@ namespace JsonPatchGenerator.Core.Models
 
         public ArrayHashIndexMap(IEnumerable<object> objects, Func<object, int> getHash)
         {
-#if (NET45)
-            Map = new ReadOnlyDictionaryWrapper<int, HashSet<int>, HashSet<int>>(_map);
-#else
-            Map = new ReadOnlyDictionaryWrapper<int, HashSet<int>, IReadOnlyCollection<int>>(_map);
-#endif
+            Map = new ReadOnlyDictionaryWrapper<int, HashSetReadOnlyAdapter<int>, IReadOnlyHashSet<int>>(_map);
             var hashes = objects.Select(o => getHash(o)).ToList();
             AddRange(hashes);
         }
@@ -53,7 +47,7 @@ namespace JsonPatchGenerator.Core.Models
             if (_map.TryGetValue(hash, out var indexes))
                 indexes.Add(index);
             else
-                _map[hash] = new HashSet<int> { index };
+                _map[hash] = new HashSetReadOnlyAdapter<int> { index };
         }
 
         public IEnumerator<int> GetEnumerator() =>
