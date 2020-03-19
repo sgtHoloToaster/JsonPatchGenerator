@@ -9,7 +9,11 @@ namespace JsonPatchGenerator.Core.Models
     {
         readonly List<int> _hashes = new List<int>();
         readonly Dictionary<int, HashSet<int>> _map = new Dictionary<int, HashSet<int>>();
-        public IReadOnlyDictionary<int, IReadOnlyCollection<int>> Map { get; }
+#if (NET45)
+        public IReadOnlyDictionary<int, HashSet<int>> Map { get; } //TODO: replace HashSet with any readonly data type
+#else
+        public IReadOnlyDictionary<int, IReadOnlyCollection<int>> Map { get; } //TODO: replace IReadOnlyCollection with some readonly HashSet implementation
+#endif
 
         private IReadOnlyList<int> List => _hashes;
 
@@ -19,7 +23,11 @@ namespace JsonPatchGenerator.Core.Models
 
         public ArrayHashIndexMap(IEnumerable<object> objects, Func<object, int> getHash)
         {
+#if (NET45)
+            Map = new ReadOnlyDictionaryWrapper<int, HashSet<int>, HashSet<int>>(_map);
+#else
             Map = new ReadOnlyDictionaryWrapper<int, HashSet<int>, IReadOnlyCollection<int>>(_map);
+#endif
             var hashes = objects.Select(o => getHash(o)).ToList();
             AddRange(hashes);
         }
