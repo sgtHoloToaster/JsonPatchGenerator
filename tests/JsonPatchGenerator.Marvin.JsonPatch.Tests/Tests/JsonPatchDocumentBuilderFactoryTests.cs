@@ -3,7 +3,7 @@ using JsonPatchGenerator.Interface.Services;
 using System;
 using Xunit;
 
-namespace JsonPatchGenerator.Marvin.Json.Tests.Tests
+namespace JsonPatchGenerator.Marvin.JsonPatch.Tests.Tests
 {
     public class JsonPatchDocumentBuilderFactoryTests
     {

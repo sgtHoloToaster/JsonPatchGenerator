@@ -1,7 +1,8 @@
 ﻿using AutoMoq;
 using JsonPatchGenerator.Interface.Services;
-using JsonPatchGenerator.Marvin.Json.Abstract;
-using JsonPatchGenerator.Marvin.Json.Tests.Models;
+using JsonPatchGenerator.Marvin.JsonPatch;
+using JsonPatchGenerator.Marvin.JsonPatch.Abstract;
+using JsonPatchGenerator.Marvin.JsonPatch.Tests.Models;
 using Marvin.JsonPatch;
 using Marvin.JsonPatch.Operations;
 using Newtonsoft.Json.Serialization;

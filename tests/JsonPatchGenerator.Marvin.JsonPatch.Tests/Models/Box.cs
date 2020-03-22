@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace JsonPatchGenerator.Marvin.Json.Tests.Models
+namespace JsonPatchGenerator.Marvin.JsonPatch.Tests.Models
 {
     public class Box
     {

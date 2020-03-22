@@ -1,13 +1,13 @@
 ﻿using JsonPatchGenerator.Core.Helpers;
 using JsonPatchGenerator.Interface.Services;
-using JsonPatchGenerator.Marvin.Json.Abstract;
+using JsonPatchGenerator.Marvin.JsonPatch.Abstract;
 using Marvin.JsonPatch;
 using Marvin.JsonPatch.Operations;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 
-namespace JsonPatchGenerator.Marvin.Json
+namespace JsonPatchGenerator.Marvin.JsonPatch
 {
     public class JsonPatchDocumentBuilder : IPatchDocumentBuilder<IJsonPatchDocumentWrapper>
     {

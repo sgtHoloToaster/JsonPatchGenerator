@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace JsonPatchGenerator.Marvin.Json.Tests.Helpers
+namespace JsonPatchGenerator.Marvin.JsonPatch.Tests.Helpers
 {
     public class JsonPatchDocumentEqualityComparer : IEqualityComparer<IJsonPatchDocument>
     {

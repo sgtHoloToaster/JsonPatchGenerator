@@ -1,13 +1,13 @@
 ﻿using JsonPatchGenerator.Core.Helpers;
 using JsonPatchGenerator.Interface.Enums;
 using JsonPatchGenerator.Interface.Models;
-using JsonPatchGenerator.Marvin.Json.Abstract;
+using JsonPatchGenerator.Marvin.JsonPatch.Abstract;
 using Marvin.JsonPatch;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace JsonPatchGenerator.Marvin.Json
+namespace JsonPatchGenerator.Marvin.JsonPatch
 {
     public class JsonPatchDocumentWrapper : IJsonPatchDocumentWrapper
     {

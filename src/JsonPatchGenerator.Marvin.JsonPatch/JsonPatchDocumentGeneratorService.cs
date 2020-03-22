@@ -1,8 +1,8 @@
 ﻿using JsonPatchGenerator.Interface.Services;
-using JsonPatchGenerator.Marvin.Json.Abstract;
+using JsonPatchGenerator.Marvin.JsonPatch.Abstract;
 using Marvin.JsonPatch;
 
-namespace JsonPatchGenerator.Marvin.Json
+namespace JsonPatchGenerator.Marvin.JsonPatch
 {
     public class JsonPatchDocumentGeneratorService : IJsonPatchGenerator<IJsonPatchDocument>
     {

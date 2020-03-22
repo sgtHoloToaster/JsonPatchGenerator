@@ -1,7 +1,7 @@
 ﻿using JsonPatchGenerator.Core.Services;
-using JsonPatchGenerator.Marvin.Json.Abstract;
-using JsonPatchGenerator.Marvin.Json.Tests.Helpers;
-using JsonPatchGenerator.Marvin.Json.Tests.Models;
+using JsonPatchGenerator.Marvin.JsonPatch.Abstract;
+using JsonPatchGenerator.Marvin.JsonPatch.Tests.Helpers;
+using JsonPatchGenerator.Marvin.JsonPatch.Tests.Models;
 using Marvin.JsonPatch;
 using Marvin.JsonPatch.Operations;
 using Newtonsoft.Json.Serialization;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace JsonPatchGenerator.Marvin.Json.Tests.Tests.JsonPatchDocumentGenerator
+namespace JsonPatchGenerator.Marvin.JsonPatch.Tests.Tests.JsonPatchDocumentGenerator
 {
     public class CoreIntegrationTests
     {

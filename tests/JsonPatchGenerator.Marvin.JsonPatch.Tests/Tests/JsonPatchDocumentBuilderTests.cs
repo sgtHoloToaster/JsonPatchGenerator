@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace JsonPatchGenerator.Marvin.Json.Tests.Tests
+namespace JsonPatchGenerator.Marvin.JsonPatch.Tests.Tests
 {
     public class JsonPatchDocumentBuilderTests
     {

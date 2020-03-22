@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace JsonPatchGenerator.Marvin.Json.Tests.Helpers
+namespace JsonPatchGenerator.Marvin.JsonPatch.Tests.Helpers
 {
     public class OperationEqualityComparer : IEqualityComparer<Operation>
     {
