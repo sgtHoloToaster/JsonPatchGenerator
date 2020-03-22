@@ -19,7 +19,7 @@ namespace JsonPatchGenerator.Marvin.JsonPatch.Tests.Tests.JsonPatchDocumentGener
         {
             // arrange
             var corePatchGenerator = new JsonPatchGeneratorService<IJsonPatchDocumentWrapper>(new DefaultTypeResolver(), new JsonPatchDocumentBuilderFactory());
-            var target = new JsonPatchDocumentGeneratorService(corePatchGenerator);
+            var target = new JsonPatch.JsonPatchDocumentGenerator(corePatchGenerator);
 
             // act
             var result = target.Generate(firstInput, secondInput);

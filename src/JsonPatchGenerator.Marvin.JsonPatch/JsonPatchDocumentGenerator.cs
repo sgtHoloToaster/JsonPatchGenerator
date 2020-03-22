@@ -4,11 +4,11 @@ using Marvin.JsonPatch;
 
 namespace JsonPatchGenerator.Marvin.JsonPatch
 {
-    public class JsonPatchDocumentGeneratorService : IJsonPatchGenerator<IJsonPatchDocument>
+    public class JsonPatchDocumentGenerator : IJsonPatchGenerator<IJsonPatchDocument>
     {
         readonly IJsonPatchGenerator<IJsonPatchDocumentWrapper> _patchGenerator;
 
-        public JsonPatchDocumentGeneratorService(IJsonPatchGenerator<IJsonPatchDocumentWrapper> jsonPatchGenerator)
+        public JsonPatchDocumentGenerator(IJsonPatchGenerator<IJsonPatchDocumentWrapper> jsonPatchGenerator)
         {
             _patchGenerator = jsonPatchGenerator;
         }
