@@ -7,8 +7,8 @@
     <ProjectGuid>{0F2B69A7-8993-4D67-9402-05FE8AC971E6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JsonPatchGenerator.Marvin.Json</RootNamespace>
-    <AssemblyName>JsonPatchGenerator.Marvin.Json</AssemblyName>
+    <RootNamespace>JsonPatchGenerator.Marvin.JsonPatch</RootNamespace>
+    <AssemblyName>JsonPatchGenerator.Marvin.JsonPatch</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
