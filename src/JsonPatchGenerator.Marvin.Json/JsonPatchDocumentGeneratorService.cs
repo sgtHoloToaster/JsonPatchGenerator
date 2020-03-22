@@ -1,7 +1,6 @@
 ﻿using JsonPatchGenerator.Interface.Services;
 using JsonPatchGenerator.Marvin.Json.Abstract;
 using Marvin.JsonPatch;
-using System;
 
 namespace JsonPatchGenerator.Marvin.Json
 {
@@ -15,6 +14,7 @@ namespace JsonPatchGenerator.Marvin.Json
         }
 
         public IJsonPatchDocument Generate(object first, object second) =>
-            throw new NotImplementedException();
+            _patchGenerator.Generate(first, second)
+                .GetValue();
     }
 }
