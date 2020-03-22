@@ -80,7 +80,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="Helpers\JsonPatchDocumentEqualityComparer.cs" />
+    <Compile Include="Helpers\OperationEqualityComparer.cs" />
+    <Compile Include="Models\Box.cs" />
+    <Compile Include="Tests\JsonPatchDocumentBuilderFactoryTests.cs" />
+    <Compile Include="Tests\JsonPatchDocumentBuilderTests.cs" />
+    <Compile Include="Tests\JsonPatchDocumentGenerator\CoreIntegrationTests.cs" />
+    <Compile Include="Tests\JsonPatchDocumentGenerator\UnitTests.cs" />
+    <Compile Include="Tests\JsonPatchDocumentWrapperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
