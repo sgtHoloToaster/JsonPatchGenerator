@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>JsonPatchGenerator.Marvin.JsonPatch</id>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <authors>Mikhail Podolskiy</authors>
     <owners>Mikhail Podolskiy</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
