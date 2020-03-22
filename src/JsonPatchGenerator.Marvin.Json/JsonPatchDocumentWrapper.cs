@@ -1,8 +1,11 @@
-﻿using JsonPatchGenerator.Interface.Models;
+﻿using JsonPatchGenerator.Core.Helpers;
+using JsonPatchGenerator.Interface.Enums;
+using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Marvin.Json.Abstract;
 using Marvin.JsonPatch;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace JsonPatchGenerator.Marvin.Json
 {
@@ -15,9 +18,11 @@ namespace JsonPatchGenerator.Marvin.Json
         }
 
         public IEnumerable<Operation> Operations =>
-            throw new NotImplementedException();
+            _jsonPatchDocument.GetOperations()
+                .Select(o => new Operation(EnumsHelper.GetValueByEnumMemberAttribute<OperationType>(o.op), o.path, o.value, o.from))
+                .ToList();
 
         public IJsonPatchDocument GetValue() =>
-            throw new NotImplementedException();
+            _jsonPatchDocument;
     }
 }
