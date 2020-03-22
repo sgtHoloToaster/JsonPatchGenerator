@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>JsonPatchGenerator.Marvin.JsonPatch</id>
+    <version>0.0.1</version>
+    <authors>Mikhail Podolskiy</authors>
+    <owners>Mikhail Podolskiy</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <description>A library that allows to create a rfc6902-based JSON Patch Document from comparing two objects.</description>
+    <tags>rfc6902 diff jsonpatchdocument jsonpatch json marvin</tags>
+    <repository url="https://github.com/SgtHoloToaster/JsonPatchGenerator" />
+    <dependencies>
+      <group targetFramework="net45">
+        <dependency id="Marvin.JsonPatch" version="2.0.0" />
+        <dependency id="JsonPatchGenerator.Core" version="[0.1.0]" exclude="Build,Analyzers" />
+        <dependency id="JsonPatchGenerator.Interface" version="[0.1.0]" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\JsonPatchGenerator.Marvin.JsonPatch.dll" target="lib\net45\JsonPatchGenerator.Marvin.JsonPatch.dll" />
+  </files>
+</package>
