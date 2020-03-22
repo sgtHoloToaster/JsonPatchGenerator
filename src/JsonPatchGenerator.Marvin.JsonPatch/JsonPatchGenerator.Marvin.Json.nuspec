@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>JsonPatchGenerator.Marvin.Json</id>
+    <version>0.0.1</version>
+    <authors>Mikhail Podolskiy</authors>
+    <owners>Mikhail Podolskiy</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <description>A library that allows to create a rfc6902-based JSON Patch Document from comparing two objects.</description>
+    <tags>rfc6902 diff JsonPatchDocument</tags>
+    <repository url="https://github.com/SgtHoloToaster/JsonPatchGenerator" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="JsonPatchGenerator.Core" version="[0.0.1]" exclude="Build,Analyzers" />
+        <dependency id="JsonPatchGenerator.Interface" version="[0.0.1]" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.AspNetCore.JsonPatch" version="[1.0.0, 4.0.0)" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="[1.0.0, 4.0.0)" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\git\JsonPatchGenerator\src\JsonPatchGenerator.AspNetCore\bin\Release\netstandard2.0\JsonPatchGenerator.AspNetCore.dll" target="lib\netstandard2.0\JsonPatchGenerator.AspNetCore.dll" />
+  </files>
+</package>

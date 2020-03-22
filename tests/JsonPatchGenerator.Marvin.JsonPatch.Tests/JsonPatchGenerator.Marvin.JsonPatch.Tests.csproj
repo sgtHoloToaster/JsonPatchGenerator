@@ -105,9 +105,9 @@
       <Project>{ccb5b3c6-6a22-451c-87c0-506499aeca99}</Project>
       <Name>JsonPatchGenerator.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\JsonPatchGenerator.Marvin.Json\JsonPatchGenerator.Marvin.Json.csproj">
+    <ProjectReference Include="..\..\src\JsonPatchGenerator.Marvin.JsonPatch\JsonPatchGenerator.Marvin.JsonPatch.csproj">
       <Project>{0f2b69a7-8993-4d67-9402-05fe8ac971e6}</Project>
-      <Name>JsonPatchGenerator.Marvin.Json</Name>
+      <Name>JsonPatchGenerator.Marvin.JsonPatch</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
