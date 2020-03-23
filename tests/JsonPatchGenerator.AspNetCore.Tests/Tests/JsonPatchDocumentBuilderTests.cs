@@ -1,5 +1,4 @@
-﻿using JsonPatchGenerator.AspNetCore.Services;
-using JsonPatchGenerator.Interface.Enums;
+﻿using JsonPatchGenerator.Interface.Enums;
 using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Models.Abstract;
 using System;

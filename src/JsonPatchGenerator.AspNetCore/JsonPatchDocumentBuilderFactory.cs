@@ -1,7 +1,7 @@
-﻿using JsonPatchGenerator.AspNetCore.Services.Abstract;
+﻿using JsonPatchGenerator.AspNetCore.Abstract;
 using JsonPatchGenerator.Interface.Services;
 
-namespace JsonPatchGenerator.AspNetCore.Services
+namespace JsonPatchGenerator.AspNetCore
 {
     public class JsonPatchDocumentBuilderFactory : IPatchDocumentBuilderFactory<IJsonPatchDocumentWrapper>
     {

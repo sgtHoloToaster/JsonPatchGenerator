@@ -1,7 +1,6 @@
 ﻿using AutoMoqCore;
 using JsonPatchGenerator.AspNetCore.Extensions;
-using JsonPatchGenerator.AspNetCore.Services;
-using JsonPatchGenerator.AspNetCore.Services.Abstract;
+using JsonPatchGenerator.AspNetCore.Abstract;
 using JsonPatchGenerator.Core.Services;
 using JsonPatchGenerator.Interface.Services;
 using Microsoft.AspNetCore.JsonPatch;
