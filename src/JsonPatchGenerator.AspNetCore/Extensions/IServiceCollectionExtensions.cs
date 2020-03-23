@@ -1,5 +1,4 @@
-﻿using JsonPatchGenerator.AspNetCore.Services;
-using JsonPatchGenerator.AspNetCore.Services.Abstract;
+﻿using JsonPatchGenerator.AspNetCore.Abstract;
 using JsonPatchGenerator.Core.Services;
 using JsonPatchGenerator.Interface.Services;
 using Microsoft.AspNetCore.JsonPatch;
@@ -14,6 +13,6 @@ namespace JsonPatchGenerator.AspNetCore.Extensions
                 .AddScoped<ITypeResolver, DefaultTypeResolver>()
                 .AddScoped<IPatchDocumentBuilderFactory<IJsonPatchDocumentWrapper>, JsonPatchDocumentBuilderFactory>()
                 .AddScoped<IJsonPatchGenerator<IJsonPatchDocumentWrapper>, JsonPatchGeneratorService<IJsonPatchDocumentWrapper>>()
-                .AddScoped<IJsonPatchGenerator<IJsonPatchDocument>, JsonPatchDocumentGeneratorService>();
+                .AddScoped<IJsonPatchGenerator<IJsonPatchDocument>, JsonPatchDocumentGenerator>();
     }
 }

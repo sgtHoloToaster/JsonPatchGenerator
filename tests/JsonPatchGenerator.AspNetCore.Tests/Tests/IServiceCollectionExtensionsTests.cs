@@ -31,7 +31,7 @@ namespace JsonPatchGenerator.AspNetCore.Tests.Tests
         [Fact]
         public void RegistersJsonPatchDocumentGenerator() =>
             TestIfServiceProviderAfterRegisteringJsonPatchGenerator(
-                MakeCorrectResolve<IJsonPatchGenerator<IJsonPatchDocument>, JsonPatchDocumentGeneratorService>);
+                this.MakeCorrectResolve<IJsonPatchGenerator<IJsonPatchDocument>, AspNetCore.JsonPatchDocumentGenerator>);
 
         [Fact]
         public void RegistersInternalJsonPatchDocumentWrapperGenerator() =>

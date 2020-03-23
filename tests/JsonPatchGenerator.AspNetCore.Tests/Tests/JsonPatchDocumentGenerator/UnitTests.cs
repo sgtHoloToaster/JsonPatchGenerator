@@ -24,7 +24,7 @@ namespace JsonPatchGenerator.AspNetCore.Tests.Tests.JsonPatchDocumentGenerator
             _mocker.GetMock<IJsonPatchGenerator<IJsonPatchDocumentWrapper>>()
                 .Setup(m => m.Generate(first, second))
                 .Returns(new JsonPatchDocumentWrapper(expected));
-            var target = _mocker.Create<JsonPatchDocumentGeneratorService>();
+            var target = _mocker.Create<AspNetCore.JsonPatchDocumentGenerator>();
 
             // act
             var result = target.Generate(first, second);
@@ -48,7 +48,7 @@ namespace JsonPatchGenerator.AspNetCore.Tests.Tests.JsonPatchDocumentGenerator
             _mocker.GetMock<IJsonPatchGenerator<IJsonPatchDocumentWrapper>>()
                 .Setup(m => m.Generate(first, second))
                 .Returns(new JsonPatchDocumentWrapper(expected));
-            var target = _mocker.Create<JsonPatchDocumentGeneratorService>();
+            var target = _mocker.Create<AspNetCore.JsonPatchDocumentGenerator>();
 
             // act
             var result = target.Generate(first, second);

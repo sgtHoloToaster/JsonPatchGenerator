@@ -19,7 +19,7 @@ namespace JsonPatchGenerator.AspNetCore.Tests.Tests.JsonPatchDocumentGenerator
         {
             // arrange
             var corePatchGenerator = new JsonPatchGeneratorService<IJsonPatchDocumentWrapper>(new DefaultTypeResolver(), new JsonPatchDocumentBuilderFactory());
-            var target = new JsonPatchDocumentGeneratorService(corePatchGenerator);
+            var target = new AspNetCore.JsonPatchDocumentGenerator(corePatchGenerator);
 
             // act
             var result = target.Generate(firstInput, secondInput);
