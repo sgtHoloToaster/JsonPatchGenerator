@@ -7,7 +7,7 @@
     <Description>A library that allows to create a rfc6902-based JSON Patch Document from comparing two objects.</Description>
     <Summary>A library that allows to create a rfc6902-based JSON Patch Document from comparing two objects.</Summary>
     <RepositoryUrl>https://github.com/SgtHoloToaster/JsonPatchGenerator</RepositoryUrl>
-    <PackageTags>rfc6902;diff;JsonPatchDocument</PackageTags>
+    <PackageTags>rfc6902;diff;JsonPatchDocument;jsonPatch;json;patch;AspNetCore;core</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
