@@ -13,16 +13,16 @@ namespace JsonPatchGenerator.AspNetCore.Tests.Tests
     {
         [Fact]
         public void CanBuildDocument() =>
-            TestBuild(Assert.NotNull);
+            TestBuild<object>(Assert.NotNull);
 
         [Fact]
         public void BuiltDocumentHasCorrectType() =>
-            TestBuild(result => Assert.True(result is JsonPatchDocumentWrapper<object>));
+            TestBuild<object>(result => Assert.True(result is JsonPatchDocumentWrapper<object>));
 
-        private void TestBuild(Action<IPatchDocument> assert)
+        private void TestBuild<T>(Action<IPatchDocument> assert) where T : class
         {
             // arrange
-            var target = new JsonPatchDocumentBuilder<object>();
+            var target = new JsonPatchDocumentBuilder<T>();
 
             // act
             var result = target.Build();
@@ -135,7 +135,7 @@ namespace JsonPatchGenerator.AspNetCore.Tests.Tests
                 (builder, expectedOperation) => builder.AppendCopyOperation(expectedOperation.Path, expectedOperation.From),
                 assert);
 
-        private void TestOperation<T>(Operation expectedOperation, Action<JsonPatchDocumentBuilder<T>, Operation> testMethod, Action<Operation, Operation> assert) =>
+        private void TestOperation<T>(Operation expectedOperation, Action<JsonPatchDocumentBuilder<T>, Operation> testMethod, Action<Operation, Operation> assert) where T : class =>
             TestOperation<T>(
                 builder => testMethod(builder, expectedOperation),
                 result => assert(expectedOperation, result));
@@ -152,7 +152,7 @@ namespace JsonPatchGenerator.AspNetCore.Tests.Tests
         private void HasCorrectFrom(Operation expected, Operation result) =>
             Assert.Equal(expected.Path, result.Path);
 
-        private void TestOperation<T>(Action<JsonPatchDocumentBuilder<T>> appendOperationAction, Action<Operation> assert)
+        private void TestOperation<T>(Action<JsonPatchDocumentBuilder<T>> appendOperationAction, Action<Operation> assert) where T : class
         {
             // arrange
             var target = new JsonPatchDocumentBuilder<T>();
