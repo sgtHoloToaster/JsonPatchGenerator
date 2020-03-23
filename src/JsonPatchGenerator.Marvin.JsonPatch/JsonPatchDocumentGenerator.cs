@@ -24,5 +24,10 @@ namespace JsonPatchGenerator.Marvin.JsonPatch
         public IJsonPatchDocument Generate(object first, object second) =>
             _patchGenerator.Generate(first, second)
                 .GetValue();
+
+        public IJsonPatchDocument Generate<T1>(T1 first, T1 second)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

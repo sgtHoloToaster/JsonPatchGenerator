@@ -2,6 +2,7 @@
 using JsonPatchGenerator.Core.Services;
 using JsonPatchGenerator.Interface.Services;
 using Microsoft.AspNetCore.JsonPatch;
+using System;
 
 namespace JsonPatchGenerator.AspNetCore
 {
@@ -24,5 +25,10 @@ namespace JsonPatchGenerator.AspNetCore
         public IJsonPatchDocument Generate(object first, object second) =>
             _patchGenerator.Generate(first, second)
                 .GetValue();
+
+        public IJsonPatchDocument Generate<T1>(T1 first, T1 second)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
