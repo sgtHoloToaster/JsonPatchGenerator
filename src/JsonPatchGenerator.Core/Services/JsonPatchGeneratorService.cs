@@ -35,11 +35,6 @@ namespace JsonPatchGenerator.Core.Services
             return builder.Build();
         }
 
-        public T Generate<T1>(T1 first, T1 second)
-        {
-            throw new NotImplementedException();
-        }
-
         private void AppendObjectPatchOperations(IPatchDocumentBuilder<T> builder, object first, object second, string path) =>
             AppendObjectPatchOperations(builder, first, second, path, first.GetType());
 
