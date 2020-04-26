@@ -1,6 +1,5 @@
 ﻿using AutoMoq;
 using JsonPatchGenerator.Interface.Services;
-using JsonPatchGenerator.Marvin.JsonPatch;
 using JsonPatchGenerator.Marvin.JsonPatch.Abstract;
 using JsonPatchGenerator.Marvin.JsonPatch.Tests.Models;
 using Marvin.JsonPatch;
@@ -9,7 +8,7 @@ using Newtonsoft.Json.Serialization;
 using System.Collections.Generic;
 using Xunit;
 
-namespace JsonPatchGenerator.Marvin.Json.Tests.Tests.JsonPatchDocumentGenerator
+namespace JsonPatchGenerator.Marvin.JsonPatch.Tests.Tests.JsonPatchDocumentGenerator
 {
     public class UnitTests
     {
