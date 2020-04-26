@@ -2,6 +2,6 @@
 {
     public interface IJsonPatchGeneratorGeneric<T> : IJsonPatchGenerator<T>
     {
-        T Generate<T1>(T1 first, T1 second);
+        T Generate<T1>(T1 first, T1 second) where T1 : class;
     }
 }
