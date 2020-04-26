@@ -37,7 +37,7 @@ namespace JsonPatchGenerator.AspNetCore.Tests.Tests
         public void CreatedGenericBuilderHasCorrectType() =>
             TestGenericBuilderCreate<Box>(result => Assert.True(result is JsonPatchDocumentBuilder<Box>));
 
-        private void TestGenericBuilderCreate<T>(Action<IPatchDocumentBuilder<IPatchDocument>> assert)
+        private void TestGenericBuilderCreate<T>(Action<IPatchDocumentBuilder<IPatchDocument>> assert) where T : class
         {
             // arrange
             var target = new JsonPatchDocumentBuilderFactory();

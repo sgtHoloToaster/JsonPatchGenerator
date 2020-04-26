@@ -4,6 +4,6 @@ namespace JsonPatchGenerator.Interface.Services
 {
     public interface IPatchDocumentBuilderFactoryGeneric<out TPatchDocument> : IPatchDocumentBuilderFactory<TPatchDocument> where TPatchDocument : IPatchDocument 
     {
-        IPatchDocumentBuilder<TPatchDocument> Create<T1>();
+        IPatchDocumentBuilder<TPatchDocument> Create<T1>() where T1 : class;
     }
 }
