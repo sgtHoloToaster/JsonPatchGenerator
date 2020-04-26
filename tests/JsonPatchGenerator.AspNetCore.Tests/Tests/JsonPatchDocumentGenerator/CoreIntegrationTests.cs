@@ -18,7 +18,7 @@ namespace JsonPatchGenerator.AspNetCore.Tests.Tests.JsonPatchDocumentGenerator
         public void GeneratedDocumentHasCorrectOperations(JsonPatchDocument expected, Box firstInput, Box secondInput)
         {
             // arrange
-            var corePatchGenerator = new JsonPatchGeneratorService<IJsonPatchDocumentWrapper>(new DefaultTypeResolver(), new JsonPatchDocumentBuilderFactory());
+            var corePatchGenerator = new JsonPatchGeneratorGenericService<IJsonPatchDocumentWrapper>(new DefaultTypeResolver(), new JsonPatchDocumentBuilderFactory());
             var target = new AspNetCore.JsonPatchDocumentGenerator(corePatchGenerator);
 
             // act
