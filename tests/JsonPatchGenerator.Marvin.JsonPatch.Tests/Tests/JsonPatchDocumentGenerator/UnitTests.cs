@@ -18,10 +18,10 @@ namespace JsonPatchGenerator.Marvin.JsonPatch.Tests.Tests.JsonPatchDocumentGener
         public void CanGenerateDocument()
         {
             // arrange
-            var first = new object();
-            var second = new object();
+            var first = new Box();
+            var second = new Box();
             var expected = new JsonPatchDocument();
-            _mocker.GetMock<IJsonPatchGenerator<IJsonPatchDocumentWrapper>>()
+            _mocker.GetMock<IJsonPatchGeneratorGeneric<IJsonPatchDocumentWrapper>>()
                 .Setup(m => m.Generate(first, second))
                 .Returns(new JsonPatchDocumentWrapper(expected));
             var target = _mocker.Create<JsonPatch.JsonPatchDocumentGenerator>();
@@ -45,7 +45,7 @@ namespace JsonPatchGenerator.Marvin.JsonPatch.Tests.Tests.JsonPatchDocumentGener
                 new Operation("replace", "/Id", null, 2)
             };
             var expected = new JsonPatchDocument(expectedOperations, new DefaultContractResolver());
-            _mocker.GetMock<IJsonPatchGenerator<IJsonPatchDocumentWrapper>>()
+            _mocker.GetMock<IJsonPatchGeneratorGeneric<IJsonPatchDocumentWrapper>>()
                 .Setup(m => m.Generate(first, second))
                 .Returns(new JsonPatchDocumentWrapper(expected));
             var target = _mocker.Create<JsonPatch.JsonPatchDocumentGenerator>();
@@ -55,6 +55,30 @@ namespace JsonPatchGenerator.Marvin.JsonPatch.Tests.Tests.JsonPatchDocumentGener
 
             // assert
             Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void GeneratedGenericDocumentHasCorrectType()
+        {
+            // arrange 
+            var first = new Box { Id = 1, Title = "OldBox" };
+            var second = new Box { Id = 2, Title = "NewBox" };
+            var expectedOperations = new List<Operation<Box>>
+            {
+                new Operation<Box>("replace", "/Title", null, "NewBox"),
+                new Operation<Box>("replace", "/Id", null, 2)
+            };
+            var expected = new JsonPatchDocument<Box>(expectedOperations, new DefaultContractResolver());
+            _mocker.GetMock<IJsonPatchGeneratorGeneric<IJsonPatchDocumentWrapper>>()
+                .Setup(m => m.Generate(first, second))
+                .Returns(new JsonPatchDocumentWrapper(expected));
+            var target = _mocker.Create<JsonPatch.JsonPatchDocumentGenerator>();
+
+            // act
+            var result = target.Generate(first, second);
+
+            // assert
+            Assert.True(result is JsonPatchDocument<Box>);
         }
     }
 }
