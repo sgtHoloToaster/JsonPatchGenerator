@@ -15,6 +15,13 @@ PM> Install-Package JsonPatchGenerator.AspNetCore
 ```
 
 ## Usage
+Everything is simple:
+```c#
+var patchGenerator = new JsonPatchDocumentGenerator();
+var jsonPatchDocument = patchGenerator.Generate(first, second);
+```
+
+### Using DI container
 Add this line to the `ConfigureServices` method of your `Startup.cs`:
 ```c#
 services.AddJsonPatchGenerator();
