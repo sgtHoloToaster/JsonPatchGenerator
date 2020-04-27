@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Authors>Mikhail Podolskiy</Authors>
     <Description>A library that allows to create a rfc6902-based JSON Patch Document from comparing two objects.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -18,7 +18,7 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <PackageReference Include="JsonPatchGenerator.Interface" Version="[0.1.0]" />
+        <PackageReference Include="JsonPatchGenerator.Interface" Version="[0.1.1]" />
       </ItemGroup>
     </Otherwise>
   </Choose>

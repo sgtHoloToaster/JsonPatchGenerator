@@ -35,7 +35,7 @@ namespace JsonPatchGenerator.Core.Services
             return builder.Build();
         }
 
-        private void AppendObjectPatchOperations(IPatchDocumentBuilder<T> builder, object first, object second, string path) =>
+        protected void AppendObjectPatchOperations(IPatchDocumentBuilder<T> builder, object first, object second, string path) =>
             AppendObjectPatchOperations(builder, first, second, path, first.GetType());
 
         private void AppendObjectPatchOperations(IPatchDocumentBuilder<T> builder, object first, object second, string path, Type type)

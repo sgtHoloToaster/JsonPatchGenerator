@@ -50,8 +50,10 @@
     <Compile Include="Abstract\IJsonPatchDocumentWrapper.cs" />
     <Compile Include="JsonPatchDocumentBuilder.cs" />
     <Compile Include="JsonPatchDocumentBuilderFactory.cs" />
+    <Compile Include="JsonPatchDocumentBuilderOfT.cs" />
     <Compile Include="JsonPatchDocumentGenerator.cs" />
     <Compile Include="JsonPatchDocumentWrapper.cs" />
+    <Compile Include="JsonPatchDocumentWrapperOfT.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

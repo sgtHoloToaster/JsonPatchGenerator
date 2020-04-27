@@ -5,23 +5,27 @@ using Microsoft.AspNetCore.JsonPatch;
 
 namespace JsonPatchGenerator.AspNetCore
 {
-    public class JsonPatchDocumentGenerator : IJsonPatchGenerator<IJsonPatchDocument>
+    public class JsonPatchDocumentGenerator : IJsonPatchGeneratorGeneric<IJsonPatchDocument>
     {
-        readonly IJsonPatchGenerator<IJsonPatchDocumentWrapper> _patchGenerator;
+        readonly IJsonPatchGeneratorGeneric<IJsonPatchDocumentWrapper> _patchGenerator;
 
         public JsonPatchDocumentGenerator()
         {
             var typeResolver = new DefaultTypeResolver();
             var buildersFactory = new JsonPatchDocumentBuilderFactory();
-            _patchGenerator = new JsonPatchGeneratorService<IJsonPatchDocumentWrapper>(typeResolver, buildersFactory);
+            _patchGenerator = new JsonPatchGeneratorGenericService<IJsonPatchDocumentWrapper>(typeResolver, buildersFactory);
         }
 
-        public JsonPatchDocumentGenerator(IJsonPatchGenerator<IJsonPatchDocumentWrapper> jsonPatchGenerator)
+        public JsonPatchDocumentGenerator(IJsonPatchGeneratorGeneric<IJsonPatchDocumentWrapper> jsonPatchGenerator)
         {
             _patchGenerator = jsonPatchGenerator;
         }
 
         public IJsonPatchDocument Generate(object first, object second) =>
+            (_patchGenerator as IJsonPatchGenerator<IJsonPatchDocumentWrapper>).Generate(first, second)
+                .GetValue();
+
+        public IJsonPatchDocument Generate<T1>(T1 first, T1 second) where T1 : class =>
             _patchGenerator.Generate(first, second)
                 .GetValue();
     }

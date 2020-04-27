@@ -18,7 +18,7 @@ namespace JsonPatchGenerator.Marvin.JsonPatch.Tests.Tests.JsonPatchDocumentGener
         public void GeneratedDocumentHasCorrectOperations(JsonPatchDocument expected, Box firstInput, Box secondInput)
         {
             // arrange
-            var corePatchGenerator = new JsonPatchGeneratorService<IJsonPatchDocumentWrapper>(new DefaultTypeResolver(), new JsonPatchDocumentBuilderFactory());
+            var corePatchGenerator = new JsonPatchGeneratorGenericService<IJsonPatchDocumentWrapper>(new DefaultTypeResolver(), new JsonPatchDocumentBuilderFactory());
             var target = new JsonPatch.JsonPatchDocumentGenerator(corePatchGenerator);
 
             // act

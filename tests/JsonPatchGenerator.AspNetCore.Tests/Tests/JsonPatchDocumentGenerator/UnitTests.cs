@@ -18,10 +18,10 @@ namespace JsonPatchGenerator.AspNetCore.Tests.Tests.JsonPatchDocumentGenerator
         public void CanGenerateDocument()
         {
             // arrange
-            var first = new object();
-            var second = new object();
+            var first = new Box();
+            var second = new Box();
             var expected = new JsonPatchDocument();
-            _mocker.GetMock<IJsonPatchGenerator<IJsonPatchDocumentWrapper>>()
+            _mocker.GetMock<IJsonPatchGeneratorGeneric<IJsonPatchDocumentWrapper>>()
                 .Setup(m => m.Generate(first, second))
                 .Returns(new JsonPatchDocumentWrapper(expected));
             var target = _mocker.Create<AspNetCore.JsonPatchDocumentGenerator>();
@@ -45,7 +45,7 @@ namespace JsonPatchGenerator.AspNetCore.Tests.Tests.JsonPatchDocumentGenerator
                 new Operation("replace", "/Id", null, 2)
             };
             var expected = new JsonPatchDocument(expectedOperations, new DefaultContractResolver());
-            _mocker.GetMock<IJsonPatchGenerator<IJsonPatchDocumentWrapper>>()
+            _mocker.GetMock<IJsonPatchGeneratorGeneric<IJsonPatchDocumentWrapper>>()
                 .Setup(m => m.Generate(first, second))
                 .Returns(new JsonPatchDocumentWrapper(expected));
             var target = _mocker.Create<AspNetCore.JsonPatchDocumentGenerator>();

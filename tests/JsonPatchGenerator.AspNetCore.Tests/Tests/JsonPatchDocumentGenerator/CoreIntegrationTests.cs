@@ -18,7 +18,7 @@ namespace JsonPatchGenerator.AspNetCore.Tests.Tests.JsonPatchDocumentGenerator
         public void GeneratedDocumentHasCorrectOperations(JsonPatchDocument expected, Box firstInput, Box secondInput)
         {
             // arrange
-            var corePatchGenerator = new JsonPatchGeneratorService<IJsonPatchDocumentWrapper>(new DefaultTypeResolver(), new JsonPatchDocumentBuilderFactory());
+            var corePatchGenerator = new JsonPatchGeneratorGenericService<IJsonPatchDocumentWrapper>(new DefaultTypeResolver(), new JsonPatchDocumentBuilderFactory());
             var target = new AspNetCore.JsonPatchDocumentGenerator(corePatchGenerator);
 
             // act
@@ -45,5 +45,22 @@ namespace JsonPatchGenerator.AspNetCore.Tests.Tests.JsonPatchDocumentGenerator
 
         private static JsonPatchDocument GetJsonPatchDocument(params Operation[] operations) =>
             new JsonPatchDocument(operations.ToList(), new DefaultContractResolver());
+
+        [Fact]
+        public void CanGenerateGenericJsonPatchDocument()
+        {
+            // arrange
+            var target = new AspNetCore.JsonPatchDocumentGenerator();
+            var testObject = new Box();
+
+            // act
+            var result = target.Generate(testObject, testObject);
+
+            // assert
+            var type = result.GetType();
+            Assert.True(type.IsGenericType);
+            var genericTypeArgument = type.GetGenericArguments()[0];
+            Assert.Equal(testObject.GetType(), genericTypeArgument);
+        }
     }
 }
