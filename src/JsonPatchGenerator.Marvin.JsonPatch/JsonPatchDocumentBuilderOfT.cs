@@ -1,6 +1,4 @@
 ﻿using JsonPatchGenerator.Core.Helpers;
-using JsonPatchGenerator.Interface.Enums;
-using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Services;
 using JsonPatchGenerator.Marvin.JsonPatch.Abstract;
 using Marvin.JsonPatch;
@@ -8,7 +6,7 @@ using Marvin.JsonPatch.Operations;
 using Newtonsoft.Json.Serialization;
 using System.Collections.Generic;
 
-namespace JsonPatchGenerator.AspNetCore
+namespace JsonPatchGenerator.Marvin.JsonPatch
 {
     public class JsonPatchDocumentBuilder<T> : IPatchDocumentBuilder<IJsonPatchDocumentWrapper> where T : class
     {

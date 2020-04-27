@@ -1,5 +1,4 @@
-﻿using AutoMoq;
-using JsonPatchGenerator.Core.Helpers;
+﻿using JsonPatchGenerator.Core.Helpers;
 using Marvin.JsonPatch;
 using Marvin.JsonPatch.Operations;
 using Newtonsoft.Json.Serialization;

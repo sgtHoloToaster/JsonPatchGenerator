@@ -1,5 +1,4 @@
-﻿using JsonPatchGenerator.Marvin.JsonPatch.Tests.Models;
-using JsonPatchGenerator.Interface.Enums;
+﻿using JsonPatchGenerator.Interface.Enums;
 using JsonPatchGenerator.Interface.Models;
 using JsonPatchGenerator.Interface.Models.Abstract;
 using System;
@@ -7,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace JsonPatchGenerator.AspNetCore.Tests.Tests
+namespace JsonPatchGenerator.Marvin.JsonPatch.Tests.Tests
 {
     public class JsonPatchDocumentBuilderOfTTests
     {
