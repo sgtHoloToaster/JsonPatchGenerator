@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>JsonPatchGenerator.Marvin.JsonPatch</id>
-    <version>0.0.2</version>
+    <version>0.1.0</version>
     <authors>Mikhail Podolskiy</authors>
     <owners>Mikhail Podolskiy</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -14,8 +14,8 @@
     <dependencies>
       <group targetFramework="net45">
         <dependency id="Marvin.JsonPatch" version="2.0.0" />
-        <dependency id="JsonPatchGenerator.Core" version="[0.1.0]" exclude="Build,Analyzers" />
-        <dependency id="JsonPatchGenerator.Interface" version="[0.1.0]" exclude="Build,Analyzers" />
+        <dependency id="JsonPatchGenerator.Core" version="[0.1.1]" exclude="Build,Analyzers" />
+        <dependency id="JsonPatchGenerator.Interface" version="[0.1.1]" exclude="Build,Analyzers" />
       </group>
     </dependencies>
   </metadata>
