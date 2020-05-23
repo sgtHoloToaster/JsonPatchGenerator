@@ -2,6 +2,7 @@
 using JsonPatchGenerator.Interface.Services;
 using JsonPatchGenerator.Marvin.JsonPatch.Abstract;
 using Marvin.JsonPatch;
+using OneType;
 
 namespace JsonPatchGenerator.Marvin.JsonPatch
 {

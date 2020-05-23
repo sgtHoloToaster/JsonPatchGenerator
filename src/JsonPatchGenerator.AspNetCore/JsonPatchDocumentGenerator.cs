@@ -2,6 +2,7 @@
 using JsonPatchGenerator.Core.Services;
 using JsonPatchGenerator.Interface.Services;
 using Microsoft.AspNetCore.JsonPatch;
+using OneType;
 
 namespace JsonPatchGenerator.AspNetCore
 {

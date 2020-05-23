@@ -1,5 +1,6 @@
 ﻿using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Services;
+using OneType.Interface;
 
 namespace JsonPatchGenerator.Core.Services
 {

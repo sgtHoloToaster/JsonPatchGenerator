@@ -3,8 +3,8 @@ using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Services;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
+using OneType.Interface;
 
 namespace JsonPatchGenerator.Core.Services
 {
@@ -43,8 +43,8 @@ namespace JsonPatchGenerator.Core.Services
             var properties = _typeResolver.GetProperties(type);
             foreach (var property in properties)
             {
-                var firstValue = property.GetValue(first, _typeResolver);
-                var secondValue = property.GetValue(second, _typeResolver);
+                var firstValue = property.GetValue(first);
+                var secondValue = property.GetValue(second);
                 AppendPatchOperations(builder, firstValue, secondValue, ConcatPath(path, property.Name), property.Type);
             }
         }
@@ -76,8 +76,8 @@ namespace JsonPatchGenerator.Core.Services
         //TODO: refactor
         private void AppendArrayPatchOperations(IPatchDocumentBuilder<T> builder, Array firstArray, Array secondArray, string path, Type propertyType)
         {
-            var firstArrayHashCodes = new ArrayHashIndexMap(firstArray, _typeResolver.GetHashCode);
-            var secondArrayHashCodes = new ArrayHashIndexMap(secondArray, _typeResolver.GetHashCode);
+            var firstArrayHashCodes = new ArrayHashIndexMap(firstArray, _typeResolver.GetObjectHashCode);
+            var secondArrayHashCodes = new ArrayHashIndexMap(secondArray, _typeResolver.GetObjectHashCode);
             var toAdd = secondArrayHashCodes.Except(firstArrayHashCodes).ToArray();
             var toRemove = firstArrayHashCodes.Except(secondArrayHashCodes).ToArray();
             var offsets = new int[secondArray.Length];
