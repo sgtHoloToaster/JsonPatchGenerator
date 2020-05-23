@@ -1,4 +1,5 @@
 ﻿using JsonPatchGenerator.Core.Services;
+using OneType;
 using Xunit;
 
 namespace JsonPatchGenerator.Core.Tests.Tests.JsonPatchGeneratorServiceTests

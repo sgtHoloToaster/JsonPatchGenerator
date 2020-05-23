@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System;
 using Xunit;
+using OneType.Interface;
+using OneType;
 
 namespace JsonPatchGenerator.AspNetCore.Tests.Tests
 {

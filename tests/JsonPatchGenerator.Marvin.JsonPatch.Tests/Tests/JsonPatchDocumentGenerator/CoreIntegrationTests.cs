@@ -5,6 +5,7 @@ using JsonPatchGenerator.Marvin.JsonPatch.Tests.Models;
 using Marvin.JsonPatch;
 using Marvin.JsonPatch.Operations;
 using Newtonsoft.Json.Serialization;
+using OneType;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
