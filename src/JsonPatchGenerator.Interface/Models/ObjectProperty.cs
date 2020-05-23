@@ -42,7 +42,7 @@ namespace JsonPatchGenerator.Core.Models
             unchecked
             {
                 hash *= 23 + (Type?.GetHashCode() ?? 0);
-                hash *= 23 + (Type?.GetHashCode() ?? 0);
+                hash *= 23 + (Name?.GetHashCode() ?? 0);
             }
 
             return hash;
