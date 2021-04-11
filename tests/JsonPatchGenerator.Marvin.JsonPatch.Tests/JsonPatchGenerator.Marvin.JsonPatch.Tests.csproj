@@ -40,8 +40,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMoq, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AutoMoq.2.0.0\lib\net45\AutoMoq.dll</HintPath>
+    <Reference Include="AutoMoqSlim, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AutoMoqSlim.0.1.0\lib\net45\AutoMoqSlim.dll</HintPath>
     </Reference>
     <Reference Include="Marvin.JsonPatch, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Marvin.JsonPatch.2.1.1\lib\portable40-net40+win8\Marvin.JsonPatch.dll</HintPath>

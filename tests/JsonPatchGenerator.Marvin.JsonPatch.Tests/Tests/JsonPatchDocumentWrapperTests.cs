@@ -1,4 +1,4 @@
-﻿using AutoMoq;
+﻿using AutoMoqSlim;
 using JsonPatchGenerator.Core.Helpers;
 using Marvin.JsonPatch;
 using Marvin.JsonPatch.Operations;

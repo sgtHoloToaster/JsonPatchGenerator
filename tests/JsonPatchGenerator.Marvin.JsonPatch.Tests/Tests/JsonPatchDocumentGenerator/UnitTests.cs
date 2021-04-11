@@ -1,4 +1,4 @@
-﻿using AutoMoq;
+﻿using AutoMoqSlim;
 using JsonPatchGenerator.Interface.Services;
 using JsonPatchGenerator.Marvin.JsonPatch.Abstract;
 using JsonPatchGenerator.Marvin.JsonPatch.Tests.Models;
