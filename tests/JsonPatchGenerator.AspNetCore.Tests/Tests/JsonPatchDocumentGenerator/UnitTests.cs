@@ -1,4 +1,4 @@
-﻿using AutoMoqCore;
+﻿using AutoMoqSlim;
 using JsonPatchGenerator.AspNetCore.Abstract;
 using JsonPatchGenerator.AspNetCore.Tests.Models;
 using JsonPatchGenerator.Interface.Services;

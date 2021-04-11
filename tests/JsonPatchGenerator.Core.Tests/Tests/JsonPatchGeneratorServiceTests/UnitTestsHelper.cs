@@ -1,4 +1,4 @@
-﻿using AutoMoqCore;
+﻿using AutoMoqSlim;
 using JsonPatchGenerator.Core.Models;
 using JsonPatchGenerator.Interface.Models.Abstract;
 using JsonPatchGenerator.Interface.Services;

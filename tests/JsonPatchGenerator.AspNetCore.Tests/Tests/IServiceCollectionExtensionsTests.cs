@@ -1,5 +1,4 @@
-﻿using AutoMoqCore;
-using JsonPatchGenerator.AspNetCore.Extensions;
+﻿using JsonPatchGenerator.AspNetCore.Extensions;
 using JsonPatchGenerator.AspNetCore.Abstract;
 using JsonPatchGenerator.Core.Services;
 using JsonPatchGenerator.Interface.Services;
@@ -8,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System;
 using Xunit;
+using AutoMoqSlim;
 
 namespace JsonPatchGenerator.AspNetCore.Tests.Tests
 {

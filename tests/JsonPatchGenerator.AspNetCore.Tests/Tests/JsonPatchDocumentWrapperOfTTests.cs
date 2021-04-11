@@ -1,5 +1,4 @@
-﻿using AutoMoqCore;
-using JsonPatchGenerator.Core.Helpers;
+﻿using JsonPatchGenerator.Core.Helpers;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.JsonPatch.Operations;
 using Newtonsoft.Json.Serialization;
